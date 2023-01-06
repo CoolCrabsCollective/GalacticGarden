@@ -21,7 +21,7 @@ void Asteroid::tick(float delta) {
 }
 
 void Asteroid::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-	sprite.setPosition(location);
+	sprite.setPosition(location - sf::Vector2f {0.5f, 0.5f});
 	sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
 	target.draw(sprite);
 }

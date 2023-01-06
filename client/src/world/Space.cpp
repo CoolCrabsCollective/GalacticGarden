@@ -8,7 +8,7 @@
 Space::Space(wiz::AssetLoader& assets) 
 	: assets(assets), entities(), ship(*this, { 0.0f, 0.0f }) {
 	entities.push_back(&ship);
-	entities.push_back(new Asteroid(*this, { 0.0f, 3.0f }));
+	entities.push_back(new Asteroid(*this, { 0.0f, -3.0f }));
 }
 
 void Space::tick(float delta) {
