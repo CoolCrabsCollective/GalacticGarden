@@ -10,7 +10,7 @@
 #include "WIZ/game/Screen.h"
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Sprite.hpp"
-#include "ExampleGame.h"
+#include "GalacticGarden.h"
 
 class LoadingScreen : public wiz::Screen, public wiz::WindowListener {
 	std::string name = "LoadingScreen";
