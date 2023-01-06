@@ -6,8 +6,10 @@
 
 #include "Entity.h"
 #include "SFML/Graphics/RenderTarget.hpp"
+#include "SFML/Graphics/Sprite.hpp"
 
 class Ship : public Entity {
+	mutable sf::Sprite sprite;
 
 public:
 	Ship(Space& space, const sf::Vector2f& location);

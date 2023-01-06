@@ -11,7 +11,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
 }
 
 void SpaceScreen::tick(float delta) {
-	sf::Vector2f vec(getGame().getWindow().getView().getSize());
+	sf::Vector2f vec = { 1.0f, 1.0f };
 
 	vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
 	vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
@@ -22,7 +22,12 @@ void SpaceScreen::tick(float delta) {
 
 void SpaceScreen::render(sf::RenderTarget& target) {
 	target.clear();
+	target.setView(sf::View({ 0.5f, 0.5f }, { 1.0f, 1.0f }));
+	
 	target.draw(background);
+	target.setView(sf::View({ space.getShip().getLocation().x,
+	                          space.getShip().getLocation().y }, Space::VIEW_SIZE));
+	
 	target.draw(space);
 }
 
