@@ -6,7 +6,7 @@
 #define GAMETEMPLATE_LOADINGSCREEN_H
 
 
-#include "HelloSFMLScreen.h"
+#include "SpaceScreen.h"
 #include "WIZ/game/Screen.h"
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Sprite.hpp"
