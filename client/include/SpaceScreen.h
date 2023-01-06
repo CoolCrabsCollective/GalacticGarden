@@ -23,6 +23,8 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener {
     sf::Sound sound;
     sf::Music* music;
 
+    sf::Sprite background;
+
 
 public:
     SpaceScreen(wiz::Game& game);

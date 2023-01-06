@@ -22,10 +22,11 @@ void SpaceScreen::tick(float delta) {
 
 void SpaceScreen::render(sf::RenderTarget& target) {
   target.clear();
+  target.draw(background);
 }
 
 void SpaceScreen::show() {
-
+  background.setTexture(*getGame().getAssets().get(GameAssets::BACKGROUND));
 
   getGame().addWindowListener(this);
 }
