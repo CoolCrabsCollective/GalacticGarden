@@ -7,7 +7,7 @@
 #include <WIZ/asset/AssetLoader.h>
 
 #include "GalacticGarden.h"
-#include "LoadingScreen.h"
+#include "SpaceScreen.h"
 
 #include <WIZ/logging/DailyFileLogger.h>
 
@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
 
 	GalacticGarden game(window, logger, loader);
 
-	game.setScreen(std::shared_ptr<LoadingScreen>(new LoadingScreen(game)));
+	game.setScreen(std::shared_ptr<SpaceScreen>(new SpaceScreen(game)));
 
 	while (window->isOpen()) {
 		game.update();
