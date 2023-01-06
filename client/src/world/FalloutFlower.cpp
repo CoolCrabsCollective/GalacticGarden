@@ -4,6 +4,6 @@
 
 #include "world/FalloutFlower.h"
 
-float Flower::get_time_to_maturity() const {
+float FalloutFlower::get_time_to_maturity() const {
     return 5.f;
 }
