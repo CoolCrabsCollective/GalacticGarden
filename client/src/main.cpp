@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
 	mode = sf::VideoMode(640, 480, 32);
 #endif
 
-	std::shared_ptr<sf::RenderWindow> window = std::make_shared<sf::RenderWindow>(mode, "SFML Game Template Project");
+	std::shared_ptr<sf::RenderWindow> window = std::make_shared<sf::RenderWindow>(mode, "Galactic Garden");
 
 	GalacticGarden game(window, logger, loader);
 
