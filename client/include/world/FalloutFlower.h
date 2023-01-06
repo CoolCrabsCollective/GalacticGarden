@@ -6,7 +6,7 @@
 
 #include "Crop.h"
 
-class Flower : public Crop {
+class FalloutFlower : public Crop {
 public:
     float get_time_to_maturity() const override;
 };
