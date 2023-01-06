@@ -5,7 +5,6 @@
 #include "TitleScreen.h"
 #include "GameAssets.h"
 #include "SFML/Window/Touch.hpp"
-#include "Box2DTestScreen.h"
 #include "SpaceScreen.h"
 
 TitleScreen::TitleScreen(wiz::Game& game)
@@ -41,7 +40,7 @@ void TitleScreen::render(sf::RenderTarget& target) {
 }
 
 void TitleScreen::show() {
-	logo.setTexture(*getAssets().get(GameAssets::LOGO));
+	//logo.setTexture(*getAssets().get(GameAssets::LOGO));
 	background.setTexture(*getAssets().get(GameAssets::BACKGROUND));
 
 	getGame().addWindowListener(this);

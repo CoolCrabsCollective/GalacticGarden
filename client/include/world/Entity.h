@@ -7,6 +7,7 @@
 
 #include "SFML/System/Vector2.hpp"
 #include "Tickable.h"
+#include "SFML/Graphics/Drawable.hpp"
 
 class Space;
 

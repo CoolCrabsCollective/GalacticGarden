@@ -4,45 +4,42 @@
 
 #include "SpaceScreen.h"
 #include "SFML/Window/Touch.hpp"
-#include "SFML/Network/TcpSocket.hpp"
-#include "SFML/Network/IpAddress.hpp"
 #include <string>
-#include <iostream>
-#include "Box2DTestScreen.h"
-
 
 SpaceScreen::SpaceScreen(wiz::Game& game)
-        : Screen(game) {
+	: Screen(game), space(game.getAssets()) {
 }
 
 void SpaceScreen::tick(float delta) {
-  sf::Vector2f vec(getGame().getWindow().getView().getSize());
+	sf::Vector2f vec(getGame().getWindow().getView().getSize());
 
-  vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
-  vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
-  background.setScale(vec);
-
+	vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
+	vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
+	background.setScale(vec);
+	
+	space.tick(delta);
 }
 
 void SpaceScreen::render(sf::RenderTarget& target) {
-  target.clear();
-  target.draw(background);
+	target.clear();
+	target.draw(background);
+	target.draw(space);
 }
 
 void SpaceScreen::show() {
-  background.setTexture(*getGame().getAssets().get(GameAssets::BACKGROUND));
+	background.setTexture(*getGame().getAssets().get(GameAssets::BACKGROUND));
 
-  getGame().addWindowListener(this);
+	getGame().addWindowListener(this);
 }
 
 void SpaceScreen::hide() {
-  getGame().removeWindowListener(this);
+	getGame().removeWindowListener(this);
 }
 
 const std::string& SpaceScreen::getName() const {
-  return name;
+	return name;
 }
 
 void SpaceScreen::windowClosed() {
-  getGame().getWindow().close();
+	getGame().getWindow().close();
 }

@@ -16,6 +16,7 @@
 #include "SFML/Graphics/CircleShape.hpp"
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Text.hpp"
+#include "world/Space.h"
 
 class SpaceScreen : public wiz::Screen, public wiz::WindowListener {
     std::string name = "SpaceScreen";
@@ -24,7 +25,7 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener {
     sf::Music* music;
 
     sf::Sprite background;
-
+	Space space;
 
 public:
     SpaceScreen(wiz::Game& game);
