@@ -10,15 +10,17 @@ Asteroid::Asteroid(Space& space, const sf::Vector2f& location)
 	: Entity(space, location) {
 
 	this->sprite.setTexture(*space.getAssets().get(GameAssets::ASTEROID), true);
-	
+
+    double randomXVelocity = ((double) rand() / (RAND_MAX)) * 2 - 1;
+    double randomYVelocity = ((double) rand() / (RAND_MAX)) * 2 - 1;
+    this->velocity = sf::Vector2f(randomXVelocity, randomYVelocity);
 }
 
 void Asteroid::tick(float delta) {
-
+    this->location += this->velocity;
 }
 
 void Asteroid::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-
 	sprite.setPosition(location);
 	sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
 	target.draw(sprite);

@@ -12,6 +12,7 @@
 
 class Asteroid : public Entity {
 	mutable sf::Sprite sprite;
+    sf::Vector2f velocity;
 public:
 	explicit Asteroid(Space& space, const sf::Vector2f& location);
 
