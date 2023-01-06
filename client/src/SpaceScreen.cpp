@@ -16,7 +16,11 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
 }
 
 void SpaceScreen::tick(float delta) {
+  sf::Vector2f vec(getGame().getWindow().getView().getSize());
 
+  vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
+  vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
+  background.setScale(vec);
 
 }
 
