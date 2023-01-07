@@ -8,6 +8,7 @@
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 #include "world/weapon/LazerType.h"
+#include "world/anime/Anime.h"
 
 class Ship : public Entity {
 protected:
@@ -23,6 +24,15 @@ protected:
     float boostAcc = 20.f;
     sf::Vector2f moveVelocity = { 0.f, 0.f };
     bool isBoosting = false;
+    bool isIdle = false;
+public:
+    void setIsIdle(bool isIdle);
+
+protected:
+    mutable sf::Sprite normalAnimeSprite;
+    Anime normalAnime;
+    mutable sf::Sprite boostAnimeSprite;
+    Anime boostAnime;
 public:
     void setIsBoosting(bool isBoosting);
 
