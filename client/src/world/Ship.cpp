@@ -114,7 +114,7 @@ void Ship::plantOnAsteroid(Space& space) {
     if(time_since_last_plant >= plant_delay) {
         sf::Vector2f shipLocation = space.getShip().getLocation();
 
-        std::vector<Entity *> entities = space.getAllEntitiesInRect(this->location, {4, 4});
+        std::vector<Entity *> entities = space.getAllEntitiesInRect(this->location, {6, 6});
 
         for (Entity *entity: entities) {
             Asteroid *asteroid = dynamic_cast<Asteroid *>(entity);

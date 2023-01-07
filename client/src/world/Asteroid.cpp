@@ -21,7 +21,7 @@ Asteroid::Asteroid(Space& space,
 	sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ASTEROID), true);
 	sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
 
-    zoneSprite.setTexture(*space.getAssets().get(GameAssets::WHITE_PIXEL), true);
+    zoneSprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_SOIL), true);
     zoneSprite.setOrigin({ zoneSprite.getTexture()->getSize().x / 2.0f, zoneSprite.getTexture()->getSize().y / 2.0f });
 	
 	this->rotation = rotation;
@@ -69,7 +69,7 @@ void Asteroid::draw(sf::RenderTarget& target, const sf::RenderStates& states) co
 	
 	for(auto &[key, value] : plantingZones) {
         zoneSprite.setPosition(location + key.rotatedBy(sf::degrees(rotation)));
-        zoneSprite.setScale({ 0.5f / zoneSprite.getTexture()->getSize().x, 0.5f / zoneSprite.getTexture()->getSize().y });
+        zoneSprite.setScale({ 1.f / (zoneSprite.getTexture()->getSize().x * 4.f), 1.f / (zoneSprite.getTexture()->getSize().y * 4.f)});
         if(value == nullptr)
             target.draw(zoneSprite);
 	}
@@ -142,19 +142,20 @@ const std::optional<sf::Vector2f> Asteroid::getClosestAvailablePlantingZone(sf::
     std::optional<sf::Vector2f> closestPlantingZone;
     float closestPlantingZoneDistance = -1.0;
 
-    for (auto const& plantingZone : plantingZones)
-    {
-        if (plantingZone.second == nullptr) {
-            float distance = pow(plantingZone.first.x-location.x,2) + pow(plantingZone.first.y-location.y,2);
-            if (closestPlantingZoneDistance != -1.0) {
-                if (distance < closestPlantingZoneDistance) {
-                    closestPlantingZoneDistance = distance;
-                    closestPlantingZone = plantingZone.first;
-                }
-            } else {
+    for (auto const& plantingZone : plantingZones) {
+        if (plantingZone.second != nullptr)
+            continue;
+
+        float distance = (this->location + plantingZone.first.rotatedBy(sf::degrees(rotation))  - location).lengthSq();
+
+        if (closestPlantingZoneDistance != -1.0) {
+            if (distance < closestPlantingZoneDistance) {
                 closestPlantingZoneDistance = distance;
                 closestPlantingZone = plantingZone.first;
             }
+        } else {
+            closestPlantingZoneDistance = distance;
+            closestPlantingZone = plantingZone.first;
         }
     }
 
