@@ -14,8 +14,17 @@ class Ship : public Entity {
 public:
 	Ship(Space& space, const sf::Vector2f& location);
 
-public:
 	void tick(float delta) override;
 	
 	void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
+
+  void moveInDirOfVec(const sf::Vector2f& moveVec);
+
+  void updatePos(sf::Vector2f& moveVec);
+
+private:
+    float moveSpeed = 5.0;
+    sf::Vector2f moveDir = {0.0, 0.0};
+
+    void processInput();
 };

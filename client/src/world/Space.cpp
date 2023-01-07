@@ -24,8 +24,8 @@ void Space::tick(float delta) {
 
 void Space::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
 	sf::Vector2f viewSize = VIEW_SIZE;
-	sf::Vector2f start = getShip().getLocation() - viewSize / 2.0f;
-	sf::Vector2f end = getShip().getLocation() + viewSize / 2.0f;
+	sf::Vector2f start = this->getShip().getLocation() - viewSize / 2.0f;
+	sf::Vector2f end = this->getShip().getLocation() + viewSize / 2.0f;
 
 
 	for(Entity* entity : entities)
@@ -36,7 +36,7 @@ void Space::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
 			target.draw(*entity);
 }
 
-const Ship& Space::getShip() const {
+Ship Space::getShip() const {
 	return ship;
 }
 
