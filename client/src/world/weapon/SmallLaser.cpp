@@ -22,6 +22,7 @@ void SmallLaser::tick(float delta) {
 void SmallLaser::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
     sprite.setPosition({location.x, location.y});
     sprite.setScale({ 1.0f / 16.f, 1.0f / 16.0f });
+    sprite.setRotation(sf::radians(direction.angle().asRadians() + M_PI_2));
     target.draw(sprite);
 }
 

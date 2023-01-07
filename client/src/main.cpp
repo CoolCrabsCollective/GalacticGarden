@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
 
 	GalacticGarden game(window, logger, loader);
 
-	game.setScreen(std::shared_ptr<LoadingScreen>(new LoadingScreen(game)));
+	game.setScreen(std::make_shared<LoadingScreen>(game));
 
 	while (window->isOpen()) {
 		game.update();

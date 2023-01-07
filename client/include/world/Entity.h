@@ -18,7 +18,6 @@ class Entity : public Tickable, public sf::Drawable {
 protected:
 	Space& space;
 	sf::Vector2f location;
-    bool shouldBeDestroyed;
 public:
 
 	Entity(Space& space, 
@@ -36,11 +35,17 @@ public:
 	const sf::Vector2f& getLocation() const {
 		return location;
 	}
+    
+    [[nodiscard]]
+    virtual sf::Vector2f getVisualSize() const {
+        return sf::Vector2f { 1.0f, 1.0f };
+    }
 
     virtual float getZOrder() const {
         return 0.;
     };
 
+    [[nodiscard]]
     virtual bool shouldBeRemoved() const {
         return false;
     }

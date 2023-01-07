@@ -14,15 +14,16 @@ Space::Space(wiz::AssetLoader& assets)
     : assets(assets), entities(), ship(*this, { 0.0f, 0.0f }), spacialMap() {
     entities.push_back(&ship);
 
-    entities.push_back(new Asteroid(*this, { 0.0f, 3.0f }, 0.0f, 5.0f, { 0.0f, 0.0f }, 10.0f ));
-    entities.push_back(new Asteroid(*this, { 2.1f, -3.1f }, 0.0f, 3.0f, { -0.5f, 1.0f }, -1.0f));
+    Asteroid* a1;
+	entities.push_back(a1 = new Asteroid(*this, { 0.0f, 3.0f }, 0.0f, 5.0f, { 0.0f, 0.0f }, 10.0f ));
+	entities.push_back(new Asteroid(*this, { 2.1f, -3.1f }, 0.0f, 3.0f, { -0.5f, 1.0f }, -1.0f));
 
-	entities.push_back(new FalloutFlower(*this, { 0.0, 0.f}));
-    entities.push_back(new FalloutFlower(*this, { -1.0, 1.0f}));
-    entities.push_back(new FalloutFlower(*this, { 3.0, -3.0f}));
 	entities.push_back(new HatchlingShip(*this, {-1.0f, -1.0f}));
 
-    initSpacialMap();
+	initSpacialMap();
+    
+    a1->plant(CropType::FLOWER, a1->getPlantingLocations()[0]);
+    a1->plant(CropType::FLOWER, a1->getPlantingLocations()[4]);
 }
 
 
@@ -87,7 +88,7 @@ void Space::tick(float delta) {
         if(!spacialMap.contains(oldKey))
             throw std::runtime_error("Error entity was not properly in spacial map (DID YOU UPDATE POSITION OUTSIDE OF TICK?)");
 
-        auto list = spacialMap[oldKey];
+        auto& list = spacialMap[oldKey];
 
         auto last = list.end();
         auto pos = std::find(list.begin(), last, entity);
@@ -146,30 +147,29 @@ std::vector<Entity*> Space::getAllEntitiesInRect(sf::Vector2f center,
 
 void Space::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
     sf::Vector2f viewSize = VIEW_SIZE;
-    sf::Vector2f start = this->getShip().getLocation() - viewSize / 2.0f;
-    sf::Vector2f end = this->getShip().getLocation() + viewSize / 2.0f;
+    sf::Vector2f start = target.getView().getCenter() - viewSize / 2.0f;
+    sf::Vector2f end = target.getView().getCenter() + viewSize / 2.0f;
 
     entities_draw_list.clear();
 
-    for(Entity* obj : entities) {
+    for(Entity* obj : entities)
         entities_draw_list.push_back(obj);
-    }
 
     std::sort(entities_draw_list.begin(), entities_draw_list.end(), [&](Entity* a, Entity* b){
         return a->getZOrder() < b->getZOrder();
     });
 
     for(Entity* entity : entities_draw_list) {
-        if(entity->getLocation().x >= start.x
-           && entity->getLocation().y >= start.y
-           && entity->getLocation().x <= end.x
-           && entity->getLocation().y <= end.y)
+        if(entity->getLocation().x + entity->getVisualSize().x / 2.0f >= start.x
+           && entity->getLocation().y + entity->getVisualSize().y / 2.0f >= start.y
+           && entity->getLocation().x - entity->getVisualSize().x / 2.0f <= end.x
+           && entity->getLocation().y - entity->getVisualSize().y / 2.0f <= end.y)
             target.draw(*entity);
     }
 }
 
 void Space::removeEntities() {
-    int i = 0;
+    size_t i = 0;
     while (i < this->entities.size()) {
         Entity* entity = this->entities.at(i);
         if (entity->shouldBeRemoved()) {

@@ -31,6 +31,8 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     Space space;
 
     wiz::MappingDatabase mappingDatabase;
+    
+    sf::Vector2f cameraPosition;
 
 public:
     SpaceScreen(wiz::Game& game);
@@ -51,7 +53,7 @@ public:
 
     void keyPressed(const sf::Event::KeyEvent &keyEvent) override;
 
-    void processInput();
+    void processInput(float delta);
 };
 
 

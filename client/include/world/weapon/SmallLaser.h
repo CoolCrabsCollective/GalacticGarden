@@ -9,7 +9,7 @@
 
 class SmallLaser : public Entity {
 protected:
-    const float speed = 5.f;
+    const float speed = 8.f;
     float lifetime = 2.f;
     const sf::Vector2f direction;
     mutable sf::Sprite sprite;

@@ -6,6 +6,8 @@
 #include "world/Ship.h"
 #include "GameAssets.h"
 #include "world/weapon/SmallLaser.h"
+#include "world/crop/Crop.h"
+#include "world/Asteroid.h"
 
 Ship::Ship(Space& space, const sf::Vector2f& location) 
 	: Entity(space, location) {
@@ -15,21 +17,30 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 }
 
 void Ship::tick(float delta) {
-  sf::Vector2f newPos = {moveDir.x*delta*moveSpeed + this->location.x, moveDir.y*delta*moveSpeed + this->location.y};
-  updatePos(newPos);
-  time_since_last_fire += delta / 1000.f;
+    float bad_delta = delta / 1000.f;
+    sf::Vector2f newPos = { moveVelocity.x * bad_delta + this->location.x, moveVelocity.y * bad_delta + this->location.y };
+
+    this->location = newPos;
+    time_since_last_fire += bad_delta;
+    time_since_last_plant += bad_delta;
+    
+    for(Entity* entity : space.getAllEntitiesInRect(location, { 2.0f, 2.0f })) {
+        Crop* crop = dynamic_cast<Crop*>(entity);
+        if(crop && crop->isReady() && (crop->getLocation() - location).lengthSq() < 1.0f) {
+            crop->harvest();
+            harvestedCount++;
+        }
+    }
 }
 
-void Ship::updatePos(sf::Vector2f& moveVec) {
-  this->location = moveVec;
-  this->sprite.setPosition(moveVec);
-
-  processInput();
+float Ship::getRotation() const {
+    return rotation;
 }
 
 void Ship::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
 	sprite.setPosition(location);
 	sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
+    sprite.setRotation(sf::radians(rotation));
 	target.draw(sprite);
 }
 
@@ -37,35 +48,50 @@ float Ship::getZOrder() const {
     return 8.f;
 }
 
-void Ship::moveInDirOfVec(const sf::Vector2f& moveVec) {
-  this->moveDir = {moveVec.x / 100, moveVec.y / 100};
-}
+void Ship::moveInDirOfVec(const sf::Vector2f& moveVec, float good_delta) {
+    sf::Vector2f moveVecNorm { 0.f, 0.f };
+    
+    if(moveVec.length() > 0.001f) // is not zero
+        moveVecNorm = moveVec.normalized();
 
-void Ship::processInput() {
-  // TODO: does this belong in Ship? shouldn't this be in SpaceScreen
-  bool connected = sf::Joystick::isConnected(0);
-
-  float xAxisInput = connected ? sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) :
-                     (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
-                     ? 100.00 : ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) ||
-                                  sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) ? -100.00 : 0.00));
-
-  float yAxisInput = connected ? sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) :
-                     (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
-                     ? -100.00 : ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) ||
-                                  sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) ? 100.00 : 0.00));
-
-  sf::Vector2f moveVec = {xAxisInput, yAxisInput};
-
-
-  moveInDirOfVec(moveVec);
-
+    this->moveVelocity += moveVecNorm * acc * good_delta;
+    if(this->moveVelocity.length() > maxSpeed)
+    {
+        this->moveVelocity = this->moveVelocity.normalized() * maxSpeed;
+    }
 }
 
 void Ship::fire() {
     if(time_since_last_fire >= fire_delay)
     {
-        space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f)));
+        space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::radians(rotation))));
         time_since_last_fire = 0.f;
+    }
+}
+
+void Ship::setRotation(float rotationRad) {
+    this->rotation = rotationRad;
+}
+
+void Ship::PlantOnAsteroid(Space& space) {
+    if(time_since_last_plant >= plant_delay) {
+        sf::Vector2f shipLocation = space.getShip().getLocation();
+
+        std::vector<Entity *> entities = space.getAllEntitiesInRect(this->location, {4, 4});
+
+        const std::map<sf::Vector2f, Crop *, VecCompare> *plantingZones = nullptr;
+
+        for (Entity *entity: entities) {
+            Asteroid *asteroid = dynamic_cast<Asteroid *>(entity);
+
+            if (asteroid != nullptr) {
+                std::optional<sf::Vector2f> closestPlantingZone = asteroid->getClosestAvailablePlantingZone(shipLocation);
+                if (closestPlantingZone.has_value()) {
+                    asteroid->plant(CropType::FLOWER, closestPlantingZone.value());
+                    time_since_last_plant = .0f;
+                }
+                break;
+            }
+        }
     }
 }

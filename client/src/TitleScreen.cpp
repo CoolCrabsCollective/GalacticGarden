@@ -15,7 +15,7 @@ void TitleScreen::tick(float delta) {
 
 	logo.setOrigin(sf::Vector2f(logo.getTextureRect().getSize() / 2));
 	logo.setPosition(vec / 2.0f);
-	//logo.setScale(sf::Vector2f(0.25f, 0.25f));
+	logo.setScale(sf::Vector2f(10.0f, 10.0f));
 
 	vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
 	vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
@@ -40,8 +40,8 @@ void TitleScreen::render(sf::RenderTarget& target) {
 }
 
 void TitleScreen::show() {
-	//logo.setTexture(*getAssets().get(GameAssets::LOGO));
-	//background.setTexture(*getAssets().get(GameAssets::BACKGROUND));
+	logo.setTexture(*getAssets().get(GameAssets::LOGO));
+	background.setTexture(*getAssets().get(GameAssets::BACKGROUND));
 
 	getGame().addWindowListener(this);
 
