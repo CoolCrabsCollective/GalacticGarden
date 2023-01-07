@@ -5,8 +5,8 @@
 #include "world/Space.h"
 #include "world/enemy/EnemyShip.h"
 #include "SFML/Graphics/RenderTarget.hpp"
-#include "world/weapon/Lazer.h"
 #include "GameAssets.h"
+#include "world/weapon/SmallEnemyLaser.h"
 
 EnemyShip::EnemyShip(Space &space, sf::Vector2f location) 
     : Entity(space, location) {
@@ -23,7 +23,7 @@ void EnemyShip::draw(sf::RenderTarget &target, const sf::RenderStates &states) c
 
     sprite.setRotation(sf::degrees(rotation));
 
-        damageShader->setUniform("hit_multiplier", redness);
+    damageShader->setUniform("hit_multiplier", redness);
     if (redness > 0.0f)
         target.draw(sprite, damageShader);
     else
@@ -39,18 +39,29 @@ void EnemyShip::tick(float delta) {
             continue;
         
         if(Lazer* lazer = dynamic_cast<Lazer*>(entity)) {
-            redness = 1.0f;
-            health -= lazer->getDamage();
-            lazer->consume();
-            if(health <= 0.0f) {
-                health = 0.0f;
-                return;
+            if (lazer->getFraction() != fraction) {
+                redness = 1.0f;
+                health -= lazer->getDamage();
+                lazer->consume();
+                if (health <= 0.0f) {
+                    health = 0.0f;
+                    return;
+                }
             }
         }
     }
 
     if (redness > 0.0f) {
         redness -= delta / 1000;
+    }
+}
+
+void EnemyShip::fire() {
+    if (time_since_last_fire >= fire_delay) {
+        space.addEntity(
+                new SmallEnemyLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
+
+        time_since_last_fire = 0.f;
     }
 }
 

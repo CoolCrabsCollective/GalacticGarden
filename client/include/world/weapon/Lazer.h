@@ -8,6 +8,11 @@
 
 #include "world/Entity.h"
 
+enum Fraction {
+    FRIENDLY,
+    ENEMY
+};
+
 class Lazer : public Entity {
 public:
     Lazer(Space& space, const sf::Vector2f& location) 
@@ -16,6 +21,8 @@ public:
     virtual float getDamage() = 0;
     
     virtual void consume() = 0;
+
+    virtual Fraction getFraction() = 0;
 
     bool shouldBeRemoved() const override {
         return Entity::shouldBeRemoved();

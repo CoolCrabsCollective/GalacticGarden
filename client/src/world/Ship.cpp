@@ -15,20 +15,38 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 	
 	this->sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_SHIP), true);
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
+    float origin_y_pos = (sprite.getTexture()->getSize().y / 2.0f);
+    normalAnimeSprite.setOrigin({sprite.getTexture()->getSize().x / 2.0f, origin_y_pos});
+    boostAnimeSprite.setOrigin({sprite.getTexture()->getSize().x / 2.0f, origin_y_pos});
+
+    normalAnime.insertFrame(space.getAssets().get(GameAssets::TEXTURE_SHIP_MOVING_1));
+    normalAnime.insertFrame(space.getAssets().get(GameAssets::TEXTURE_SHIP_MOVING_2));
+    normalAnime.setAnimationSprite(&normalAnimeSprite);
+
+    boostAnime.insertFrame(space.getAssets().get(GameAssets::TEXTURE_SHIP_BOOSTING_1));
+    boostAnime.insertFrame(space.getAssets().get(GameAssets::TEXTURE_SHIP_BOOSTING_2));
+    boostAnime.setAnimationSprite(&boostAnimeSprite);
+
+    normalAnime.startAnimation();
+    boostAnime.startAnimation();
 }
 
 void Ship::tick(float delta) {
     float bad_delta = delta / 1000.f;
 
+    boostAnime.runAnimation(bad_delta);
+    normalAnime.runAnimation(bad_delta);
+
     constexpr float energy_per_boost = 2.f;
-    if(isBoosting)
+    if(isBoosting && !isIdle)
     {
         isBoosting = energy > energy_per_boost * bad_delta;
+        if(isBoosting)
+            energy -= energy_per_boost * bad_delta;
     }
 
     if(isBoosting)
     {
-        energy -= energy_per_boost * bad_delta;
         if(this->moveVelocity.length() > maxSpeedBoost)
         {
             this->moveVelocity = this->moveVelocity.normalized() * maxSpeedBoost;
@@ -66,8 +84,26 @@ void Ship::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
 	sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
     sprite.setRotation(sf::degrees(rotation));
 
+    normalAnimeSprite.setPosition(location);
+    normalAnimeSprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
+    normalAnimeSprite.setRotation(sf::degrees(rotation));
 
-	target.draw(sprite);
+    boostAnimeSprite.setPosition(location);
+    boostAnimeSprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
+    boostAnimeSprite.setRotation(sf::degrees(rotation));
+
+    if(isIdle)
+    {
+        target.draw(sprite);
+    }
+    else if(isBoosting)
+    {
+        target.draw(boostAnimeSprite);
+    }
+    else
+    {
+        target.draw(normalAnimeSprite);
+    }
 }
 
 float Ship::getZOrder() const {
@@ -180,4 +216,8 @@ int Ship::getEnergy() const {
 
 void Ship::setIsBoosting(bool isBoosting) {
     this->isBoosting = isBoosting;
+}
+
+void Ship::setIsIdle(bool isIdle) {
+    this->isIdle = isIdle;
 }

@@ -173,6 +173,7 @@ void SpaceScreen::processInput(float delta) {
                        (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
                        ? -100.00 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) ? 100.00 : 0.00);
 
+    space.getShip().setIsIdle(std::abs(xAxisInput) <= 0.1 && std::abs(yAxisInput) <= 0.1f);
     sf::Vector2f moveVec = {xAxisInput, yAxisInput};
 
     space.getShip().moveInDirOfVec(moveVec, delta / 1000.f);
