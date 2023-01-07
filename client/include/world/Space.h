@@ -17,11 +17,11 @@ class Space : public Tickable, public sf::Drawable {
 protected:
 	wiz::AssetLoader& assets;
 	std::vector<Entity*> entities;
-    mutable std::vector<Entity*> entities_draw_list;
-	
-    std::map<uint64_t, std::list<Entity*>> spacialMap;
 
-	Ship ship;
+    Ship ship;
+    
+    mutable std::vector<Entity*> entities_draw_list;
+    std::map<uint64_t, std::list<Entity*>> spacialMap;
 	
 public:
 	constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };

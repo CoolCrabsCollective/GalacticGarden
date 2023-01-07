@@ -97,12 +97,14 @@ void Space::tick(float delta) {
 
         if(list.empty())
             spacialMap.erase(oldKey);
+        
+		if(!spacialMap.contains(newKey))
+			spacialMap[newKey] = { entity };
+		else
+			spacialMap[newKey].insert(spacialMap[newKey].begin(), entity);
+	}
 
-        if(!spacialMap.contains(newKey))
-            spacialMap[newKey] = { entity };
-        else
-            spacialMap[newKey].insert(spacialMap[newKey].begin(), entity);
-    }
+    removeEntities();
 }
 
 std::vector<Entity*> Space::getAllEntitiesInRect(sf::Vector2f center,
@@ -168,7 +170,7 @@ void Space::removeEntities() {
     int i = 0;
     while (i < this->entities.size()) {
         Entity* entity = this->entities.at(i);
-        if (false) { // check if entity should be removed
+        if (entity->shouldBeRemoved()) {
             entities.erase(entities.begin() + i);
             removeFromMap(entity);
             delete entity;

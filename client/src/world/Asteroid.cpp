@@ -14,15 +14,19 @@ Asteroid::Asteroid(Space& space,
 				   float startAngVelocity) 
 	: Entity(space, location) {
 	
-    sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ASTEROID), true);
+	sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ASTEROID), true);
 	sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
-	
+
+    zoneSprite.setTexture(*space.getAssets().get(GameAssets::WHITE_PIXEL), true);
+    zoneSprite.setOrigin({ zoneSprite.getTexture()->getSize().x / 2.0f, zoneSprite.getTexture()->getSize().y / 2.0f });
 	
 	this->rotation = rotation;
 	
 	this->size = size;
-    this->velocity = startVelocity;
+	this->velocity = startVelocity;
 	this->angularVelocity = startAngVelocity;
+
+  generatePlantingZones();
 }
 
 void Asteroid::tick(float delta) {
@@ -50,7 +54,7 @@ void Asteroid::tick(float delta) {
 }
 
 float Asteroid::getZOrder() const {
-    return 0;
+	return 0;
 }
 
 void Asteroid::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
@@ -58,6 +62,26 @@ void Asteroid::draw(sf::RenderTarget& target, const sf::RenderStates& states) co
 	sprite.setScale({ size / sprite.getTexture()->getSize().x, size / sprite.getTexture()->getSize().y });
 	sprite.setRotation(sf::degrees(rotation));
 	target.draw(sprite);
+	
+	for(auto &[key, value] : plantingZones) {
+        
+        zoneSprite.setPosition(location + key.rotatedBy(sf::degrees(rotation)));
+        zoneSprite.setScale({ 0.5f / zoneSprite.getTexture()->getSize().x, 0.5f / zoneSprite.getTexture()->getSize().y });
+        target.draw(zoneSprite);
+	}
 }
 
+void Asteroid::generatePlantingZones() {
+	float minRadius = size / 4.0f;
+	float maxRadius = size / 2.0f * 7.0f / 8.0f;
 
+    int randDir = 0;
+    int randDes = 0;
+
+    for(int i = 0; i<10; i++) {
+		randDir = rand() % 360;
+		randDes = rand() * minRadius / maxRadius;
+
+		plantingZones.insert(std::pair<sf::Vector2f, Crop*>{{randDes * cosf(randDir), randDes * sinf(randDir)}, nullptr});
+    }
+}
