@@ -50,7 +50,32 @@ void SpaceScreen::mouseButtonPressed(const sf::Event::MouseButtonEvent &mouseBut
 }
 
 void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
-
+    switch(keyEvent.code) {
+        case sf::Keyboard::Num1:
+        case sf::Keyboard::Numpad1:
+            space.getShip().setLazerType(LazerType::SIMPLE);
+            break;
+        
+        case sf::Keyboard::Num2:
+        case sf::Keyboard::Numpad2:
+            space.getShip().setLazerType(LazerType::DOUBLE);
+            break;
+        
+        case sf::Keyboard::Num3:
+        case sf::Keyboard::Numpad3:
+            space.getShip().setLazerType(LazerType::TRIANGLE);
+            break;
+        
+        case sf::Keyboard::Num4:
+        case sf::Keyboard::Numpad4:
+            space.getShip().setLazerType(LazerType::FOUR_WAY);
+            break;
+            
+        case sf::Keyboard::Num5:
+        case sf::Keyboard::Numpad5:
+            space.getShip().setLazerType(LazerType::CRAZY);
+            break;
+    }
 }
 
 const std::string& SpaceScreen::getName() const {
@@ -89,7 +114,7 @@ void SpaceScreen::processInput(float delta) {
     bool isPlanting = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) || sf::Mouse::isButtonPressed(sf::Mouse::Button::Right);
 
     if (isPlanting)
-        space.getShip().PlantOnAsteroid(space);
+        space.getShip().plantOnAsteroid(space);
 
     float xAxisInput = mappingFound && connected ? sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) :
                        (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
