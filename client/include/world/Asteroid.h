@@ -61,6 +61,8 @@ public:
     
     void removeCrop(sf::Vector2f relLocation);
 
+    const std::optional<sf::Vector2f> getClosestAvailablePlantingZone(sf::Vector2f location) const;
+
 private:
     void generatePlantingZones();
 };
