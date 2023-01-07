@@ -140,9 +140,12 @@ void SpaceScreen::processInput(float delta) {
 //    }
 
     bool isFiring = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) || sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
+    bool isBoosting = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift);
 
     if(isFiring)
         space.getShip().fire();
+
+    space.getShip().setIsBoosting(isBoosting);
 
 //    bool isPlanting = mappingFound && connected ? sf::Joystick::isButtonPressed(0, mapping.getButton(wiz::MapButton::Left_Shoulder)) :
 //            (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) ||
@@ -163,7 +166,6 @@ void SpaceScreen::processInput(float delta) {
 
     sf::Vector2f moveVec = {xAxisInput, yAxisInput};
 
-    sf::Vector2i mousePos = sf::Mouse::getPosition();
     space.getShip().moveInDirOfVec(moveVec, delta / 1000.f);
 
     sf::Vector2f pos = getWindow().mapPixelToCoords(sf::Mouse::getPosition(getWindow()), sf::View({ 0.f, 0.f }, Space::VIEW_SIZE));

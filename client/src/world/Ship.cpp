@@ -18,6 +18,25 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 
 void Ship::tick(float delta) {
     float bad_delta = delta / 1000.f;
+
+    constexpr float energy_per_boost = 2.f;
+    if(isBoosting)
+    {
+        isBoosting = energy > energy_per_boost * bad_delta;
+    }
+
+    if(isBoosting)
+    {
+        energy -= energy_per_boost * bad_delta;
+        if(this->moveVelocity.length() > maxSpeedBoost)
+        {
+            this->moveVelocity = this->moveVelocity.normalized() * maxSpeedBoost;
+        }
+    }
+    else if(this->moveVelocity.length() > maxSpeed){
+        this->moveVelocity = this->moveVelocity.normalized() * maxSpeed;
+   }
+
     sf::Vector2f newPos = { moveVelocity.x * bad_delta + this->location.x, moveVelocity.y * bad_delta + this->location.y };
 
     this->location = newPos;
@@ -41,6 +60,8 @@ void Ship::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
 	sprite.setPosition(location);
 	sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
     sprite.setRotation(sf::degrees(rotation));
+
+
 	target.draw(sprite);
 }
 
@@ -54,11 +75,8 @@ void Ship::moveInDirOfVec(const sf::Vector2f& moveVec, float good_delta) {
     if(moveVec.length() > 0.001f) // is not zero
         moveVecNorm = moveVec.normalized();
 
-    this->moveVelocity += moveVecNorm * acc * good_delta;
-    if(this->moveVelocity.length() > maxSpeed)
-    {
-        this->moveVelocity = this->moveVelocity.normalized() * maxSpeed;
-    }
+    float current_acc = isBoosting ? boostAcc : acc;
+    this->moveVelocity += moveVecNorm * current_acc * good_delta;
 }
 
 
@@ -153,4 +171,8 @@ bool Ship::energy_for_shot(int shot_count) {
 
 int Ship::getEnergy() const {
     return energy;
+}
+
+void Ship::setIsBoosting(bool isBoosting) {
+    this->isBoosting = isBoosting;
 }
