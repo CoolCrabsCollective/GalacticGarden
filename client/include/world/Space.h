@@ -11,11 +11,14 @@
 #include "WIZ/asset/AssetLoader.h"
 #include "Entity.h"
 #include "Ship.h"
+#include <list>
 
 class Space : public Tickable, public sf::Drawable {
 
 	wiz::AssetLoader& assets;
 	std::vector<Entity*> entities;
+	
+	std::map<uint64_t, std::list<Entity*>> spacialMap;
 	
 	Ship ship;
 
@@ -24,6 +27,7 @@ class Space : public Tickable, public sf::Drawable {
 	
 public:
 	constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
+	constexpr const static float CHUNK_SIZE = 2.0f;
 	
 	Space(wiz::AssetLoader& assets);
 
@@ -34,6 +38,14 @@ public:
 	const Ship& getShip() const;
 
 	wiz::AssetLoader& getAssets() const;
+
+	std::vector<Entity*> getAllEntitiesInRect(sf::Vector2f center,
+											  sf::Vector2f size) const;
+	
+private:
+	void initSpacialMap();
+	
+	uint64_t spacialKey(sf::Vector2f location) const;
 
 };
 
