@@ -9,7 +9,7 @@
 Asteroid::Asteroid(Space& space, const sf::Vector2f& location) 
 	: Entity(space, location) {
 
-	this->sprite.setTexture(*space.getAssets().get(GameAssets::ASTEROID), true);
+	this->sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ASTEROID), true);
 	
 }
 

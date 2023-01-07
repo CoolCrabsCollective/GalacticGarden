@@ -6,10 +6,13 @@
 
 #include "Entity.h"
 #include "SFML/Graphics/Drawable.hpp"
+#include "SFML/Graphics/Sprite.hpp"
+#include "SFML/Graphics/RenderTarget.hpp"
 
 class Crop : public Entity {
 protected:
     float time_since_planted = 0.f;
+    mutable sf::Sprite sprite;
 public:
     explicit Crop(Space& space, sf::Vector2f location);
 		
