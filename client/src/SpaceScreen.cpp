@@ -8,19 +8,27 @@
 #include "GameAssets.h"
 
 SpaceScreen::SpaceScreen(wiz::Game& game)
-	: Screen(game), space(game.getAssets()), mappingDatabase() {
+	: Screen(game), space(game.getAssets()), mappingDatabase(), gameOverMenu(*this) {
     mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
     cameraPosition = space.getShip().getLocation();
     energySprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ENERGY));
 }
 
 void SpaceScreen::tick(float delta) {
-    processInput(delta);
-	sf::Vector2f vec = { 1.0f, 1.0f };
+    if(!gameover) {
+        processInput(delta);
+        space.tick(delta);   
+    } else {
+        gameoverCooldown -= delta / 1000.0f;
+    }
+}
 
-	vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
-	vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
-	background.setScale(vec);
+void SpaceScreen::render(sf::RenderTarget& target) {
+
+    sf::Vector2f vec = { 1.0f, 1.0f };
+    vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
+    vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
+    background.setScale(vec);
     energySprite.setPosition({50.f, 900.f});
     energySprite.setScale({4.f, 4.f});
 
@@ -29,10 +37,7 @@ void SpaceScreen::tick(float delta) {
     energyText.setScale({2.f, 2.f});
     energyText.setFillColor(sf::Color::White);
     energyText.setFont(*space.getAssets().get(GameAssets::SANS_TTF));
-	space.tick(delta);
-}
-
-void SpaceScreen::render(sf::RenderTarget& target) {
+    
 	target.clear();
 	target.setView(sf::View({ 0.5f, 0.5f }, { 1.0f, 1.0f }));
 	target.draw(background);
@@ -42,9 +47,11 @@ void SpaceScreen::render(sf::RenderTarget& target) {
 	target.draw(space);
 
     // ui
-    target.setView(sf::View(sf::Vector2f{SpaceScreen::UI_VIEW_SIZE.x / 2.f, SpaceScreen::UI_VIEW_SIZE.y / 2.f}, SpaceScreen::UI_VIEW_SIZE));
+    target.setView(sf::View(SpaceScreen::UI_VIEW_SIZE / 2.0f, SpaceScreen::UI_VIEW_SIZE));
     target.draw(energySprite);
     target.draw(energyText);
+    if(gameover)
+        target.draw(gameOverMenu);
 }
 
 void SpaceScreen::show() {
@@ -60,11 +67,24 @@ void SpaceScreen::hide() {
 }
 
 void SpaceScreen::mouseButtonPressed(const sf::Event::MouseButtonEvent &mouseButtonEvent) {
-
+    if(gameover && gameoverCooldown <= 0.0f) {
+        getGame().setScreen(new SpaceScreen(getGame()));
+        return;
+    }
 }
 
 void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
+    if(gameover && gameoverCooldown <= 0.0f) {
+        getGame().setScreen(new SpaceScreen(getGame()));
+        return;
+    }
+    
     switch(keyEvent.code) {
+        case sf::Keyboard::Escape:
+            if(!gameover)
+                gameover = true;
+            break;
+        
         case sf::Keyboard::Num1:
         case sf::Keyboard::Numpad1:
             space.getShip().setLazerType(LazerType::SIMPLE);
