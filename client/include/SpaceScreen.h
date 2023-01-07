@@ -31,6 +31,9 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     Space space;
 
     wiz::MappingDatabase mappingDatabase;
+    wiz::Mapping mapping;
+    bool controllerDisconnected = true;
+    bool mappingFound = false;
     
     sf::Vector2f cameraPosition;
 
