@@ -2,7 +2,7 @@
 // Created by adrien on 07/01/23.
 //
 
-#include "TractorBeam.h"
+#include "world/enemy/TractorBeam.h"
 TractorBeam::TractorBeam(Space &space, sf::Vector2f location) : Entity(space, location) {
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_TRACTOR_BEAM));
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
