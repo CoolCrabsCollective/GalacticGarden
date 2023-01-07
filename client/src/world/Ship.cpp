@@ -143,14 +143,14 @@ void Ship::setLazerType(LazerType lazer_type) {
 }
 
 bool Ship::energy_for_shot(int shot_count) {
-    float energy_per_shot = 0.15f;
-    float energy_used = static_cast<float>(shot_count) * energy_per_shot;
+    int energy_per_shot = 1;
+    int energy_used = shot_count * energy_per_shot;
     bool success = energy_used < energy;
     if(success)
         energy -= energy_used;
     return success;
 }
 
-float Ship::getEnergy() const {
+int Ship::getEnergy() const {
     return energy;
 }

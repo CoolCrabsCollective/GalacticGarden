@@ -22,11 +22,11 @@ protected:
     sf::Vector2f moveVelocity = { 0.f, 0.f };
     bool rotateLeft = false, rotateRight = false;
 public:
-    float getEnergy() const;
+    int getEnergy() const;
 
 protected:
 
-    float energy = 10.f;
+    int energy = 100;
     LazerType lazerType = LazerType::SIMPLE;
 
     bool energy_for_shot(int shot_count);

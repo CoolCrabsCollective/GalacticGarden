@@ -5,6 +5,7 @@
 #include "SpaceScreen.h"
 #include "SFML/Window/Touch.hpp"
 #include <string>
+#include "GameAssets.h"
 
 SpaceScreen::SpaceScreen(wiz::Game& game)
 	: Screen(game), space(game.getAssets()), mappingDatabase() {
@@ -24,9 +25,10 @@ void SpaceScreen::tick(float delta) {
     energySprite.setScale({4.f, 4.f});
 
     energyText.setString(std::to_string(space.getShip().getEnergy()));
-    energyText.setPosition({ 100.f, 900.f});
-    energyText.setString("Hello world");
+    energyText.setPosition({ 175.f, 925.f});
+    energyText.setScale({2.f, 2.f});
     energyText.setFillColor(sf::Color::White);
+    energyText.setFont(*space.getAssets().get(GameAssets::SANS_TTF));
 	space.tick(delta);
 }
 
