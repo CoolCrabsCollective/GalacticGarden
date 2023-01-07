@@ -28,7 +28,7 @@ void SpaceScreen::render(sf::RenderTarget& target) {
 	target.setView(sf::View({ 0.5f, 0.5f }, { 1.0f, 1.0f }));
 
 	target.draw(background);
-    
+
 	target.setView(sf::View({ space.getShip().getLocation().x,
                               space.getShip().getLocation().y }, Space::VIEW_SIZE));
 	
@@ -94,8 +94,7 @@ void SpaceScreen::processInput(float delta) {
     sf::Vector2i mousePos = sf::Mouse::getPosition();
     space.getShip().moveInDirOfVec(moveVec, delta / 1000.f);
 
-    sf::Vector2f pos = getWindow().mapPixelToCoords(sf::Mouse::getPosition(getWindow()), sf::View({ space.getShip().getLocation().x,
-                                                                                                    space.getShip().getLocation().y }, Space::VIEW_SIZE));
+    sf::Vector2f pos = getWindow().mapPixelToCoords(sf::Mouse::getPosition(getWindow()), sf::View({ 0.f, 0.f }, Space::VIEW_SIZE));
 
     float rotation = 0.0f;
     if(pos.length() >= 0.0001)
