@@ -72,6 +72,12 @@ void SpaceScreen::processInput(float delta) {
     if(isFiring)
         space.getShip().fire();
 
+    bool isPlanting = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) ||
+                      sf::Mouse::isButtonPressed(sf::Mouse::Button::Right);
+
+    if (isPlanting)
+        space.getShip().PlantOnAsteroid(space);
+
     bool rotateLeft = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q);
     bool rotateRight = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E);
 
