@@ -21,11 +21,16 @@ protected:
     float timeSincePlanted = 0.f;
     float health;
     bool dead = false;
+    
+    sf::Texture* plantGrowing;
+    sf::Texture* grown;
     mutable sf::Sprite sprite;
     
 public:
     explicit Crop(Asteroid& asteroid, 
-                  sf::Vector2f relLocation);
+                  sf::Vector2f relLocation,
+                  sf::Texture* plantGrowing,
+                  sf::Texture* grown);
 		
     bool isReady() const;
 	

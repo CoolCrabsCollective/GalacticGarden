@@ -87,6 +87,9 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
         case sf::Keyboard::Numpad5:
             space.getShip().setLazerType(LazerType::CRAZY);
             break;
+            
+        default:
+            break;
     }
 }
 

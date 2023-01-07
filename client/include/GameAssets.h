@@ -35,6 +35,7 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_TRACTOR_BEAM, ("gfx/tractor_beam.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SOIL, ("gfx/soil.png"))
     ASSET(wiz::TextureAsset, TEXTURE_ENERGY, ("gfx/energy.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_PLANT_GROWING, ("gfx/plant_growing.png"))
 }
 
 
