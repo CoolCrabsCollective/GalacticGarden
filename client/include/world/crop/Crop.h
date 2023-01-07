@@ -12,6 +12,7 @@
 class Crop : public Entity {
 protected:
     float time_since_planted = 0.f;
+    int health;
     mutable sf::Sprite sprite;
 public:
     explicit Crop(Space& space, sf::Vector2f location);
@@ -23,4 +24,6 @@ public:
 	void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 	
 	virtual float get_time_to_maturity() const = 0;
+
+    void damage(int value);
 };

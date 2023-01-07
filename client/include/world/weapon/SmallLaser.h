@@ -14,7 +14,7 @@ protected:
     const sf::Vector2f direction;
     mutable sf::Sprite sprite;
 public:
-    explicit SmallLaser(Space& space, const sf::Vector2f& location, const sf::Vector2f& direction) : Entity(space, location), direction(direction) {}
+    explicit SmallLaser(Space& space, const sf::Vector2f& location, const sf::Vector2f& direction);
 
     void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
     void tick(float delta) override;

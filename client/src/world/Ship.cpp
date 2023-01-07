@@ -63,7 +63,7 @@ void Ship::processInput() {
 void Ship::fire() {
     if(time_since_last_fire >= fire_delay)
     {
-        space.getEntities().push_back(new SmallLaser(space, location, sf::Vector2f(0.f, 1.0f)));
+        space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f)));
         time_since_last_fire = 0.f;
     }
 }

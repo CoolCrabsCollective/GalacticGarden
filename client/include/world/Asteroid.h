@@ -13,14 +13,19 @@
 class Asteroid : public Entity {
 	mutable sf::Sprite sprite;
 	
+	float size;
+	
 	float rotation;
 	
     sf::Vector2f velocity;
 	float angularVelocity;
 public:
+	constexpr static const float MAX_SIZE = 10.0f;
+	
 	explicit Asteroid(Space& space,
 					  const sf::Vector2f& location,
 	                  float rotation,
+	                  float size,
 	                  const sf::Vector2f& startVelocity,
 	                  float startAngVelocity);
 

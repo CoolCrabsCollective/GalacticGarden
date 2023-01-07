@@ -23,3 +23,7 @@ void Crop::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
     sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
     target.draw(sprite);
 }
+
+void Crop::damage(int value) {
+    this->health -= value;
+}
