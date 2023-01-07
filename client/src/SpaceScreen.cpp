@@ -62,25 +62,40 @@ void SpaceScreen::windowClosed() {
 }
 
 void SpaceScreen::processInput(float delta) {
-    bool isFiring = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) ||
-                    sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
+    bool connected = sf::Joystick::isConnected(0);
+    // TODO: figure out why TF fetching the joystick name doesn't work
+    mappingFound = connected;
+//    if (connected) {
+//        sf::Joystick::Identification id = sf::Joystick::getIdentification(0);
+//        if (controllerDisconnected && mappingDatabase.hasMapping(id.name)) {
+//            mapping = mappingDatabase.getMapping(id.name);
+//            controllerDisconnected = false;
+//            mappingFound = true;
+//        }
+//    } else {
+//        controllerDisconnected = true;
+//        mappingFound = false;
+//    }
+
+    bool isFiring = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) || sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
 
     if(isFiring)
         space.getShip().fire();
 
-    bool isPlanting = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) ||
-                      sf::Mouse::isButtonPressed(sf::Mouse::Button::Right);
+//    bool isPlanting = mappingFound && connected ? sf::Joystick::isButtonPressed(0, mapping.getButton(wiz::MapButton::Left_Shoulder)) :
+//            (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) ||
+//            sf::Mouse::isButtonPressed(sf::Mouse::Button::Right));
+
+    bool isPlanting = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) || sf::Mouse::isButtonPressed(sf::Mouse::Button::Right);
 
     if (isPlanting)
         space.getShip().PlantOnAsteroid(space);
 
-    bool connected = sf::Joystick::isConnected(0);
-
-    float xAxisInput = connected ? sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) :
+    float xAxisInput = mappingFound && connected ? sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) :
                        (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
                        ? 100.00 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) ? -100.00 : 0.00);
 
-    float yAxisInput = connected ? sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) :
+    float yAxisInput = mappingFound && connected ? sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) :
                        (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
                        ? -100.00 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) ? 100.00 : 0.00);
 
