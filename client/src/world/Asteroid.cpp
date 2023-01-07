@@ -17,7 +17,7 @@ Asteroid::Asteroid(Space& space, const sf::Vector2f& location)
 }
 
 void Asteroid::tick(float delta) {
-    this->location += this->velocity;
+    this->location += this->velocity * (delta / 1000);
 }
 
 void Asteroid::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
