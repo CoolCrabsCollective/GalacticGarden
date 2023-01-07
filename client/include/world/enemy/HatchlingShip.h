@@ -10,13 +10,17 @@
 class HatchlingShip : public EnemyShip {
 protected:
     void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
+    
     sf::Vector2f velocityNormalized = {0.f, 1.f};
-    Crop* targetCrop = nullptr;
+    
+    Asteroid* targetAsteroid = nullptr;
+    sf::Vector2f targetPlant;
+    
     float rotation = 0.f;
 public:
     explicit HatchlingShip(Space& space, sf::Vector2f location);
+    
     void tick(float delta) override;
+    
     float getZOrder() const override;
-
-
 };

@@ -40,4 +40,8 @@ public:
     bool shouldBeRemoved() const override;
 
     void harvest();
+
+    Asteroid& getAsteroid() const;
+    
+    sf::Vector2f getLocationOnAsteroid() const;
 };
