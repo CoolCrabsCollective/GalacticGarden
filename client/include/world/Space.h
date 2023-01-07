@@ -18,7 +18,7 @@ protected:
 	std::vector<Entity*> entities;
     mutable std::vector<Entity*> entities_draw_list;
 	
-	Ship ship;
+    mutable Ship ship;
 	
 public:
 	constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
@@ -27,9 +27,11 @@ public:
 
 	void tick(float delta) override;
 
-	void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
+    std::vector<Entity *> &getEntities();
 
-  Ship getShip() const;
+    void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
+
+    Ship& getShip() const;
 
 	wiz::AssetLoader& getAssets() const;
 

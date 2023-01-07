@@ -28,7 +28,7 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     sf::Music* music;
 
     sf::Sprite background;
-	  Space space;
+    Space space;
 
     wiz::MappingDatabase mappingDatabase;
 
@@ -46,6 +46,10 @@ public:
     const std::string& getName() const override;
 
     void windowClosed() override;
+
+    void mouseButtonPressed(const sf::Event::MouseButtonEvent &mouseButtonEvent) override;
+
+    void keyPressed(const sf::Event::KeyEvent &keyEvent) override;
 };
 
 

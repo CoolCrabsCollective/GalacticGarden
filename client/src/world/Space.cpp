@@ -48,10 +48,14 @@ void Space::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
     }
 }
 
-Ship Space::getShip() const {
+Ship& Space::getShip() const {
 	return ship;
 }
 
 wiz::AssetLoader& Space::getAssets() const {
 	return assets;
+}
+
+std::vector<Entity *> &Space::getEntities() {
+    return entities;
 }
