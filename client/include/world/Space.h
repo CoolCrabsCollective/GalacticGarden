@@ -14,16 +14,14 @@
 #include <list>
 
 class Space : public Tickable, public sf::Drawable {
-
+protected:
 	wiz::AssetLoader& assets;
 	std::vector<Entity*> entities;
+    mutable std::vector<Entity*> entities_draw_list;
 	
 	std::map<uint64_t, std::list<Entity*>> spacialMap;
 	
 	Ship ship;
-
-
-	mutable std::vector<Entity*> entityDrawList = {};
 	
 public:
 	constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
@@ -38,6 +36,8 @@ public:
 	const Ship& getShip() const;
 
 	wiz::AssetLoader& getAssets() const;
+
+    const std::vector<Entity*>& getEntities() const;
 
 	std::vector<Entity*> getAllEntitiesInRect(sf::Vector2f center,
 											  sf::Vector2f size) const;

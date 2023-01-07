@@ -9,6 +9,7 @@
 #include "WIZ/asset/SoundAsset.h"
 #include "WIZ/asset/FontAsset.h"
 #include "WIZ/asset/TextureAsset.h"
+#include "TextAsset.h"
 
 #ifndef ASSET
 #define ASSET(TYPE, NAME, CONSTRUCTOR) extern const TYPE NAME;
@@ -16,6 +17,8 @@
 
 namespace GameAssets {
 	extern std::vector<const wiz::AssetBase*> ALL;
+
+  ASSET(TextAsset, CONTROLLER_DB, ("gamecontrollerdb.txt"))
 
 	ASSET(wiz::MusicAsset, GREENLIFE, ("music/greenlife.ogg"))
 	ASSET(wiz::SoundAsset, JUMP, ("sfx/jump.ogg"))
@@ -26,6 +29,7 @@ namespace GameAssets {
 	ASSET(wiz::TextureAsset, TEXTURE_SHIP, ("gfx/ship.png"))
 	ASSET(wiz::TextureAsset, TEXTURE_ASTEROID, ("gfx/asteroid.png"))
     ASSET(wiz::TextureAsset, TEXTURE_FALLOUT_FLOWER, ("gfx/fallout_flower.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_HATCHLING, ("gfx/the_hatchling.png"))
 	
 }
 

@@ -12,4 +12,6 @@ class FalloutFlower : public Crop {
 public:
     explicit FalloutFlower(Space& space, sf::Vector2f location);
     float get_time_to_maturity() const override;
+
+    float getZOrder() const override;
 };

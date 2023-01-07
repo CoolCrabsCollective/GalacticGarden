@@ -35,6 +35,10 @@ public:
 	const sf::Vector2f& getLocation() const {
 		return location;
 	}
+
+    virtual float getZOrder() const {
+        return 0.;
+    };
 };
 
 #endif //LD52_CLIENT_ENTITY_H

@@ -2,10 +2,11 @@
 // Created by Alexander Winter on 2023-01-06.
 //
 
+#include <algorithm>
 #include "world/Space.h"
 #include "world/Asteroid.h"
-#include "world/FalloutFlower.h"
-#include <algorithm>
+#include "world/crop/FalloutFlower.h"
+#include "world/enemy/HatchlingShip.h"
 #include <iostream>
 
 Space::Space(wiz::AssetLoader& assets) 
@@ -16,6 +17,7 @@ Space::Space(wiz::AssetLoader& assets)
 	entities.push_back(new Asteroid(*this, { 2.1f, -3.1f }, 0.0f, 3.0f, { -0.5f, 1.0f }, -1.0f));
 
 	entities.push_back(new FalloutFlower(*this, { 1.0, 3.f}));
+	entities.push_back(new HatchlingShip(*this, {-1.0f, -1.0f}));
 	
 	initSpacialMap();
 }
@@ -119,16 +121,27 @@ std::vector<Entity*> Space::getAllEntitiesInRect(sf::Vector2f center,
 
 void Space::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
 	sf::Vector2f viewSize = VIEW_SIZE;
-	sf::Vector2f start = getShip().getLocation() - viewSize / 2.0f;
-	sf::Vector2f end = getShip().getLocation() + viewSize / 2.0f;
+	sf::Vector2f start = this->getShip().getLocation() - viewSize / 2.0f;
+	sf::Vector2f end = this->getShip().getLocation() + viewSize / 2.0f;
 
+    entities_draw_list.clear();
 
-	for(Entity* entity : entities)
-		if(entity->getLocation().x >= start.x
-		   && entity->getLocation().y >= start.y
-		   && entity->getLocation().x <= end.x
-		   && entity->getLocation().y <= end.y)
-			target.draw(*entity);
+    for(Entity* obj : entities) {
+        entities_draw_list.push_back(obj);
+    }
+
+    std::sort(entities_draw_list.begin(), entities_draw_list.end(), [&](Entity* a, Entity* b){
+        return a->getZOrder() < b->getZOrder();
+    });
+
+	for(Entity* entity : entities_draw_list)
+    {
+        if(entity->getLocation().x >= start.x
+           && entity->getLocation().y >= start.y
+           && entity->getLocation().x <= end.x
+           && entity->getLocation().y <= end.y)
+            target.draw(*entity);
+    }
 }
 
 const Ship& Space::getShip() const {
@@ -137,4 +150,8 @@ const Ship& Space::getShip() const {
 
 wiz::AssetLoader& Space::getAssets() const {
 	return assets;
+}
+
+const std::vector<Entity*> &Space::getEntities() const {
+    return entities;
 }

@@ -49,6 +49,10 @@ void Asteroid::tick(float delta) {
 	this->rotation += this->angularVelocity * delta / 1000.0f;
 }
 
+float Asteroid::getZOrder() const {
+    return 0;
+}
+
 void Asteroid::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
 	sprite.setPosition(location);
 	sprite.setScale({ size / sprite.getTexture()->getSize().x, size / sprite.getTexture()->getSize().y });

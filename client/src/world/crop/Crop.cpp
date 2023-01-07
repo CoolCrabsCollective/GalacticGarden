@@ -2,7 +2,7 @@
 // Created by cedric on 1/6/23.
 //
 
-#include "world/Crop.h"
+#include "world/crop/Crop.h"
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Texture.hpp"
 
@@ -22,4 +22,8 @@ void Crop::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
     sprite.setPosition({location.x, -location.y});
     sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
     target.draw(sprite);
+}
+
+void Crop::damage(int value) {
+    this->health -= value;
 }
