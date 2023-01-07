@@ -50,6 +50,8 @@ public:
     void mouseButtonPressed(const sf::Event::MouseButtonEvent &mouseButtonEvent) override;
 
     void keyPressed(const sf::Event::KeyEvent &keyEvent) override;
+
+    void processInput();
 };
 
 
