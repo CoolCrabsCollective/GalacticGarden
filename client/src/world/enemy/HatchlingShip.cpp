@@ -42,8 +42,15 @@ void HatchlingShip::tick(float delta) {
     sf::Vector2 distanceToCrop = targetCrop->getLocation() - location;
     if (distanceToCrop.length() < 1)  { // todo magic num
         targetCrop->damage(this->damage * (delta/1000));
-        if (targetCrop->shouldBeRemoved())
+        if (tractorBeam == nullptr) {
+            tractorBeam = new TractorBeam(space, this->location + sf::Vector2f(1, 1));
+            space.addEntity(tractorBeam);
+        }
+        if (targetCrop->shouldBeRemoved()) {
             targetCrop = nullptr;
+            tractorBeam->setRemove(true);
+            tractorBeam = nullptr;
+        }
         return;
     }
 
@@ -52,7 +59,6 @@ void HatchlingShip::tick(float delta) {
     // move towards crop
     this->location += velocityNormalized * speed;
     this->rotation = velocityNormalized.angle().asRadians() + M_PI_2;
-
 }
 
 void HatchlingShip::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {

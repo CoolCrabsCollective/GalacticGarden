@@ -17,7 +17,7 @@ Space::Space(wiz::AssetLoader& assets)
     entities.push_back(new Asteroid(*this, { 0.0f, 3.0f }, 0.0f, 5.0f, { 0.0f, 0.0f }, 10.0f ));
     entities.push_back(new Asteroid(*this, { 2.1f, -3.1f }, 0.0f, 3.0f, { -0.5f, 1.0f }, -1.0f));
 
-	entities.push_back(new FalloutFlower(*this, { 1.0, 3.f}));
+	entities.push_back(new FalloutFlower(*this, { 0.0, 0.f}));
     entities.push_back(new FalloutFlower(*this, { -1.0, 1.0f}));
     entities.push_back(new FalloutFlower(*this, { 3.0, -3.0f}));
 	entities.push_back(new HatchlingShip(*this, {-1.0f, -1.0f}));
@@ -46,7 +46,7 @@ void Space::removeFromMap(Entity* entity) {
     if(!spacialMap.contains(key))
         throw std::runtime_error("Error entity was not properly in spacial map (DID YOU UPDATE POSITION OUTSIDE OF TICK?)");
 
-    auto list = spacialMap[key];
+    auto& list = spacialMap[key];
 
     auto last = list.end();
     auto pos = std::find(list.begin(), last, entity);
