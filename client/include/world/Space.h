@@ -19,21 +19,23 @@ protected:
 	std::vector<Entity*> entities;
     mutable std::vector<Entity*> entities_draw_list;
 	
-	std::map<uint64_t, std::list<Entity*>> spacialMap;
-	
+    std::map<uint64_t, std::list<Entity*>> spacialMap;
+
 	Ship ship;
 	
 public:
 	constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
 	constexpr const static float CHUNK_SIZE = 2.0f;
-	
+
 	Space(wiz::AssetLoader& assets);
 
 	void tick(float delta) override;
 
-	void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
+    void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
-	const Ship& getShip() const;
+    Ship& getShip();
+
+    const Ship& getShip() const;
 
 	wiz::AssetLoader& getAssets() const;
 
@@ -41,13 +43,14 @@ public:
 
 	std::vector<Entity*> getAllEntitiesInRect(sf::Vector2f center,
 											  sf::Vector2f size) const;
-	
+
+    void addEntity(Entity* entity);
+
 private:
 	void initSpacialMap();
     void removeEntities();
-	
 	void removeFromMap(Entity* entity);
-	
+
 	uint64_t spacialKey(sf::Vector2f location) const;
 
 };

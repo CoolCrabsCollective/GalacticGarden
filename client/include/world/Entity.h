@@ -39,6 +39,10 @@ public:
     virtual float getZOrder() const {
         return 0.;
     };
+
+    bool shouldBeRemoved() const {
+        return false;
+    }
 };
 
 #endif //LD52_CLIENT_ENTITY_H

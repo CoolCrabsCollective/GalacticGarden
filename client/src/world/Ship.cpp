@@ -5,6 +5,7 @@
 #include "world/Space.h"
 #include "world/Ship.h"
 #include "GameAssets.h"
+#include "world/weapon/SmallLaser.h"
 
 Ship::Ship(Space& space, const sf::Vector2f& location) 
 	: Entity(space, location) {
@@ -15,6 +16,7 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 void Ship::tick(float delta) {
   sf::Vector2f newPos = {moveDir.x*delta*moveSpeed + this->location.x, moveDir.y*delta*moveSpeed + this->location.y};
   updatePos(newPos);
+  time_since_last_fire += delta / 1000.f;
 }
 
 void Ship::updatePos(sf::Vector2f& moveVec) {
@@ -56,4 +58,12 @@ void Ship::processInput() {
 
   moveInDirOfVec(moveVec);
 
+}
+
+void Ship::fire() {
+    if(time_since_last_fire >= fire_delay)
+    {
+        space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f)));
+        time_since_last_fire = 0.f;
+    }
 }

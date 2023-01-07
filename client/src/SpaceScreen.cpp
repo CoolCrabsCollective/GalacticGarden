@@ -6,9 +6,6 @@
 #include "SFML/Window/Touch.hpp"
 #include <string>
 
-#include "WIZ/input/Mapping.h"
-#include "WIZ/input/MappingDatabase.h"
-
 SpaceScreen::SpaceScreen(wiz::Game& game)
 	: Screen(game), space(game.getAssets()), mappingDatabase() {
   mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
@@ -39,10 +36,26 @@ void SpaceScreen::show() {
 	background.setTexture(*getGame().getAssets().get(GameAssets::BACKGROUND));
 
 	getGame().addWindowListener(this);
+    getGame().addInputListener(this);
 }
 
 void SpaceScreen::hide() {
 	getGame().removeWindowListener(this);
+    getGame().removeInputListener(this);
+}
+
+void SpaceScreen::mouseButtonPressed(const sf::Event::MouseButtonEvent &mouseButtonEvent) {
+    if(mouseButtonEvent.button == sf::Mouse::Button::Left)
+    {
+        space.getShip().fire();
+    }
+}
+
+void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
+    if(keyEvent.code == sf::Keyboard::Key::Space)
+    {
+        space.getShip().fire();
+    }
 }
 
 const std::string& SpaceScreen::getName() const {
