@@ -20,6 +20,7 @@ protected:
     
     float timeSincePlanted = 0.f;
     float health;
+    bool dead = false;
     mutable sf::Sprite sprite;
     
 public:
@@ -37,4 +38,6 @@ public:
     void damage(float value);
 
     bool shouldBeRemoved() const override;
+
+    void harvest();
 };

@@ -17,6 +17,8 @@ protected:
     float angularVelocity = M_PI; // rotate PI per second
     sf::Vector2f moveDirection = {0.f, 0.f};
     bool rotateLeft = false, rotateRight = false;
+    
+    int harvestedCount = 0;
 
 public:
 	Ship(Space& space, const sf::Vector2f& location);

@@ -45,9 +45,15 @@ void Crop::damage(float value) {
     this->health -= value;
     if(health <= 0) {
         asteroid.removeCrop(relLocation);
+        dead = true;
     }
 }
 
+void Crop::harvest() {
+    dead = true;
+    asteroid.removeCrop(relLocation);
+}
+
 bool Crop::shouldBeRemoved() const {
-    return this->health <= 0;
+    return dead;
 }

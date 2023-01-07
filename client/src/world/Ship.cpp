@@ -6,6 +6,7 @@
 #include "world/Ship.h"
 #include "GameAssets.h"
 #include "world/weapon/SmallLaser.h"
+#include "world/crop/Crop.h"
 
 Ship::Ship(Space& space, const sf::Vector2f& location) 
 	: Entity(space, location) {
@@ -26,6 +27,14 @@ void Ship::tick(float delta) {
 
     this->location = newPos;
     time_since_last_fire += bad_delta;
+    
+    for(Entity* entity : space.getAllEntitiesInRect(location, { 2.0f, 2.0f })) {
+        Crop* crop = dynamic_cast<Crop*>(entity);
+        if(crop && crop->isReady() && (crop->getLocation() - location).lengthSq() < 1.0f) {
+            crop->harvest();
+            harvestedCount++;
+        }
+    }
 }
 
 float Ship::getRotation() const {
