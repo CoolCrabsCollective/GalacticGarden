@@ -6,9 +6,10 @@
 #define LD52_CLIENT_GAYSTATION_H
 
 #include "SFML/Graphics/Sprite.hpp"
-#include "world/enemy/EnemyShip.h"
+#include "world/Entity.h"
+#include "world/weapon/Lazer.h"
 
-class GayStation : public EnemyShip {
+class GayStation : public Entity {
 protected:
     mutable sf::Sprite sprite;
 
@@ -19,6 +20,12 @@ protected:
     float bob_starting_pos = 0.0f;
     float bob_speed = .3f;
     float bob_max_displacement = .1f;
+
+    Fraction fraction = FRIENDLY;
+    float health = 10.0f;
+
+    sf::Shader* damageShader = nullptr;
+    float redness = 0.0f;
 
 public:
     explicit GayStation(Space& space, sf::Vector2f location);
