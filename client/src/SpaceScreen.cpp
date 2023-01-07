@@ -10,6 +10,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
 	: Screen(game), space(game.getAssets()), mappingDatabase() {
     mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
     cameraPosition = space.getShip().getLocation();
+    energySprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ENERGY));
 }
 
 void SpaceScreen::tick(float delta) {
@@ -19,7 +20,13 @@ void SpaceScreen::tick(float delta) {
 	vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
 	vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
 	background.setScale(vec);
-	
+    energySprite.setPosition({50.f, 900.f});
+    energySprite.setScale({4.f, 4.f});
+
+    energyText.setString(std::to_string(space.getShip().getEnergy()));
+    energyText.setPosition({ 100.f, 900.f});
+    energyText.setString("Hello world");
+    energyText.setFillColor(sf::Color::White);
 	space.tick(delta);
 }
 
@@ -31,6 +38,11 @@ void SpaceScreen::render(sf::RenderTarget& target) {
     cameraPosition = cameraPosition * 0.995f + space.getShip().getLocation() * 0.005f;
 	target.setView(sf::View(cameraPosition, Space::VIEW_SIZE));
 	target.draw(space);
+
+    // ui
+    target.setView(sf::View(sf::Vector2f{SpaceScreen::UI_VIEW_SIZE.x / 2.f, SpaceScreen::UI_VIEW_SIZE.y / 2.f}, SpaceScreen::UI_VIEW_SIZE));
+    target.draw(energySprite);
+    target.draw(energyText);
 }
 
 void SpaceScreen::show() {

@@ -21,9 +21,15 @@ protected:
     float acc = 10.f; // 10 units per second ^ 2
     sf::Vector2f moveVelocity = { 0.f, 0.f };
     bool rotateLeft = false, rotateRight = false;
-    
-    int harvestedCount = 0;
+public:
+    float getEnergy() const;
+
+protected:
+
+    float energy = 10.f;
     LazerType lazerType = LazerType::SIMPLE;
+
+    bool energy_for_shot(int shot_count);
 
 public:
 	Ship(Space& space, const sf::Vector2f& location);

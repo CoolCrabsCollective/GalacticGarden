@@ -23,7 +23,7 @@
 
 class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
     std::string name = "SpaceScreen";
-
+    constexpr const static sf::Vector2f UI_VIEW_SIZE = { 1920.0f, 1080.0f };
     sf::Sound sound;
     sf::Music* music;
 
@@ -36,6 +36,8 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     bool mappingFound = false;
     
     sf::Vector2f cameraPosition;
+    sf::Sprite energySprite;
+    sf::Text energyText;
 
 public:
     SpaceScreen(wiz::Game& game);
