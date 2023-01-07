@@ -6,22 +6,31 @@
 #include "GameAssets.h"
 #include "world/Space.h"
 
-Asteroid::Asteroid(Space& space, const sf::Vector2f& location) 
+Asteroid::Asteroid(Space& space, 
+				   const sf::Vector2f& location, 
+				   float rotation,
+				   const sf::Vector2f& startVelocity,
+				   float startAngVelocity) 
 	: Entity(space, location) {
-    this->sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ASTEROID), true);
-
-    double randomXVelocity = ((double) rand() / (RAND_MAX)) * 2 - 1;
-    double randomYVelocity = ((double) rand() / (RAND_MAX)) * 2 - 1;
-    this->velocity = sf::Vector2f(randomXVelocity, randomYVelocity);
+	
+    sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ASTEROID), true);
+	sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
+	
+	
+	this->rotation = rotation;
+    this->velocity = startVelocity;
+	this->angularVelocity = startAngVelocity;
 }
 
 void Asteroid::tick(float delta) {
     this->location += this->velocity * (delta / 1000);
+	this->rotation += this->angularVelocity * (delta / 1000);
 }
 
 void Asteroid::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-	sprite.setPosition(location - sf::Vector2f {0.5f, 0.5f});
-	sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
+	sprite.setPosition(location);
+	sprite.setScale({ 5.0f / sprite.getTexture()->getSize().x, 5.0f / sprite.getTexture()->getSize().y });
+	sprite.setRotation(sf::degrees(rotation));
 	target.draw(sprite);
 }
 
