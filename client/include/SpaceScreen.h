@@ -51,7 +51,7 @@ public:
 
     void keyPressed(const sf::Event::KeyEvent &keyEvent) override;
 
-    void processInput();
+    void processInput(float delta);
 };
 
 

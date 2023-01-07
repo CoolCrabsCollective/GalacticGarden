@@ -13,6 +13,11 @@ protected:
 	mutable sf::Sprite sprite;
     float fire_delay = 0.4f;
     float time_since_last_fire = 0.f;
+    float rotation = 0.0f;
+    float angularVelocity = M_PI; // rotate PI per second
+    sf::Vector2f moveDirection = {0.f, 0.f};
+    bool rotateLeft = false, rotateRight = false;
+
 public:
 	Ship(Space& space, const sf::Vector2f& location);
 
@@ -27,10 +32,12 @@ public:
   void moveInDirOfVec(const sf::Vector2f& moveVec);
 
   void updatePos(sf::Vector2f& moveVec);
+    void setRotateLeft(bool rotateLeft);
+
+    void setRotateRight(bool rotateRight);
+
+    float getRotation() const;
 
 private:
-    float moveSpeed = 0.001;
-    sf::Vector2f moveDir = {0.0, 0.0};
-
-    void processInput();
+    float moveSpeed = 3.f;
 };
