@@ -15,19 +15,17 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 }
 
 void Ship::tick(float delta) {
-  float good_delta = delta / 1000.f;
-  sf::Vector2f newPos = {moveDirection.x*good_delta*moveSpeed + this->location.x, moveDirection.y*good_delta*moveSpeed + this->location.y};
-  if(rotateLeft)
-  {
-      rotation -= good_delta * angularVelocity;
-  }
-
-  if(rotateRight)
-  {
-      rotation += good_delta * angularVelocity;
-  }
-  updatePos(newPos);
-  time_since_last_fire += good_delta;
+    float bad_delta = delta / 1000.f;
+    sf::Vector2f newPos = {moveDirection.x * bad_delta * moveSpeed + this->location.x, moveDirection.y * bad_delta * moveSpeed + this->location.y };
+    if(rotateLeft)
+        rotation -= bad_delta * angularVelocity;
+    
+    
+    if(rotateRight)
+        rotation += bad_delta * angularVelocity;
+    
+    updatePos(newPos);
+    time_since_last_fire += bad_delta;
 }
 
 float Ship::getRotation() const {
@@ -51,12 +49,12 @@ float Ship::getZOrder() const {
 }
 
 void Ship::moveInDirOfVec(const sf::Vector2f& moveVec) {
-    sf::Vector2f moveVecNorm{0.f, 0.f};
+    sf::Vector2f moveVecNorm { 0.f, 0.f };
+    
     if(moveVec.length() > 0.001f) // is not zero
-    {
         moveVecNorm = moveVec.normalized().rotatedBy(sf::radians(rotation));
-    }
-  this->moveDirection = moveVecNorm;
+    
+    this->moveDirection = moveVecNorm;
 }
 
 void Ship::fire() {
