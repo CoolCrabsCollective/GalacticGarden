@@ -18,8 +18,6 @@ Space::Space(wiz::AssetLoader& assets)
 	entities.push_back(a1 = new Asteroid(*this, { 0.0f, 3.0f }, 0.0f, 5.0f, { 0.0f, 0.0f }, 10.0f ));
 	entities.push_back(new Asteroid(*this, { 2.1f, -3.1f }, 0.0f, 3.0f, { -0.5f, 1.0f }, -1.0f));
 
-	entities.push_back(new HatchlingShip(*this, {-1.0f, -1.0f}));
-
 	initSpacialMap();
     
     a1->plant(CropType::FLOWER, a1->getPlantingLocations()[0]);
@@ -220,15 +218,15 @@ void Space::addEntity(Entity *entity) {
 
 void Space::manageEnemies() {
     if (enemy_count < max_enemy_count && time_since_last_spawn > spawn_delay) {
-        float minRadius = 4.0f;
-        float maxRadius = 10.0f;
+        float minRadius = .0f;
+        float maxRadius = 360.0f;
+        float minDes = 4.0f;
+        float maxDes = 10.0f;
 
-        for (int i = 0; i < 10; i++) {
-            float dir = i / 10.0f * 360.0f;
-            float randDes = static_cast<float>(rand() / (RAND_MAX + 1.0)) * (maxRadius - minRadius) + minRadius;
+        float randDir = static_cast<float>(rand() / (RAND_MAX + 1.0)) * (maxRadius - minRadius) + minRadius;
+        float randDes = static_cast<float>(rand() / (RAND_MAX + 1.0)) * (maxDes - minDes) + minDes;
 
-            spawnEnemy({randDes * cosf(dir), randDes * sinf(dir)});
-        }
+        spawnEnemy({randDes * cosf(randDir), randDes * sinf(randDir)});
     }
 }
 

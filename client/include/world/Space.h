@@ -24,7 +24,7 @@ protected:
     std::map<uint64_t, std::list<Entity*>> spacialMap;
 
     int enemy_count = 0;
-    int max_enemy_count = 100;
+    int max_enemy_count = 2;
     float spawn_delay = 100.0f;
     float time_since_last_spawn = .0f;
 	
