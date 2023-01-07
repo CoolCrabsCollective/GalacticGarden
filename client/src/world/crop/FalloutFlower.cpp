@@ -2,8 +2,7 @@
 // Created by cedric on 1/6/23.
 //
 
-#include "world/FalloutFlower.h"
-#include "WIZ/asset/AssetLoader.h"
+#include "world/crop/FalloutFlower.h"
 #include "world/Space.h"
 #include "GameAssets.h"
 

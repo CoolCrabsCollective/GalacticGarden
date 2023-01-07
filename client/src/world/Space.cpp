@@ -4,7 +4,8 @@
 
 #include "world/Space.h"
 #include "world/Asteroid.h"
-#include "world/FalloutFlower.h"
+#include "world/crop/FalloutFlower.h"
+#include "world/enemy/HatchlingShip.h"
 
 Space::Space(wiz::AssetLoader& assets) 
 	: assets(assets), entities(), ship(*this, { 0.0f, 0.0f }) {
@@ -12,6 +13,7 @@ Space::Space(wiz::AssetLoader& assets)
 	entities.push_back(new Asteroid(*this, { 0.0f, 3.0f }));
     entities.push_back(new FalloutFlower(*this, { 1.0, 3.f}));
 	entities.push_back(new Asteroid(*this, { 0.0f, -3.0f }));
+    entities.push_back(new HatchlingShip(*this, {-1.0f, -1.0f}));
 }
 
 void Space::tick(float delta) {

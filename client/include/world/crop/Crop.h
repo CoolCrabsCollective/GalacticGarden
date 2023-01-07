@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Entity.h"
+#include "world/Entity.h"
 #include "SFML/Graphics/Drawable.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/RenderTarget.hpp"
