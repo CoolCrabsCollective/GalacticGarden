@@ -72,17 +72,26 @@ void HatchlingShip::tick(float delta) {
         
         crop->damage(this->damage * delta / 1000.0f);
         if (tractorBeam == nullptr) {
-            tractorBeam = new TractorBeam(space, this->location + sf::Vector2f(1, 1));
-            space.addEntity(tractorBeam);
+            tractorBeam = new TractorBeam(space);
         }
         
         if (crop->shouldBeRemoved()) {
             targetAsteroid = nullptr;
-            tractorBeam->setRemove(true);
+            delete tractorBeam;
             tractorBeam = nullptr;
         }
+
+        if(tractorBeam)
+        {
+            tractorBeam->setLocation(location + velocityNormalized);
+            tractorBeam->setRotationDegrees(this->rotation);
+        }
+
         return;
+
     }
+
+
 
     velocityNormalized = distanceToCrop.normalized();
 
@@ -91,6 +100,16 @@ void HatchlingShip::tick(float delta) {
     this->rotation = velocityNormalized.angle().asDegrees() + 90.0f;
 }
 
+void HatchlingShip::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
+    sprite.setPosition({location.x, location.y});
+    sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
+
+    sprite.setRotation(sf::degrees(rotation));
+    target.draw(sprite);
+
+    if(tractorBeam)
+        tractorBeam->draw(target, states);
+}
 
 float HatchlingShip::getZOrder() const {
     return 2.f;
