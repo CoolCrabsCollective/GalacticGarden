@@ -23,7 +23,7 @@ void EnemyShip::draw(sf::RenderTarget &target, const sf::RenderStates &states) c
 
     sprite.setRotation(sf::degrees(rotation));
 
-        damageShader->setUniform("hit_multiplier", redness);
+    damageShader->setUniform("hit_multiplier", redness);
     if (redness > 0.0f)
         target.draw(sprite, damageShader);
     else
@@ -39,12 +39,14 @@ void EnemyShip::tick(float delta) {
             continue;
         
         if(Lazer* lazer = dynamic_cast<Lazer*>(entity)) {
-            redness = 1.0f;
-            health -= lazer->getDamage();
-            lazer->consume();
-            if(health <= 0.0f) {
-                health = 0.0f;
-                return;
+            if (lazer->getFraction() == FRIENDLY) {
+                redness = 1.0f;
+                health -= lazer->getDamage();
+                lazer->consume();
+                if (health <= 0.0f) {
+                    health = 0.0f;
+                    return;
+                }
             }
         }
     }

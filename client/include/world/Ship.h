@@ -24,7 +24,7 @@ protected:
     float boostAcc = 20.f;
     sf::Vector2f moveVelocity = { 0.f, 0.f };
     bool isBoosting = false;
-    bool isIdle = false;
+    bool isIdle = true;
 public:
     void setIsIdle(bool isIdle);
 

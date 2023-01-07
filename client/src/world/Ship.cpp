@@ -14,7 +14,7 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 	
 	this->sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_SHIP), true);
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
-    float origin_y_pos = (sprite.getTexture()->getSize().y / 2.0f) + 4.f;
+    float origin_y_pos = (sprite.getTexture()->getSize().y / 2.0f) - 8.f;
     normalAnimeSprite.setOrigin({sprite.getTexture()->getSize().x / 2.0f, origin_y_pos});
     boostAnimeSprite.setOrigin({sprite.getTexture()->getSize().x / 2.0f, origin_y_pos});
 
@@ -25,6 +25,9 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
     boostAnime.insertFrame(space.getAssets().get(GameAssets::TEXTURE_SHIP_BOOSTING_1));
     boostAnime.insertFrame(space.getAssets().get(GameAssets::TEXTURE_SHIP_BOOSTING_2));
     boostAnime.setAnimationSprite(&boostAnimeSprite);
+
+    normalAnime.startAnimation();
+    boostAnime.startAnimation();
 }
 
 void Ship::tick(float delta) {
@@ -211,5 +214,5 @@ void Ship::setIsBoosting(bool isBoosting) {
 }
 
 void Ship::setIsIdle(bool isIdle) {
-    isIdle = isIdle;
+    this->isIdle = isIdle;
 }
