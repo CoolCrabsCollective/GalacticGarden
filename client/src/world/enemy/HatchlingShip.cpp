@@ -16,7 +16,6 @@ HatchlingShip::HatchlingShip(Space &space, sf::Vector2f location) : EnemyShip(sp
 }
 
 void HatchlingShip::tick(float delta) {
-    rotation += delta / 1000.f;
     if (targetCrop == nullptr) {
         // find a target crop
         Crop* closestCrop = nullptr;
