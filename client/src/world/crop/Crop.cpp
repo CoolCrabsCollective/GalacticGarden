@@ -24,7 +24,7 @@ void Crop::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
     target.draw(sprite);
 }
 
-void Crop::damage(int value) {
+void Crop::damage(float value) {
     this->health -= value;
 }
 
