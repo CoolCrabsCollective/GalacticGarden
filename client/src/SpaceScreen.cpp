@@ -12,6 +12,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
 }
 
 void SpaceScreen::tick(float delta) {
+    processInput();
 	sf::Vector2f vec = { 1.0f, 1.0f };
 
 	vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
@@ -45,17 +46,11 @@ void SpaceScreen::hide() {
 }
 
 void SpaceScreen::mouseButtonPressed(const sf::Event::MouseButtonEvent &mouseButtonEvent) {
-    if(mouseButtonEvent.button == sf::Mouse::Button::Left)
-    {
-        space.getShip().fire();
-    }
+
 }
 
 void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
-    if(keyEvent.code == sf::Keyboard::Key::Space)
-    {
-        space.getShip().fire();
-    }
+
 }
 
 const std::string& SpaceScreen::getName() const {
@@ -64,4 +59,12 @@ const std::string& SpaceScreen::getName() const {
 
 void SpaceScreen::windowClosed() {
 	getGame().getWindow().close();
+}
+
+void SpaceScreen::processInput() {
+    bool isFiring = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) ||
+                    sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
+
+    if(isFiring)
+        space.getShip().fire();
 }

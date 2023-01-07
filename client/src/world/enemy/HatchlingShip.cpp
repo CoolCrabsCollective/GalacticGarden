@@ -20,8 +20,7 @@ void HatchlingShip::tick(float delta) {
         Crop* closestCrop = nullptr;
 
         for (Entity* entity : space.getEntities()) {
-            Crop* potentialCrop;
-            if (potentialCrop = dynamic_cast<Crop*>(entity)) {
+            if (Crop* potentialCrop = dynamic_cast<Crop*>(entity)) {
                 if (closestCrop == nullptr) {
                     closestCrop = potentialCrop;
                     continue;
