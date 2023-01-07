@@ -9,4 +9,6 @@
 class HatchlingShip : public EnemyShip {
 public:
     explicit HatchlingShip(Space& space, sf::Vector2f location);
+
+    float getZOrder() const override;
 };

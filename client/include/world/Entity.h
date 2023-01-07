@@ -8,13 +8,14 @@
 #include "SFML/System/Vector2.hpp"
 #include "Tickable.h"
 #include "SFML/Graphics/Drawable.hpp"
+#include "Renderable.h"
 
 class Space;
 
 /**
  * Something which has a location in 2D space
  */
-class Entity : public Tickable, public sf::Drawable {
+class Entity : public Tickable, public Renderable {
 protected:
 	Space& space;
 	sf::Vector2f location;

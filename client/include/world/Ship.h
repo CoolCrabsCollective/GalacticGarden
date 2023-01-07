@@ -14,6 +14,8 @@ class Ship : public Entity {
 public:
 	Ship(Space& space, const sf::Vector2f& location);
 
+    float getZOrder() const override;
+
 public:
 	void tick(float delta) override;
 	

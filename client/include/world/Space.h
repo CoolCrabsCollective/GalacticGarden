@@ -13,12 +13,12 @@
 #include "Ship.h"
 
 class Space : public Tickable, public sf::Drawable {
-
+protected:
 	wiz::AssetLoader& assets;
 	std::vector<Entity*> entities;
+    std::vector<Renderable*> renderables;
 	
 	Ship ship;
-
 
 	mutable std::vector<Entity*> entityDrawList = {};
 	

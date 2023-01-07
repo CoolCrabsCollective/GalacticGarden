@@ -9,3 +9,7 @@
 HatchlingShip::HatchlingShip(Space &space, sf::Vector2f location) : EnemyShip(space, location) {
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_HATCHLING));
 }
+
+float HatchlingShip::getZOrder() const {
+    return 2.f;
+}

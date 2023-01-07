@@ -22,3 +22,7 @@ void Ship::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
 	sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
 	target.draw(sprite);
 }
+
+float Ship::getZOrder() const {
+    return 5.f;
+}
