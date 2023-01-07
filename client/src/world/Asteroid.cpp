@@ -8,9 +8,9 @@
 
 Asteroid::Asteroid(Space& space, const sf::Vector2f& location) 
 	: Entity(space, location) {
+    this->sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ASTEROID), true);
 
-	this->sprite.setTexture(*space.getAssets().get(GameAssets::ASTEROID), true);
-
+    srand(time(0));
     double randomXVelocity = ((double) rand() / (RAND_MAX)) * 2 - 1;
     double randomYVelocity = ((double) rand() / (RAND_MAX)) * 2 - 1;
     this->velocity = sf::Vector2f(randomXVelocity, randomYVelocity);

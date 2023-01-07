@@ -9,7 +9,7 @@
 Ship::Ship(Space& space, const sf::Vector2f& location) 
 	: Entity(space, location) {
 	
-	this->sprite.setTexture(*space.getAssets().get(GameAssets::SHIP), true);
+	this->sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_SHIP), true);
 }
 
 void Ship::tick(float delta) {
