@@ -8,6 +8,7 @@
 #include "world/crop/FalloutFlower.h"
 #include "world/enemy/HatchlingShip.h"
 #include "world/weapon/SmallLaser.h"
+#include "world/station/GayStation.h"
 #include <iostream>
 
 Space::Space(wiz::AssetLoader& assets) 
@@ -17,6 +18,8 @@ Space::Space(wiz::AssetLoader& assets)
     Asteroid* a1;
 	entities.push_back(a1 = new Asteroid(*this, { 0.0f, 3.0f }, 0.0f, 5.0f, { 0.0f, 0.0f }, 10.0f ));
 	entities.push_back(new Asteroid(*this, { 2.1f, -3.1f }, 0.0f, 3.0f, { -0.5f, 1.0f }, -1.0f));
+
+    entities.push_back(new GayStation(*this, {10.0f, .0f}));
 
 	initSpacialMap();
     
