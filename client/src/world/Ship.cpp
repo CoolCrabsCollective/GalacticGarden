@@ -6,6 +6,8 @@
 #include "world/Ship.h"
 #include "GameAssets.h"
 #include "world/weapon/SmallLaser.h"
+#include "world/crop/Crop.h"
+#include "world/Asteroid.h"
 
 Ship::Ship(Space& space, const sf::Vector2f& location) 
 	: Entity(space, location) {
@@ -20,6 +22,15 @@ void Ship::tick(float delta) {
 
     this->location = newPos;
     time_since_last_fire += bad_delta;
+    time_since_last_plant += bad_delta;
+    
+    for(Entity* entity : space.getAllEntitiesInRect(location, { 2.0f, 2.0f })) {
+        Crop* crop = dynamic_cast<Crop*>(entity);
+        if(crop && crop->isReady() && (crop->getLocation() - location).lengthSq() < 1.0f) {
+            crop->harvest();
+            harvestedCount++;
+        }
+    }
 }
 
 float Ship::getRotation() const {
@@ -60,4 +71,27 @@ void Ship::fire() {
 
 void Ship::setRotation(float rotationRad) {
     this->rotation = rotationRad;
+}
+
+void Ship::PlantOnAsteroid(Space& space) {
+    if(time_since_last_plant >= plant_delay) {
+        sf::Vector2f shipLocation = space.getShip().getLocation();
+
+        std::vector<Entity *> entities = space.getAllEntitiesInRect(this->location, {4, 4});
+
+        const std::map<sf::Vector2f, Crop *, VecCompare> *plantingZones = nullptr;
+
+        for (Entity *entity: entities) {
+            Asteroid *asteroid = dynamic_cast<Asteroid *>(entity);
+
+            if (asteroid != nullptr) {
+                std::optional<sf::Vector2f> closestPlantingZone = asteroid->getClosestAvailablePlantingZone(shipLocation);
+                if (closestPlantingZone.has_value()) {
+                    asteroid->plant(CropType::FLOWER, closestPlantingZone.value());
+                    time_since_last_plant = .0f;
+                }
+                break;
+            }
+        }
+    }
 }

@@ -35,6 +35,11 @@ public:
 	const sf::Vector2f& getLocation() const {
 		return location;
 	}
+    
+    [[nodiscard]]
+    virtual sf::Vector2f getVisualSize() const {
+        return sf::Vector2f { 1.0f, 1.0f };
+    }
 
     virtual float getZOrder() const {
         return 0.;

@@ -30,7 +30,7 @@ Asteroid::Asteroid(Space& space,
 	this->velocity = startVelocity;
 	this->angularVelocity = startAngVelocity;
 
-  generatePlantingZones();
+    generatePlantingZones();
 }
 
 void Asteroid::tick(float delta) {
@@ -40,17 +40,17 @@ void Asteroid::tick(float delta) {
 	std::vector<Entity*> close = space.getAllEntitiesInRect(location, extent);
 	
 	for(Entity* entity : close) {
-		Asteroid* other = dynamic_cast<Asteroid*>(entity);
-		
-		if(other) {
-			sf::Vector2f normal = other->getLocation() - location;
-			float dst2 = normal.lengthSq();
-			float normalDst = size / 2.0f + other->size / 2.0f;
-			if(dst2 < normalDst * normalDst * 7.0f / 8.0f && velocity.dot(normal) > 0.0f) {
-				velocity = velocity - 2.0f * velocity.dot(normal) * normal / normal.lengthSq();
-				angularVelocity = -angularVelocity;
-			}
-		}
+        Asteroid* other = dynamic_cast<Asteroid*>(entity);
+
+        if(other) {
+            sf::Vector2f normal = other->getLocation() - location;
+            float dst2 = normal.lengthSq();
+            float normalDst = size / 2.0f + other->size / 2.0f;
+            if(dst2 < normalDst * normalDst * 7.0f / 8.0f && velocity.dot(normal) > 0.0f) {
+                velocity = velocity - 2.0f * velocity.dot(normal) * normal / normal.lengthSq();
+                angularVelocity = -angularVelocity;
+            }
+        }
 	}
 	
 	this->location += this->velocity * delta / 1000.0f;
@@ -136,4 +136,27 @@ const sf::Vector2f& Asteroid::getVelocity() const {
 
 float Asteroid::getAngularVelocity() const {
     return angularVelocity;
+}
+
+const std::optional<sf::Vector2f> Asteroid::getClosestAvailablePlantingZone(sf::Vector2f location) const {
+    std::optional<sf::Vector2f> closestPlantingZone;
+    float closestPlantingZoneDistance = -1.0;
+
+    for (auto const& plantingZone : plantingZones)
+    {
+        if (plantingZone.second == nullptr) {
+            float distance = pow(plantingZone.first.x-location.x,2) + pow(plantingZone.first.y-location.y,2);
+            if (closestPlantingZoneDistance != -1.0) {
+                if (distance < closestPlantingZoneDistance) {
+                    closestPlantingZoneDistance = distance;
+                    closestPlantingZone = plantingZone.first;
+                }
+            } else {
+                closestPlantingZoneDistance = distance;
+                closestPlantingZone = plantingZone.first;
+            }
+        }
+    }
+
+    return closestPlantingZone;
 }

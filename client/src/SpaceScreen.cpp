@@ -8,7 +8,8 @@
 
 SpaceScreen::SpaceScreen(wiz::Game& game)
 	: Screen(game), space(game.getAssets()), mappingDatabase() {
-  mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
+    mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
+    cameraPosition = space.getShip().getLocation();
 }
 
 void SpaceScreen::tick(float delta) {
@@ -27,6 +28,7 @@ void SpaceScreen::render(sf::RenderTarget& target) {
 	target.setView(sf::View({ 0.5f, 0.5f }, { 1.0f, 1.0f }));
 
 	target.draw(background);
+    
 	target.setView(sf::View({ space.getShip().getLocation().x,
                               space.getShip().getLocation().y }, Space::VIEW_SIZE));
 	
@@ -67,6 +69,12 @@ void SpaceScreen::processInput(float delta) {
 
     if(isFiring)
         space.getShip().fire();
+
+    bool isPlanting = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) ||
+                      sf::Mouse::isButtonPressed(sf::Mouse::Button::Right);
+
+    if (isPlanting)
+        space.getShip().PlantOnAsteroid(space);
 
     bool rotateLeft = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q);
     bool rotateRight = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E);
