@@ -22,6 +22,11 @@ protected:
     
     mutable std::vector<Entity*> entities_draw_list;
     std::map<uint64_t, std::list<Entity*>> spacialMap;
+
+    std::vector<Entity*> enemies;
+    int max_enemy_count = 10;
+    float spawn_delay = 100.0f;
+    float time_since_last_spawn = .0f;
 	
 public:
 	constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
@@ -52,6 +57,9 @@ private:
 	void removeFromMap(Entity* entity);
 
 	uint64_t spacialKey(sf::Vector2f location) const;
+
+    void manageEnemies();
+    void spawnEnemy(sf::Vector2f pos);
 
 };
 
