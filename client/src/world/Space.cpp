@@ -18,8 +18,6 @@ Space::Space(wiz::AssetLoader& assets)
 	entities.push_back(a1 = new Asteroid(*this, { 0.0f, 3.0f }, 0.0f, 5.0f, { 0.0f, 0.0f }, 10.0f ));
 	entities.push_back(new Asteroid(*this, { 2.1f, -3.1f }, 0.0f, 3.0f, { -0.5f, 1.0f }, -1.0f));
 
-	entities.push_back(new HatchlingShip(*this, {-1.0f, -1.0f}));
-
 	initSpacialMap();
     
     a1->plant(CropType::FLOWER, a1->getPlantingLocations()[0]);

@@ -88,10 +88,7 @@ void HatchlingShip::tick(float delta) {
         }
 
         return;
-
     }
-
-
 
     velocityNormalized = distanceToCrop.normalized();
 
