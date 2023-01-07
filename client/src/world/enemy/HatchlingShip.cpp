@@ -43,12 +43,12 @@ void HatchlingShip::tick(float delta) {
     if (distanceToCrop.length() < 1)  { // todo magic num
         targetCrop->damage(this->damage * (delta/1000));
         if (tractorBeam == nullptr) {
-            tractorBeam = new TractorBeam(space, this->location + sf::Vector2f(1, 1));
-            space.addEntity(tractorBeam);
+            tractorBeam = new TractorBeam(space);
         }
+
         if (targetCrop->shouldBeRemoved()) {
             targetCrop = nullptr;
-            tractorBeam->setRemove(true);
+            delete tractorBeam;
             tractorBeam = nullptr;
         }
         return;
@@ -59,6 +59,12 @@ void HatchlingShip::tick(float delta) {
     // move towards crop
     this->location += velocityNormalized * speed;
     this->rotation = velocityNormalized.angle().asRadians() + M_PI_2;
+
+    if(tractorBeam)
+    {
+        tractorBeam->setLocation(location);
+        tractorBeam->setRotationDegrees(sf::radians(this->rotation).asDegrees());
+    }
 }
 
 void HatchlingShip::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
@@ -67,6 +73,9 @@ void HatchlingShip::draw(sf::RenderTarget &target, const sf::RenderStates &state
 
     sprite.setRotation(sf::radians(rotation));
     target.draw(sprite);
+
+    if(tractorBeam)
+        tractorBeam->draw(target, states);
 }
 
 float HatchlingShip::getZOrder() const {
