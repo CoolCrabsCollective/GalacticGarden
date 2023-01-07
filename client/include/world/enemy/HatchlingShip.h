@@ -13,4 +13,5 @@ class HatchlingShip : public EnemyShip {
 public:
     explicit HatchlingShip(Space& space, sf::Vector2f location);
     void tick(float delta) override;
+    float getZOrder() const override;
 };

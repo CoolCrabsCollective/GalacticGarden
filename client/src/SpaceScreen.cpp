@@ -6,8 +6,12 @@
 #include "SFML/Window/Touch.hpp"
 #include <string>
 
+#include "WIZ/input/Mapping.h"
+#include "WIZ/input/MappingDatabase.h"
+
 SpaceScreen::SpaceScreen(wiz::Game& game)
-	: Screen(game), space(game.getAssets()) {
+	: Screen(game), space(game.getAssets()), mappingDatabase() {
+  mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
 }
 
 void SpaceScreen::tick(float delta) {

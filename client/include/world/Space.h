@@ -13,14 +13,12 @@
 #include "Ship.h"
 
 class Space : public Tickable, public sf::Drawable {
-
+protected:
 	wiz::AssetLoader& assets;
 	std::vector<Entity*> entities;
+    mutable std::vector<Entity*> entities_draw_list;
 	
 	Ship ship;
-
-
-	mutable std::vector<Entity*> entityDrawList = {};
 	
 public:
 	constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
@@ -31,7 +29,7 @@ public:
 
 	void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
-	const Ship& getShip() const;
+  Ship getShip() const;
 
 	wiz::AssetLoader& getAssets() const;
 

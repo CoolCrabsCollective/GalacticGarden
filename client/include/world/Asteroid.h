@@ -27,6 +27,8 @@ public:
 	void tick(float delta) override;
 
 	void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
+
+    float getZOrder() const override;
 };
 
 

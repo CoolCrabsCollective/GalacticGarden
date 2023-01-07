@@ -44,3 +44,7 @@ void HatchlingShip::tick(float delta) {
         this->location += moveDirectionNormalized * speed;
     }
 }
+
+float HatchlingShip::getZOrder() const {
+    return 2.f;
+}
