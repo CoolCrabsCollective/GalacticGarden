@@ -26,12 +26,10 @@ void SpaceScreen::tick(float delta) {
 void SpaceScreen::render(sf::RenderTarget& target) {
 	target.clear();
 	target.setView(sf::View({ 0.5f, 0.5f }, { 1.0f, 1.0f }));
-
 	target.draw(background);
-
-	target.setView(sf::View({ space.getShip().getLocation().x,
-                              space.getShip().getLocation().y }, Space::VIEW_SIZE));
-	
+    
+    cameraPosition = cameraPosition * 0.995f + space.getShip().getLocation() * 0.005f;
+	target.setView(sf::View(cameraPosition, Space::VIEW_SIZE));
 	target.draw(space);
 }
 
@@ -62,7 +60,7 @@ const std::string& SpaceScreen::getName() const {
 void SpaceScreen::windowClosed() {
 	getGame().getWindow().close();
 }
-#include <iostream>
+
 void SpaceScreen::processInput(float delta) {
     bool isFiring = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) ||
                     sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
