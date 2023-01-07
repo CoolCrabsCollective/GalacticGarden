@@ -12,6 +12,7 @@ float FalloutFlower::get_time_to_maturity() const {
 
 FalloutFlower::FalloutFlower(Space &space, sf::Vector2f location) : Crop(space, location) {
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_FALLOUT_FLOWER));
+    health = 10;
 }
 
 float FalloutFlower::getZOrder() const {
