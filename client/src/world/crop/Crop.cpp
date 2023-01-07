@@ -27,3 +27,7 @@ void Crop::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
 void Crop::damage(int value) {
     this->health -= value;
 }
+
+bool Crop::shouldBeRemoved() const {
+    return this->health <= 0;
+}
