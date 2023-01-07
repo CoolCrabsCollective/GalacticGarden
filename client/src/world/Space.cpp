@@ -218,26 +218,18 @@ void Space::addEntity(Entity *entity) {
 
 void Space::manageEnemies() {
     if (enemy_count < max_enemy_count && time_since_last_spawn > spawn_delay) {
-        float minRadius = .0f;
-        float maxRadius = 360.0f;
-        float minDes = 4.0f;
-        float maxDes = 10.0f;
+        float minDst = 9.0f;
+        float maxDst = 20.0f;
 
-        float randDir = static_cast<float>(rand() / (RAND_MAX + 1.0)) * (maxRadius - minRadius) + minRadius;
-        float randDes = static_cast<float>(rand() / (RAND_MAX + 1.0)) * (maxDes - minDes) + minDes;
+        float randDir = static_cast<float>(rand() / (RAND_MAX + 1.0)) * 360.0;
+        float randDes = static_cast<float>(rand() / (RAND_MAX + 1.0)) * (maxDst - minDst) + minDst;
 
-        spawnEnemy({randDes * cosf(randDir), randDes * sinf(randDir)});
+        spawnEnemy({randDes * cosf(randDir) + ship.getLocation().x, randDes * sinf(randDir) + ship.getLocation().y});
     }
 }
 
 void Space::spawnEnemy(sf::Vector2f pos) {
-    double val = rand() * 1.0 / RAND_MAX;
-
-    Entity* newEnemy;
-
-    newEnemy = new HatchlingShip(*this, pos);
-
-    addEntity(newEnemy);
+    addEntity(new HatchlingShip(*this, pos));
     enemy_count++;
-    time_since_last_spawn = .0f;
+    time_since_last_spawn = 0.0f;
 }
