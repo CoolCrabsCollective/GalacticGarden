@@ -155,3 +155,7 @@ wiz::AssetLoader& Space::getAssets() const {
 const std::vector<Entity*> &Space::getEntities() const {
     return entities;
 }
+
+void Space::removeEntities() {
+//    for (int i )
+}
