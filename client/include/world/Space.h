@@ -48,7 +48,7 @@ public:
 
 private:
 	void initSpacialMap();
-
+    void removeEntities();
 	void removeFromMap(Entity* entity);
 
 	uint64_t spacialKey(sf::Vector2f location) const;

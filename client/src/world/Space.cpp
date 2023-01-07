@@ -155,13 +155,26 @@ void Space::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
         return a->getZOrder() < b->getZOrder();
     });
 
-	for(Entity* entity : entities_draw_list)
-    {
+	for(Entity* entity : entities_draw_list) {
         if(entity->getLocation().x >= start.x
            && entity->getLocation().y >= start.y
            && entity->getLocation().x <= end.x
            && entity->getLocation().y <= end.y)
             target.draw(*entity);
+    }
+}
+
+void Space::removeEntities() {
+    int i = 0;
+    while (i < this->entities.size()) {
+        Entity* entity = this->entities.at(i);
+        if (false) { // check if entity should be removed
+            entities.erase(entities.begin() + i);
+            removeFromMap(entity);
+            delete entity;
+        } else {
+            i++;
+        }
     }
 }
 

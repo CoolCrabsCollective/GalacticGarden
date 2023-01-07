@@ -11,6 +11,7 @@ HatchlingShip::HatchlingShip(Space &space, sf::Vector2f location) : EnemyShip(sp
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_HATCHLING));
     targetCrop = nullptr;
     speed = 0.001f;
+    damage = 1;
 }
 
 void HatchlingShip::tick(float delta) {
@@ -34,15 +35,20 @@ void HatchlingShip::tick(float delta) {
                 }
             }
         }
-
         targetCrop = closestCrop;
-    } else {
-        // move towards crop
-        sf::Vector2 moveDirection = targetCrop->getLocation() - location;
-        sf::Vector2 moveDirectionNormalized = moveDirection.normalized();
-
-        this->location += moveDirectionNormalized * speed;
+        return;
     }
+
+    sf::Vector2 moveDirection = targetCrop->getLocation() - location;
+    if (moveDirection.length() < 0.1)  { // TODO: magic number and I don't care
+        targetCrop->damage(this->damage);
+        return;
+    }
+
+    sf::Vector2 moveDirectionNormalized = moveDirection.normalized();
+
+    // move towards crop
+    this->location += moveDirectionNormalized * speed;
 }
 
 float HatchlingShip::getZOrder() const {
