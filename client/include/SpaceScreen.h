@@ -18,14 +18,19 @@
 #include "SFML/Graphics/Text.hpp"
 #include "world/Space.h"
 
-class SpaceScreen : public wiz::Screen, public wiz::WindowListener {
+#include "WIZ/input/Mapping.h"
+#include "WIZ/input/MappingDatabase.h"
+
+class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
     std::string name = "SpaceScreen";
 
     sf::Sound sound;
     sf::Music* music;
 
     sf::Sprite background;
-	Space space;
+	  Space space;
+
+    wiz::MappingDatabase mappingDatabase;
 
 public:
     SpaceScreen(wiz::Game& game);

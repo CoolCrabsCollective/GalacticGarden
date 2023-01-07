@@ -29,7 +29,7 @@ public:
 
 	void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
-	const Ship& getShip() const;
+  Ship getShip() const;
 
 	wiz::AssetLoader& getAssets() const;
 
