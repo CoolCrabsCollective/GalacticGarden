@@ -7,6 +7,7 @@
 #include "Entity.h"
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SFML/Graphics/Sprite.hpp"
+#include "world/weapon/LazerType.h"
 
 class Ship : public Entity {
 protected:
@@ -18,10 +19,11 @@ protected:
     float rotation = 0.0f;
     float maxSpeed = 4.f; // 4 units per second
     float acc = 10.f; // 10 units per second ^ 2
-    sf::Vector2f moveVelocity = {0.f, 0.f};
+    sf::Vector2f moveVelocity = { 0.f, 0.f };
     bool rotateLeft = false, rotateRight = false;
     
     int harvestedCount = 0;
+    LazerType lazerType = LazerType::SIMPLE;
 
 public:
 	Ship(Space& space, const sf::Vector2f& location);
@@ -37,7 +39,10 @@ public:
     void moveInDirOfVec(const sf::Vector2f& moveVec, float good_delta);
 
     void setRotation(float rotationRad);
-    void PlantOnAsteroid(Space& space);
+    
+    void plantOnAsteroid(Space& space);
 
     float getRotation() const;
+
+    void setLazerType(LazerType lazer_type);
 };
