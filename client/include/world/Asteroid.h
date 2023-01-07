@@ -57,6 +57,10 @@ public:
     
     std::vector<sf::Vector2f> getPlantingLocations() const;
     
+    bool isPlanted(sf::Vector2f location) const;
+
+    Crop* getCrop(sf::Vector2f relLocation);
+    
     void plant(CropType cropType, sf::Vector2f relLocation);
     
     void removeCrop(sf::Vector2f relLocation);

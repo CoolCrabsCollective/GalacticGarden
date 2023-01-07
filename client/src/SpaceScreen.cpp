@@ -110,7 +110,7 @@ void SpaceScreen::processInput(float delta) {
     if(pos.length() >= 0.0001)
     {
         pos = pos.normalized();
-        rotation = pos.angle().asRadians();
+        rotation = pos.angle().asDegrees();
     }
-    space.getShip().setRotation(rotation + M_PI_2);
+    space.getShip().setRotation(rotation + 90.0f);
 }

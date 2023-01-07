@@ -160,3 +160,18 @@ const std::optional<sf::Vector2f> Asteroid::getClosestAvailablePlantingZone(sf::
 
     return closestPlantingZone;
 }
+
+bool Asteroid::isPlanted(sf::Vector2f plant) const {
+
+    if(!plantingZones.contains(plant))
+        throw std::runtime_error("Invalid location");
+    
+    return plantingZones.at(plant) != nullptr;
+}
+
+Crop* Asteroid::getCrop(sf::Vector2f plant) {
+
+    if(!plantingZones.contains(plant))
+        throw std::runtime_error("Invalid location");
+    return plantingZones[plant];
+}

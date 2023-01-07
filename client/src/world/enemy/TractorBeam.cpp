@@ -1,8 +1,7 @@
 //
 // Created by adrien on 07/01/23.
 //
-
-#include "TractorBeam.h"
+#include "world/enemy/TractorBeam.h"
 TractorBeam::TractorBeam(Space &space) : Entity(space, sf::Vector2f{0.0f, 0.0f}) {
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_TRACTOR_BEAM));
     // Set origin at the bottom of the tractor beam, not the middle

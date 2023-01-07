@@ -40,7 +40,7 @@ float Ship::getRotation() const {
 void Ship::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
 	sprite.setPosition(location);
 	sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
-    sprite.setRotation(sf::radians(rotation));
+    sprite.setRotation(sf::degrees(rotation));
 	target.draw(sprite);
 }
 
@@ -64,7 +64,7 @@ void Ship::moveInDirOfVec(const sf::Vector2f& moveVec, float good_delta) {
 void Ship::fire() {
     if(time_since_last_fire >= fire_delay)
     {
-        space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::radians(rotation))));
+        space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
         time_since_last_fire = 0.f;
     }
 }

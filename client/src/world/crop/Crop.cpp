@@ -57,3 +57,11 @@ void Crop::harvest() {
 bool Crop::shouldBeRemoved() const {
     return dead;
 }
+
+Asteroid& Crop::getAsteroid() const {
+    return asteroid;
+}
+
+sf::Vector2f Crop::getLocationOnAsteroid() const {
+    return relLocation;
+}
