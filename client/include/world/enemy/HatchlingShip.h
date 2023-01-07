@@ -16,10 +16,9 @@ protected:
     sf::Vector2f targetPlant;
 
     TractorBeam* tractorBeam = nullptr;
-    
 public:
     explicit HatchlingShip(Space& space, sf::Vector2f location);
-    
+    void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
     void tick(float delta) override;
     
     float getZOrder() const override;

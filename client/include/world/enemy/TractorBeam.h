@@ -11,13 +11,16 @@
 class TractorBeam : public Entity {
 protected:
     mutable sf::Sprite sprite;
-    void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
-    bool remove;
+    float rotationDegrees = 0.0f;
+    sf::Vector2f location{};
 public:
-    explicit TractorBeam(Space &space, sf::Vector2f location);
+    explicit TractorBeam(Space &space);
     void tick(float delta) override;
-    bool shouldBeRemoved() const override;
-    void setRemove(bool remove);
+    void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
+
+    void setRotationDegrees(float rotationDegrees);
+
+    void setLocation(const sf::Vector2f &location);
 };
 
 
