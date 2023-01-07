@@ -12,7 +12,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
 }
 
 void SpaceScreen::tick(float delta) {
-    processInput();
+    processInput(delta);
 	sf::Vector2f vec = { 1.0f, 1.0f };
 
 	vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
@@ -25,10 +25,13 @@ void SpaceScreen::tick(float delta) {
 void SpaceScreen::render(sf::RenderTarget& target) {
 	target.clear();
 	target.setView(sf::View({ 0.5f, 0.5f }, { 1.0f, 1.0f }));
+
 	
 	target.draw(background);
-	target.setView(sf::View({ space.getShip().getLocation().x,
-	                          space.getShip().getLocation().y }, Space::VIEW_SIZE));
+    sf::View camera = sf::View({ space.getShip().getLocation().x,
+                                 space.getShip().getLocation().y }, Space::VIEW_SIZE);
+    camera.setRotation(sf::radians(space.getShip().getRotation() ));
+	target.setView(camera);
 	
 	target.draw(space);
 }
@@ -61,10 +64,29 @@ void SpaceScreen::windowClosed() {
 	getGame().getWindow().close();
 }
 
-void SpaceScreen::processInput() {
+void SpaceScreen::processInput(float delta) {
     bool isFiring = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) ||
                     sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
 
     if(isFiring)
         space.getShip().fire();
+
+    bool rotateLeft = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q);
+    bool rotateRight = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E);
+
+    bool connected = sf::Joystick::isConnected(0);
+
+    float xAxisInput = connected ? sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) :
+                       (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+                       ? 100.00 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) ? -100.00 : 0.00);
+
+    float yAxisInput = connected ? sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) :
+                       (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+                       ? -100.00 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) ? 100.00 : 0.00);
+
+    sf::Vector2f moveVec = {xAxisInput, yAxisInput};
+
+    space.getShip().moveInDirOfVec(moveVec);
+    space.getShip().setRotateLeft(rotateLeft);
+    space.getShip().setRotateRight(rotateRight);
 }

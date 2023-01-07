@@ -15,21 +15,34 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 }
 
 void Ship::tick(float delta) {
-  sf::Vector2f newPos = {moveDir.x*delta*moveSpeed + this->location.x, moveDir.y*delta*moveSpeed + this->location.y};
+  float good_delta = delta / 1000.f;
+  sf::Vector2f newPos = {moveDirection.x*good_delta*moveSpeed + this->location.x, moveDirection.y*good_delta*moveSpeed + this->location.y};
+  if(rotateLeft)
+  {
+      rotation -= good_delta * angularVelocity;
+  }
+
+  if(rotateRight)
+  {
+      rotation += good_delta * angularVelocity;
+  }
   updatePos(newPos);
-  time_since_last_fire += delta / 1000.f;
+  time_since_last_fire += good_delta;
+}
+
+float Ship::getRotation() const {
+    return rotation;
 }
 
 void Ship::updatePos(sf::Vector2f& moveVec) {
   this->location = moveVec;
   this->sprite.setPosition(moveVec);
-
-  processInput();
 }
 
 void Ship::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
 	sprite.setPosition(location);
 	sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
+    sprite.setRotation(sf::radians(rotation ));
 	target.draw(sprite);
 }
 
@@ -38,28 +51,12 @@ float Ship::getZOrder() const {
 }
 
 void Ship::moveInDirOfVec(const sf::Vector2f& moveVec) {
-  this->moveDir = {moveVec.x / 100, moveVec.y / 100};
-}
-
-void Ship::processInput() {
-  // TODO: does this belong in Ship? shouldn't this be in SpaceScreen
-  bool connected = sf::Joystick::isConnected(0);
-
-  float xAxisInput = connected ? sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) :
-                     (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
-                     ? 100.00 : ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) ||
-                                  sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) ? -100.00 : 0.00));
-
-  float yAxisInput = connected ? sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) :
-                     (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
-                     ? -100.00 : ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) ||
-                                  sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) ? 100.00 : 0.00));
-
-  sf::Vector2f moveVec = {xAxisInput, yAxisInput};
-
-
-  moveInDirOfVec(moveVec);
-
+    sf::Vector2f moveVecNorm{0.f, 0.f};
+    if(moveVec.length() > 0.001f) // is not zero
+    {
+        moveVecNorm = moveVec.normalized().rotatedBy(sf::radians(rotation));
+    }
+  this->moveDirection = moveVecNorm;
 }
 
 void Ship::fire() {
@@ -68,4 +65,12 @@ void Ship::fire() {
         space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f)));
         time_since_last_fire = 0.f;
     }
+}
+
+void Ship::setRotateLeft(bool rotateLeft) {
+    this->rotateLeft = rotateLeft;
+}
+
+void Ship::setRotateRight(bool rotateRight) {
+    this->rotateRight = rotateRight;
 }
