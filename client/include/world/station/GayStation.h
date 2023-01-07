@@ -6,9 +6,9 @@
 #define LD52_CLIENT_GAYSTATION_H
 
 #include "SFML/Graphics/Sprite.hpp"
-#include "world/Entity.h"
+#include "world/enemy/EnemyShip.h"
 
-class GayStation : public Entity {
+class GayStation : public EnemyShip {
 protected:
     mutable sf::Sprite sprite;
 

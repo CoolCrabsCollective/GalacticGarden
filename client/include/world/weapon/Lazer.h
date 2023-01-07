@@ -8,7 +8,7 @@
 
 #include "world/Entity.h"
 
-enum fraction {
+enum Fraction {
     FRIENDLY,
     ENEMY
 };
@@ -22,7 +22,7 @@ public:
     
     virtual void consume() = 0;
 
-    virtual fraction getFraction() = 0;
+    virtual Fraction getFraction() = 0;
 
     bool shouldBeRemoved() const override {
         return Entity::shouldBeRemoved();

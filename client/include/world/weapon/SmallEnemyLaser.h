@@ -32,7 +32,7 @@ public:
     void consume() override;
 
     [[nodiscard]]
-    fraction getFraction() {
+    Fraction getFraction() {
         return ENEMY;
     };
 

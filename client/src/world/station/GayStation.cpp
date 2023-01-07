@@ -6,7 +6,7 @@
 #include "world/station/GayStation.h"
 #include "GameAssets.h"
 
-GayStation::GayStation(Space &space, sf::Vector2f location) : Entity(space, location){
+GayStation::GayStation(Space &space, sf::Vector2f location) : EnemyShip(space, location){
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_GAY_STATION));
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
 
@@ -14,6 +14,8 @@ GayStation::GayStation(Space &space, sf::Vector2f location) : Entity(space, loca
 }
 
 void GayStation::tick(float delta) {
+    EnemyShip::tick(delta);
+
     if (abs(bobbingDisplacement-bob_starting_pos) >= bob_max_displacement) {
         bobbingDirection = !bobbingDirection;
     }
