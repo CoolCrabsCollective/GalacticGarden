@@ -40,6 +40,8 @@ public:
 	
 	virtual float getTimeToMaturity() const = 0;
 
+    virtual float getEnergyGain() const = 0;
+
     void damage(float value);
 
     bool shouldBeRemoved() const override;

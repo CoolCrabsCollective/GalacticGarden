@@ -28,7 +28,7 @@ void Ship::tick(float delta) {
         Crop* crop = dynamic_cast<Crop*>(entity);
         if(crop && crop->isReady() && (crop->getLocation() - location).lengthSq() < 1.0f) {
             crop->harvest();
-            harvestedCount++;
+            energy += crop->getEnergyGain();
         }
     }
 }
@@ -61,30 +61,37 @@ void Ship::moveInDirOfVec(const sf::Vector2f& moveVec, float good_delta) {
     }
 }
 
+
 void Ship::fire() {
+
     if(time_since_last_fire >= fire_delay)
     {
         switch(lazerType) {
 
             case SIMPLE:
+                if(!energy_for_shot(1)) return;
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 break;
             case DOUBLE:
+                if(!energy_for_shot(2)) return;
                 space.addEntity(new SmallLaser(space, location + (sf::Vector2f {0.25f, 0.0f}).rotatedBy(sf::degrees(rotation)), sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 space.addEntity(new SmallLaser(space, location + (sf::Vector2f {-0.25f, 0.0f}).rotatedBy(sf::degrees(rotation)), sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 break;
             case TRIANGLE:
+                if(!energy_for_shot(3)) return;
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation - 15.0f))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 15.0f))));
                 break;
             case FOUR_WAY:
+                if(!energy_for_shot(4)) return;
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 90.0f))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 180.0f))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 270.0f))));
                 break;
             case CRAZY:
+                if(!energy_for_shot(14)) return;
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 90.0f))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 180.0f))));
@@ -133,4 +140,17 @@ void Ship::plantOnAsteroid(Space& space) {
 
 void Ship::setLazerType(LazerType lazer_type) {
     this->lazerType = lazer_type;
+}
+
+bool Ship::energy_for_shot(int shot_count) {
+    float energy_per_shot = 0.15f;
+    float energy_used = static_cast<float>(shot_count) * energy_per_shot;
+    bool success = energy_used < energy;
+    if(success)
+        energy -= energy_used;
+    return success;
+}
+
+float Ship::getEnergy() const {
+    return energy;
 }

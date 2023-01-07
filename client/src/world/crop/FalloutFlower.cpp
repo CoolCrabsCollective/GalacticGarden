@@ -22,3 +22,7 @@ FalloutFlower::FalloutFlower(Asteroid& asteroid, sf::Vector2f relLocation)
 float FalloutFlower::getZOrder() const {
     return 1.f;
 }
+
+float FalloutFlower::getEnergyGain() const {
+    return 5.f;
+}

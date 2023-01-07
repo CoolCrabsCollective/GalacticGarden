@@ -15,4 +15,6 @@ public:
     float getTimeToMaturity() const override;
 
     float getZOrder() const override;
+
+    float getEnergyGain() const override;
 };
