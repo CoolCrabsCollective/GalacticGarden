@@ -27,8 +27,8 @@ void HatchlingShip::tick(float delta) {
                     continue;
                 }
 
-                float distanceToClosestCrop = sqrt(pow(closestCrop->getLocation().x - location.x,2) + pow(closestCrop->getLocation().y - location.y, 2));
-                float distanceToPotentialCrop = sqrt(pow(potentialCrop->getLocation().x - location.x,2) + pow(potentialCrop->getLocation().y - location.y, 2));
+                float distanceToClosestCrop = pow(closestCrop->getLocation().x - location.x,2) + pow(closestCrop->getLocation().y - location.y, 2);
+                float distanceToPotentialCrop = pow(potentialCrop->getLocation().x - location.x,2) + pow(potentialCrop->getLocation().y - location.y, 2);
 
                 if (distanceToPotentialCrop < distanceToClosestCrop) {
                     closestCrop = potentialCrop;
@@ -42,6 +42,8 @@ void HatchlingShip::tick(float delta) {
     sf::Vector2 moveDirection = targetCrop->getLocation() - location;
     if (moveDirection.length() < 0.1)  { // TODO: magic number and I don't care
         targetCrop->damage(this->damage);
+        if (targetCrop->shouldBeRemoved())
+            targetCrop = nullptr;
         return;
     }
 

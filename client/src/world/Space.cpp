@@ -18,6 +18,7 @@ Space::Space(wiz::AssetLoader& assets)
 	entities.push_back(new Asteroid(*this, { 2.1f, -3.1f }, 0.0f, 3.0f, { -0.5f, 1.0f }, -1.0f));
 
 	entities.push_back(new FalloutFlower(*this, { 1.0, 3.f}));
+    entities.push_back(new FalloutFlower(*this, { 0.0, 1.0f}));
 	entities.push_back(new HatchlingShip(*this, {-1.0f, -1.0f}));
 
 	initSpacialMap();
