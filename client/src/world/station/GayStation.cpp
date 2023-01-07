@@ -35,3 +35,7 @@ void GayStation::draw(sf::RenderTarget &target, const sf::RenderStates &states) 
 bool GayStation::shouldBeRemoved() const {
     return false;
 }
+
+float GayStation::getZOrder() const {
+    return 1.0f;
+}

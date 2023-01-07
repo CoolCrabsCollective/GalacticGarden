@@ -41,7 +41,8 @@ public:
                       float rotation,
                       float size,
                       const sf::Vector2f& startVelocity,
-                      float startAngVelocity);
+                      float startAngVelocity,
+                      int plantingZoneCount);
 
     void tick(float delta) override;
 
@@ -73,7 +74,7 @@ public:
     const std::optional<sf::Vector2f> getClosestAvailablePlantingZone(sf::Vector2f location) const;
 
 private:
-    void generatePlantingZones();
+    void generatePlantingZones(int count);
 };
 
 

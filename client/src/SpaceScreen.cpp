@@ -5,6 +5,7 @@
 #include "SpaceScreen.h"
 #include "SFML/Window/Touch.hpp"
 #include <string>
+#include <X11/Xlibint.h>
 #include "GameAssets.h"
 
 SpaceScreen::SpaceScreen(wiz::Game& game)
@@ -17,7 +18,11 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
 void SpaceScreen::tick(float delta) {
     if(!gameover) {
         processInput(delta);
-        space.tick(delta);   
+        space.tick(delta);
+        
+        float trans = pow(0.99f, delta);
+
+        cameraPosition = cameraPosition * trans + space.getShip().getLocation() * (1.0f - trans);
     } else {
         gameoverCooldown -= delta / 1000.0f;
     }
@@ -42,8 +47,7 @@ void SpaceScreen::render(sf::RenderTarget& target) {
 	target.setView(sf::View({ 0.5f, 0.5f }, { 1.0f, 1.0f }));
 	target.draw(background);
     
-    cameraPosition = cameraPosition * 0.995f + space.getShip().getLocation() * 0.005f;
-	target.setView(sf::View(cameraPosition, Space::VIEW_SIZE));
+	target.setView(sf::View(cameraPosition, Space::VIEW_SIZE * zoom));
 	target.draw(space);
 
     // ui
@@ -64,6 +68,11 @@ void SpaceScreen::show() {
 void SpaceScreen::hide() {
 	getGame().removeWindowListener(this);
     getGame().removeInputListener(this);
+}
+
+void SpaceScreen::mouseWheelScrolled(const sf::Event::MouseWheelScrollEvent& mouseWheelScrollEvent) {
+    zoom -= mouseWheelScrollEvent.delta;
+    zoom = max(zoom, 1.0f);
 }
 
 void SpaceScreen::mouseButtonPressed(const sf::Event::MouseButtonEvent &mouseButtonEvent) {

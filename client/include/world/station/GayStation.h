@@ -33,6 +33,8 @@ public:
     }
 
     bool shouldBeRemoved() const override;
+
+    float getZOrder() const override;
 };
 
 #endif //LD52_CLIENT_GAYSTATION_H

@@ -15,6 +15,10 @@ namespace MathUtil
     inline sf::Vector2f toFloat(sf::Vector2u intVec) {
         return sf::Vector2f { static_cast<float>(intVec.x), static_cast<float>(intVec.y) };
     }
+    
+    inline constexpr const float pow2(float x) {
+        return x * x;
+    }
 }
 
 #endif //LD52_CLIENT_MATHUTIL_H

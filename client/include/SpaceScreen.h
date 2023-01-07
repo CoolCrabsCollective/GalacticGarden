@@ -36,6 +36,8 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     bool mappingFound = false;
     
     sf::Vector2f cameraPosition;
+    float zoom = 1.0f;
+    
     sf::Sprite energySprite;
     sf::Text energyText;
     
@@ -65,6 +67,8 @@ public:
     void keyPressed(const sf::Event::KeyEvent &keyEvent) override;
 
     void processInput(float delta);
+
+    void mouseWheelScrolled(const sf::Event::MouseWheelScrollEvent& mouseWheelScrollEvent) override;
 };
 
 

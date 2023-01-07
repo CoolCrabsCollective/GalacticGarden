@@ -8,6 +8,7 @@
 #include "world/weapon/SmallLaser.h"
 #include "world/crop/Crop.h"
 #include "world/Asteroid.h"
+#include "util/MathUtil.h"
 
 Ship::Ship(Space& space, const sf::Vector2f& location) 
 	: Entity(space, location) {
@@ -39,6 +40,10 @@ void Ship::tick(float delta) {
 
     sf::Vector2f newPos = { moveVelocity.x * bad_delta + this->location.x, moveVelocity.y * bad_delta + this->location.y };
 
+    if(newPos.lengthSq() > MathUtil::pow2(Space::MAP_RADIUS)) {
+        newPos = newPos.normalized() * Space::MAP_RADIUS;
+    }
+    
     this->location = newPos;
     time_since_last_fire += bad_delta;
     time_since_last_plant += bad_delta;
