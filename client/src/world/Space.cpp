@@ -179,6 +179,11 @@ void Space::removeEntities() {
         if (entity->shouldBeRemoved()) {
             entities.erase(entities.begin() + i);
             removeFromMap(entity);
+
+            EnemyShip* enemy = dynamic_cast<EnemyShip*>(entity);
+            if (enemy != nullptr)
+                enemy_count--;
+
             delete entity;
         } else {
             i++;
@@ -214,7 +219,7 @@ void Space::addEntity(Entity *entity) {
 }
 
 void Space::manageEnemies() {
-    if (enemies.size() < max_enemy_count && time_since_last_spawn > spawn_delay) {
+    if (enemy_count < max_enemy_count && time_since_last_spawn > spawn_delay) {
         float minRadius = 4.0f;
         float maxRadius = 10.0f;
 
@@ -234,7 +239,7 @@ void Space::spawnEnemy(sf::Vector2f pos) {
 
     newEnemy = new HatchlingShip(*this, pos);
 
-    enemies.push_back(newEnemy);
     addEntity(newEnemy);
+    enemy_count++;
     time_since_last_spawn = .0f;
 }
