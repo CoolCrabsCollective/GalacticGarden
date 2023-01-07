@@ -40,7 +40,7 @@ void HatchlingShip::tick(float delta) {
     }
 
     sf::Vector2 distanceToCrop = targetCrop->getLocation() - location;
-    if (distanceToCrop.length() < 0.1)  {
+    if (distanceToCrop.length() < 1)  { // todo magic num
         targetCrop->damage(this->damage);
         if (targetCrop->shouldBeRemoved())
             targetCrop = nullptr;
