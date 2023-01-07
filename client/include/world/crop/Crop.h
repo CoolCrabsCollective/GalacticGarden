@@ -19,7 +19,7 @@ protected:
     const sf::Vector2f relLocation;
     
     float timeSincePlanted = 0.f;
-    int health;
+    float health;
     mutable sf::Sprite sprite;
     
 public:
@@ -34,7 +34,7 @@ public:
 	
 	virtual float getTimeToMaturity() const = 0;
 
-    void damage(int value);
+    void damage(float value);
 
     bool shouldBeRemoved() const override;
 };

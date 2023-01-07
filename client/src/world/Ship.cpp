@@ -11,6 +11,7 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 	: Entity(space, location) {
 	
 	this->sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_SHIP), true);
+    sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
 }
 
 void Ship::tick(float delta) {
@@ -27,13 +28,13 @@ void Ship::updatePos(sf::Vector2f& moveVec) {
 }
 
 void Ship::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-	sprite.setPosition(location - sf::Vector2f {0.5f, 0.5f});
+	sprite.setPosition(location);
 	sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
 	target.draw(sprite);
 }
 
 float Ship::getZOrder() const {
-    return 5.f;
+    return 8.f;
 }
 
 void Ship::moveInDirOfVec(const sf::Vector2f& moveVec) {
@@ -41,6 +42,7 @@ void Ship::moveInDirOfVec(const sf::Vector2f& moveVec) {
 }
 
 void Ship::processInput() {
+  // TODO: does this belong in Ship? shouldn't this be in SpaceScreen
   bool connected = sf::Joystick::isConnected(0);
 
   float xAxisInput = connected ? sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) :

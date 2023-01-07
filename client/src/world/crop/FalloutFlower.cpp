@@ -14,7 +14,7 @@ float FalloutFlower::getTimeToMaturity() const {
 FalloutFlower::FalloutFlower(Asteroid& asteroid, sf::Vector2f relLocation) 
     : Crop(asteroid, relLocation) {
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_FALLOUT_FLOWER), true);
-    health = 10;
+    health = 5.0f;
 }
 
 float FalloutFlower::getZOrder() const {
