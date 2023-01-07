@@ -8,10 +8,15 @@
 #include "../crop/Crop.h"
 
 class HatchlingShip : public EnemyShip {
-    sf::Vector2f velocity;
-    Crop* targetCrop;
+protected:
+    void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
+    sf::Vector2f velocityNormalized = {0.f, 1.f};
+    Crop* targetCrop = nullptr;
+    float rotation = 0.f;
 public:
     explicit HatchlingShip(Space& space, sf::Vector2f location);
     void tick(float delta) override;
     float getZOrder() const override;
+
+
 };

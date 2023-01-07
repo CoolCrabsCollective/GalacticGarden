@@ -11,6 +11,7 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 	: Entity(space, location) {
 	
 	this->sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_SHIP), true);
+    sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
 }
 
 void Ship::tick(float delta) {
@@ -27,7 +28,6 @@ void Ship::updatePos(sf::Vector2f& moveVec) {
 }
 
 void Ship::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    sprite.setOrigin({0.5f * sprite.getTexture()->getSize().x, 0.5f * sprite.getTexture()->getSize().y});
 	sprite.setPosition(location);
 	sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
 	target.draw(sprite);

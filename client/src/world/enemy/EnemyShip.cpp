@@ -12,7 +12,6 @@ EnemyShip::EnemyShip(Space &space, sf::Vector2f location) : Entity(space, locati
 }
 
 void EnemyShip::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
-    sprite.setOrigin({0.5f * sprite.getTexture()->getSize().x, 0.5f * sprite.getTexture()->getSize().y});
     sprite.setPosition({location.x, -location.y});
     sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
     target.draw(sprite);
