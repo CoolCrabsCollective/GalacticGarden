@@ -8,10 +8,8 @@
 #include "SFML/Graphics/Texture.hpp"
 #include "world/weapon/Lazer.h"
 
-
 EnemyShip::EnemyShip(Space &space, sf::Vector2f location) 
     : Entity(space, location) {
-
 }
 
 void EnemyShip::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {

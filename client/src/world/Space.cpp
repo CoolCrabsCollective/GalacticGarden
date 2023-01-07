@@ -107,7 +107,11 @@ void Space::tick(float delta) {
 			spacialMap[newKey].insert(spacialMap[newKey].begin(), entity);
 	}
 
+    manageEnemies();
+
     removeEntities();
+
+    time_since_last_spawn += delta;
 }
 
 std::vector<Entity*> Space::getAllEntitiesInRect(sf::Vector2f center,
@@ -207,4 +211,30 @@ void Space::addEntity(Entity *entity) {
         spacialMap[key] = { entity };
     else
         spacialMap[key].insert(spacialMap[key].begin(), entity);
+}
+
+void Space::manageEnemies() {
+    if (enemies.size() < max_enemy_count && time_since_last_spawn > spawn_delay) {
+        float minRadius = 4.0f;
+        float maxRadius = 10.0f;
+
+        for (int i = 0; i < 10; i++) {
+            float dir = i / 10.0f * 360.0f;
+            float randDes = static_cast<float>(rand() / (RAND_MAX + 1.0)) * (maxRadius - minRadius) + minRadius;
+
+            spawnEnemy({randDes * cosf(dir), randDes * sinf(dir)});
+        }
+    }
+}
+
+void Space::spawnEnemy(sf::Vector2f pos) {
+    double val = rand() * 1.0 / RAND_MAX;
+
+    Entity* newEnemy;
+
+    newEnemy = new HatchlingShip(*this, pos);
+
+    enemies.push_back(newEnemy);
+    addEntity(newEnemy);
+    time_since_last_spawn = .0f;
 }
