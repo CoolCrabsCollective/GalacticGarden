@@ -8,7 +8,8 @@
 
 SpaceScreen::SpaceScreen(wiz::Game& game)
 	: Screen(game), space(game.getAssets()), mappingDatabase() {
-  mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
+    mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
+    cameraPosition = space.getShip().getLocation();
 }
 
 void SpaceScreen::tick(float delta) {
@@ -28,8 +29,8 @@ void SpaceScreen::render(sf::RenderTarget& target) {
 
 	
 	target.draw(background);
-    sf::View camera = sf::View({ space.getShip().getLocation().x,
-                                 space.getShip().getLocation().y }, Space::VIEW_SIZE);
+    cameraPosition = cameraPosition * 0.5f + space.getShip().getLocation() * 0.5f;
+    sf::View camera = sf::View(cameraPosition, Space::VIEW_SIZE);
     camera.setRotation(sf::radians(space.getShip().getRotation() ));
 	target.setView(camera);
 	

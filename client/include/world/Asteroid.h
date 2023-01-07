@@ -60,6 +60,11 @@ public:
     void plant(CropType cropType, sf::Vector2f relLocation);
     
     void removeCrop(sf::Vector2f relLocation);
+    
+    [[nodiscard]]
+    sf::Vector2f getVisualSize() const override {
+        return sf::Vector2f { size, size };
+    }
 
 private:
     void generatePlantingZones();
