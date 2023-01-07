@@ -40,8 +40,10 @@ void HatchlingShip::tick(float delta) {
     }
 
     sf::Vector2 distanceToCrop = targetCrop->getLocation() - location;
-    if (distanceToCrop.length() < 0.1)  {
+    if (distanceToCrop.length() < 1)  { // todo magic num
         targetCrop->damage(this->damage);
+        if (targetCrop->shouldBeRemoved())
+            targetCrop = nullptr;
         return;
     }
 
@@ -49,12 +51,12 @@ void HatchlingShip::tick(float delta) {
 
     // move towards crop
     this->location += velocityNormalized * speed;
-    this->rotation = velocityNormalized.angle().asRadians() - M_PI_4;
+    this->rotation = velocityNormalized.angle().asRadians() + M_PI_2;
 
 }
 
 void HatchlingShip::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
-    sprite.setPosition({location.x, -location.y});
+    sprite.setPosition({location.x, location.y});
     sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
 
     sprite.setRotation(sf::radians(rotation));
