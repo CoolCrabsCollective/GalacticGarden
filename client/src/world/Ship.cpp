@@ -79,8 +79,6 @@ void Ship::PlantOnAsteroid(Space& space) {
 
         std::vector<Entity *> entities = space.getAllEntitiesInRect(this->location, {4, 4});
 
-        const std::map<sf::Vector2f, Crop *, VecCompare> *plantingZones = nullptr;
-
         for (Entity *entity: entities) {
             Asteroid *asteroid = dynamic_cast<Asteroid *>(entity);
 
