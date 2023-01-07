@@ -37,6 +37,26 @@ void Space::initSpacialMap() {
 	}
 }
 
+void Space::removeFromMap(Entity* entity) {
+	uint64_t key = spacialKey(entity->getLocation());
+
+	if(!spacialMap.contains(key))
+		throw std::runtime_error("Error entity was not properly in spacial map (DID YOU UPDATE POSITION OUTSIDE OF TICK???)");
+
+	auto list = spacialMap[key];
+
+	auto last = list.end();
+	auto pos = std::find(list.begin(), last, entity);
+
+	if(pos == last)
+		throw std::runtime_error("Error entity was not properly in spacial map (DID YOU UPDATE POSITION OUTSIDE OF TICK???)");
+
+	list.erase(pos);
+
+	if(list.empty())
+		spacialMap.erase(key);
+}
+
 uint64_t Space::spacialKey(sf::Vector2f location) const {
 	uint32_t chunkX = round(location.x / CHUNK_SIZE);
 	uint32_t chunkY = round(location.y / CHUNK_SIZE);
