@@ -6,6 +6,7 @@
 #include "world/enemy/EnemyShip.h"
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "GameAssets.h"
+#include "world/weapon/SmallEnemyLaser.h"
 
 EnemyShip::EnemyShip(Space &space, sf::Vector2f location) 
     : Entity(space, location) {
@@ -52,6 +53,15 @@ void EnemyShip::tick(float delta) {
 
     if (redness > 0.0f) {
         redness -= delta / 1000;
+    }
+}
+
+void EnemyShip::fire() {
+    if (time_since_last_fire >= fire_delay) {
+        space.addEntity(
+                new SmallEnemyLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
+
+        time_since_last_fire = 0.f;
     }
 }
 
