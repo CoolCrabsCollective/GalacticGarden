@@ -41,7 +41,7 @@ void TitleScreen::render(sf::RenderTarget& target) {
 
 void TitleScreen::show() {
 	//logo.setTexture(*getAssets().get(GameAssets::LOGO));
-	background.setTexture(*getAssets().get(GameAssets::BACKGROUND));
+	//background.setTexture(*getAssets().get(GameAssets::BACKGROUND));
 
 	getGame().addWindowListener(this);
 
