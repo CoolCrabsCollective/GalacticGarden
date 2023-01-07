@@ -26,4 +26,6 @@ public:
 	virtual float get_time_to_maturity() const = 0;
 
     void damage(int value);
+
+    bool shouldBeRemoved() const override;
 };
