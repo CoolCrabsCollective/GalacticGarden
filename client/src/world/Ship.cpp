@@ -16,25 +16,20 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 
 void Ship::tick(float delta) {
     float bad_delta = delta / 1000.f;
-    sf::Vector2f newPos = {moveDirection.x * bad_delta * moveSpeed + this->location.x, moveDirection.y * bad_delta * moveSpeed + this->location.y };
+    sf::Vector2f newPos = { moveDirection.x * bad_delta * moveSpeed + this->location.x, moveDirection.y * bad_delta * moveSpeed + this->location.y };
     if(rotateLeft)
         rotation -= bad_delta * angularVelocity;
     
     
     if(rotateRight)
         rotation += bad_delta * angularVelocity;
-    
-    updatePos(newPos);
+
+    this->location = newPos;
     time_since_last_fire += bad_delta;
 }
 
 float Ship::getRotation() const {
     return rotation;
-}
-
-void Ship::updatePos(sf::Vector2f& moveVec) {
-  this->location = moveVec;
-  this->sprite.setPosition(moveVec);
 }
 
 void Ship::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {

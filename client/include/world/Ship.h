@@ -29,9 +29,8 @@ public:
 
     void fire();
 
-  void moveInDirOfVec(const sf::Vector2f& moveVec);
+    void moveInDirOfVec(const sf::Vector2f& moveVec);
 
-  void updatePos(sf::Vector2f& moveVec);
     void setRotateLeft(bool rotateLeft);
 
     void setRotateRight(bool rotateRight);

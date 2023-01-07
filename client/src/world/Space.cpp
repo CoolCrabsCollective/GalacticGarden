@@ -170,7 +170,7 @@ void Space::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
 }
 
 void Space::removeEntities() {
-    int i = 0;
+    size_t i = 0;
     while (i < this->entities.size()) {
         Entity* entity = this->entities.at(i);
         if (entity->shouldBeRemoved()) {
