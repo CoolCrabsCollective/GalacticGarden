@@ -16,13 +16,7 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 
 void Ship::tick(float delta) {
     float bad_delta = delta / 1000.f;
-    sf::Vector2f newPos = { moveDirection.x * bad_delta * moveSpeed + this->location.x, moveDirection.y * bad_delta * moveSpeed + this->location.y };
-    if(rotateLeft)
-        rotation -= bad_delta * angularVelocity;
-    
-    
-    if(rotateRight)
-        rotation += bad_delta * angularVelocity;
+    sf::Vector2f newPos = { moveVelocity.x * bad_delta + this->location.x, moveVelocity.y * bad_delta + this->location.y };
 
     this->location = newPos;
     time_since_last_fire += bad_delta;
@@ -35,7 +29,7 @@ float Ship::getRotation() const {
 void Ship::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
 	sprite.setPosition(location);
 	sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
-    sprite.setRotation(sf::radians(rotation ));
+    sprite.setRotation(sf::radians(rotation));
 	target.draw(sprite);
 }
 
@@ -43,27 +37,27 @@ float Ship::getZOrder() const {
     return 8.f;
 }
 
-void Ship::moveInDirOfVec(const sf::Vector2f& moveVec) {
+void Ship::moveInDirOfVec(const sf::Vector2f& moveVec, float good_delta) {
     sf::Vector2f moveVecNorm { 0.f, 0.f };
     
     if(moveVec.length() > 0.001f) // is not zero
-        moveVecNorm = moveVec.normalized().rotatedBy(sf::radians(rotation));
-    
-    this->moveDirection = moveVecNorm;
+        moveVecNorm = moveVec.normalized();
+
+    this->moveVelocity += moveVecNorm * acc * good_delta;
+    if(this->moveVelocity.length() > maxSpeed)
+    {
+        this->moveVelocity = this->moveVelocity.normalized() * maxSpeed;
+    }
 }
 
 void Ship::fire() {
     if(time_since_last_fire >= fire_delay)
     {
-        space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f)));
+        space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::radians(rotation))));
         time_since_last_fire = 0.f;
     }
 }
 
-void Ship::setRotateLeft(bool rotateLeft) {
-    this->rotateLeft = rotateLeft;
-}
-
-void Ship::setRotateRight(bool rotateRight) {
-    this->rotateRight = rotateRight;
+void Ship::setRotation(float rotationRad) {
+    this->rotation = rotationRad;
 }

@@ -26,12 +26,9 @@ void SpaceScreen::render(sf::RenderTarget& target) {
 	target.clear();
 	target.setView(sf::View({ 0.5f, 0.5f }, { 1.0f, 1.0f }));
 
-	
 	target.draw(background);
-    sf::View camera = sf::View({ space.getShip().getLocation().x,
-                                 space.getShip().getLocation().y }, Space::VIEW_SIZE);
-    camera.setRotation(sf::radians(space.getShip().getRotation() ));
-	target.setView(camera);
+	target.setView(sf::View({ space.getShip().getLocation().x,
+                              space.getShip().getLocation().y }, Space::VIEW_SIZE));
 	
 	target.draw(space);
 }
@@ -63,7 +60,7 @@ const std::string& SpaceScreen::getName() const {
 void SpaceScreen::windowClosed() {
 	getGame().getWindow().close();
 }
-
+#include <iostream>
 void SpaceScreen::processInput(float delta) {
     bool isFiring = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) ||
                     sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
@@ -86,7 +83,17 @@ void SpaceScreen::processInput(float delta) {
 
     sf::Vector2f moveVec = {xAxisInput, yAxisInput};
 
-    space.getShip().moveInDirOfVec(moveVec);
-    space.getShip().setRotateLeft(rotateLeft);
-    space.getShip().setRotateRight(rotateRight);
+    sf::Vector2i mousePos = sf::Mouse::getPosition();
+    space.getShip().moveInDirOfVec(moveVec, delta / 1000.f);
+
+    sf::Vector2f pos = getWindow().mapPixelToCoords(sf::Mouse::getPosition(getWindow()), sf::View({ space.getShip().getLocation().x,
+                                                                                                    space.getShip().getLocation().y }, Space::VIEW_SIZE));
+
+    float rotation = 0.0f;
+    if(pos.length() >= 0.0001)
+    {
+        pos = pos.normalized();
+        rotation = pos.angle().asRadians();
+    }
+    space.getShip().setRotation(rotation + M_PI_2);
 }

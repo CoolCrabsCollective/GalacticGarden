@@ -14,8 +14,9 @@ protected:
     float fire_delay = 0.4f;
     float time_since_last_fire = 0.f;
     float rotation = 0.0f;
-    float angularVelocity = M_PI; // rotate PI per second
-    sf::Vector2f moveDirection = {0.f, 0.f};
+    float maxSpeed = 4.f; // 4 units per second
+    float acc = 10.f; // 10 units per second ^ 2
+    sf::Vector2f moveVelocity = {0.f, 0.f};
     bool rotateLeft = false, rotateRight = false;
 
 public:
@@ -29,14 +30,9 @@ public:
 
     void fire();
 
-    void moveInDirOfVec(const sf::Vector2f& moveVec);
+    void moveInDirOfVec(const sf::Vector2f& moveVec, float good_delta);
 
-    void setRotateLeft(bool rotateLeft);
-
-    void setRotateRight(bool rotateRight);
+    void setRotation(float rotationRad);
 
     float getRotation() const;
-
-private:
-    float moveSpeed = 3.f;
 };
