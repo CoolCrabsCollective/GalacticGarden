@@ -17,6 +17,9 @@ Crop::Crop(Asteroid& asteroid, sf::Vector2f relLocation)
 }
 
 void Crop::tick(float delta) {
+    if(shouldBeRemoved())
+        return;
+    
     timeSincePlanted += delta;
     location = asteroid.getLocation() + relLocation.rotatedBy(sf::degrees(asteroid.getRotation()));
 }
@@ -26,6 +29,9 @@ bool Crop::isReady() const {
 }
 
 void Crop::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
+    if(shouldBeRemoved())
+        return;
+    
     sprite.setOrigin({0.5f * sprite.getTexture()->getSize().x, 1.0f * sprite.getTexture()->getSize().y});
     sprite.setPosition(location);
     sprite.setScale({ 0.5f / sprite.getTexture()->getSize().x, 0.5f / sprite.getTexture()->getSize().y });
@@ -33,7 +39,13 @@ void Crop::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
 }
 
 void Crop::damage(float value) {
+    if(shouldBeRemoved())
+        return;
+    
     this->health -= value;
+    if(health <= 0) {
+        asteroid.removeCrop(relLocation);
+    }
 }
 
 bool Crop::shouldBeRemoved() const {
