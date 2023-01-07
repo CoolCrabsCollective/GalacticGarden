@@ -18,6 +18,11 @@ HatchlingShip::HatchlingShip(Space &space, sf::Vector2f location)
 
 void HatchlingShip::tick(float delta) {
 
+    EnemyShip::tick(delta);
+    
+    if(shouldBeRemoved())
+        return;
+    
     if(targetAsteroid && !targetAsteroid->isPlanted(targetPlant))
         targetAsteroid = nullptr;
     
@@ -65,7 +70,7 @@ void HatchlingShip::tick(float delta) {
     sf::Vector2 distanceToCrop = crop->getLocation() - location;
     if(distanceToCrop.lengthSq() < 1.0f)  { // todo magic num
         
-        crop->damage(this->damage * (delta/1000));
+        crop->damage(this->damage * delta / 1000.0f);
         if (tractorBeam == nullptr) {
             tractorBeam = new TractorBeam(space, this->location + sf::Vector2f(1, 1));
             space.addEntity(tractorBeam);
@@ -83,16 +88,9 @@ void HatchlingShip::tick(float delta) {
 
     // move towards crop
     this->location += velocityNormalized * speed;
-    this->rotation = velocityNormalized.angle().asDegrees() + 180.0f;
+    this->rotation = velocityNormalized.angle().asDegrees() + 90.0f;
 }
 
-void HatchlingShip::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
-    sprite.setPosition({location.x, location.y});
-    sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
-
-    sprite.setRotation(sf::degrees(rotation));
-    target.draw(sprite);
-}
 
 float HatchlingShip::getZOrder() const {
     return 2.f;
