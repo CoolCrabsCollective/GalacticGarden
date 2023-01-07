@@ -10,7 +10,9 @@
 #include "SFML/Graphics/Drawable.hpp"
 #include "Entity.h"
 #include "SFML/Graphics/Sprite.hpp"
-#include "world/crop/Crop.h"
+#include "world/crop/CropType.h"
+
+class Crop;
 
 struct VecCompare {
     bool operator() (const sf::Vector2f& lhs, const sf::Vector2f& rhs) const {
@@ -26,10 +28,10 @@ class Asteroid : public Entity {
     
     float rotation;
     
-  sf::Vector2f velocity;
+    sf::Vector2f velocity;
     float angularVelocity;
 
-  std::map<sf::Vector2f, Crop*, VecCompare> plantingZones;
+    std::map<sf::Vector2f, Crop*, VecCompare> plantingZones;
 
 public:
     constexpr static const float MAX_SIZE = 10.0f;
@@ -46,6 +48,18 @@ public:
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
     float getZOrder() const override;
+
+    float getRotation() const;
+
+    const sf::Vector2f& getVelocity() const;
+
+    float getAngularVelocity() const;
+    
+    std::vector<sf::Vector2f> getPlantingLocations() const;
+    
+    void plant(CropType cropType, sf::Vector2f relLocation);
+    
+    void removeCrop(sf::Vector2f relLocation);
 
 private:
     void generatePlantingZones();

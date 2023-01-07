@@ -2,16 +2,18 @@
 // Created by cedric on 1/6/23.
 //
 
+#include "world/crop/Crop.h"
 #include "world/crop/FalloutFlower.h"
 #include "world/Space.h"
 #include "GameAssets.h"
 
-float FalloutFlower::get_time_to_maturity() const {
+float FalloutFlower::getTimeToMaturity() const {
     return 5.f;
 }
 
-FalloutFlower::FalloutFlower(Space &space, sf::Vector2f location) : Crop(space, location) {
-    sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_FALLOUT_FLOWER));
+FalloutFlower::FalloutFlower(Asteroid& asteroid, sf::Vector2f relLocation) 
+    : Crop(asteroid, relLocation) {
+    sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_FALLOUT_FLOWER), true);
     health = 10;
 }
 

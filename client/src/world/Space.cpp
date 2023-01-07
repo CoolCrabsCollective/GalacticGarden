@@ -14,13 +14,17 @@ Space::Space(wiz::AssetLoader& assets)
 	: assets(assets), entities(), ship(*this, { 0.0f, 0.0f }), spacialMap() {
 	entities.push_back(&ship);
 
-	entities.push_back(new Asteroid(*this, { 0.0f, 3.0f }, 0.0f, 5.0f, { 0.0f, 0.0f }, 10.0f ));
+    Asteroid* a1;
+	entities.push_back(a1 = new Asteroid(*this, { 0.0f, 3.0f }, 0.0f, 5.0f, { 0.0f, 0.0f }, 10.0f ));
 	entities.push_back(new Asteroid(*this, { 2.1f, -3.1f }, 0.0f, 3.0f, { -0.5f, 1.0f }, -1.0f));
 
-	entities.push_back(new FalloutFlower(*this, { 1.0, 3.f}));
+	//entities.push_back(new FalloutFlower(*this, { 1.0, 3.f}));
 	entities.push_back(new HatchlingShip(*this, {-1.0f, -1.0f}));
 
 	initSpacialMap();
+    
+    a1->plant(CropType::FLOWER, a1->getPlantingLocations()[0]);
+    a1->plant(CropType::FLOWER, a1->getPlantingLocations()[4]);
 }
 
 
