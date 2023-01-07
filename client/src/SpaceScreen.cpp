@@ -74,9 +74,6 @@ void SpaceScreen::processInput(float delta) {
     if (isPlanting)
         space.getShip().PlantOnAsteroid(space);
 
-    bool rotateLeft = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q);
-    bool rotateRight = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E);
-
     bool connected = sf::Joystick::isConnected(0);
 
     float xAxisInput = connected ? sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) :
