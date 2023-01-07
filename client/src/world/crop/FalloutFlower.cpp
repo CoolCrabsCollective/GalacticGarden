@@ -8,7 +8,7 @@
 #include "GameAssets.h"
 
 float FalloutFlower::getTimeToMaturity() const {
-    return 5.f;
+    return 15.f;
 }
 
 FalloutFlower::FalloutFlower(Asteroid& asteroid, sf::Vector2f relLocation) 
