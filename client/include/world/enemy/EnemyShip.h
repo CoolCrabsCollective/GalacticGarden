@@ -6,6 +6,7 @@
 
 #include "SFML/Graphics/Sprite.hpp"
 #include "world/Entity.h"
+#include "SFML/Graphics/Shader.hpp"
 
 class EnemyShip : public Entity {
 protected:
@@ -16,6 +17,9 @@ protected:
     float health = 10.0f;
     
     float rotation = 0.0f;
+
+    sf::Shader* damageShader = nullptr;
+    float redness = 0.0f;
 public:
     explicit EnemyShip(Space& space, sf::Vector2f location);
     

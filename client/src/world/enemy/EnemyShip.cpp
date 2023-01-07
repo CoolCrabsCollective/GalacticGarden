@@ -5,11 +5,12 @@
 #include "world/Space.h"
 #include "world/enemy/EnemyShip.h"
 #include "SFML/Graphics/RenderTarget.hpp"
-#include "SFML/Graphics/Texture.hpp"
 #include "world/weapon/Lazer.h"
+#include "GameAssets.h"
 
 EnemyShip::EnemyShip(Space &space, sf::Vector2f location) 
     : Entity(space, location) {
+    damageShader = space.getAssets().get(GameAssets::DAMAGE_SHADER);
 }
 
 void EnemyShip::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
@@ -21,7 +22,12 @@ void EnemyShip::draw(sf::RenderTarget &target, const sf::RenderStates &states) c
     sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
 
     sprite.setRotation(sf::degrees(rotation));
-    target.draw(sprite);
+
+        damageShader->setUniform("hit_multiplier", redness);
+    if (redness > 0.0f)
+        target.draw(sprite, damageShader);
+    else
+        target.draw(sprite);
 }
 
 void EnemyShip::tick(float delta) {
@@ -33,6 +39,7 @@ void EnemyShip::tick(float delta) {
             continue;
         
         if(Lazer* lazer = dynamic_cast<Lazer*>(entity)) {
+            redness = 1.0f;
             health -= lazer->getDamage();
             lazer->consume();
             if(health <= 0.0f) {
@@ -40,6 +47,10 @@ void EnemyShip::tick(float delta) {
                 return;
             }
         }
+    }
+
+    if (redness > 0.0f) {
+        redness -= delta / 1000;
     }
 }
 

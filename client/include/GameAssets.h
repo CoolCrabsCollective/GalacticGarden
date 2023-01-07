@@ -10,6 +10,7 @@
 #include "WIZ/asset/FontAsset.h"
 #include "WIZ/asset/TextureAsset.h"
 #include "TextAsset.h"
+#include "ShaderAsset.h"
 
 #ifndef ASSET
 #define ASSET(TYPE, NAME, CONSTRUCTOR) extern const TYPE NAME;
@@ -36,7 +37,9 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_SOIL, ("gfx/soil.png"))
     ASSET(wiz::TextureAsset, TEXTURE_ENERGY, ("gfx/energy.png"))
     ASSET(wiz::TextureAsset, TEXTURE_PLANT_GROWING, ("gfx/plant_growing.png"))
-}
 
+    // Shaders
+    ASSET(ShaderAsset, DAMAGE_SHADER, ("shaders/damage.vs", "shaders/damage.fs"))
+}
 
 #endif //GAMETEMPLATE_GAMEASSETS_H
