@@ -12,9 +12,17 @@
 
 class Asteroid : public Entity {
 	mutable sf::Sprite sprite;
+	
+	float rotation;
+	
     sf::Vector2f velocity;
+	float angularVelocity;
 public:
-	explicit Asteroid(Space& space, const sf::Vector2f& location);
+	explicit Asteroid(Space& space,
+					  const sf::Vector2f& location,
+	                  float rotation,
+	                  const sf::Vector2f& startVelocity,
+	                  float startAngVelocity);
 
 	void tick(float delta) override;
 
