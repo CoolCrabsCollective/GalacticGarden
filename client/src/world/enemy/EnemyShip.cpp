@@ -38,7 +38,7 @@ void EnemyShip::tick(float delta) {
             continue;
         
         if(Lazer* lazer = dynamic_cast<Lazer*>(entity)) {
-            if (lazer->getFraction() == fraction) {
+            if (lazer->getFraction() != fraction) {
                 redness = 1.0f;
                 health -= lazer->getDamage();
                 lazer->consume();

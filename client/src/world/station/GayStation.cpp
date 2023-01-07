@@ -11,6 +11,8 @@ GayStation::GayStation(Space &space, sf::Vector2f location) : EnemyShip(space, l
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
 
     bob_starting_pos = location.y;
+
+    fraction = FRIENDLY;
 }
 
 void GayStation::tick(float delta) {

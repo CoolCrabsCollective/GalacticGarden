@@ -22,7 +22,7 @@ protected:
     sf::Shader* damageShader = nullptr;
     float redness = 0.0f;
 
-    Fraction fraction = FRIENDLY;
+    Fraction fraction = ENEMY;
 public:
     explicit EnemyShip(Space& space, sf::Vector2f location);
     
