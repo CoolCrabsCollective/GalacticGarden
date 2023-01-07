@@ -19,7 +19,7 @@ bool Crop::is_ready() const {
 
 void Crop::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
     sprite.setOrigin({0.5f * sprite.getTexture()->getSize().x, 0.5f * sprite.getTexture()->getSize().y});
-    sprite.setPosition({location.x, -location.y});
+    sprite.setPosition({location.x, location.y});
     sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
     target.draw(sprite);
 }
