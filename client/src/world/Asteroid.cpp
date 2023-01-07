@@ -142,19 +142,20 @@ const std::optional<sf::Vector2f> Asteroid::getClosestAvailablePlantingZone(sf::
     std::optional<sf::Vector2f> closestPlantingZone;
     float closestPlantingZoneDistance = -1.0;
 
-    for (auto const& plantingZone : plantingZones)
-    {
-        if (plantingZone.second == nullptr) {
-            float distance = pow(plantingZone.first.x-location.x,2) + pow(plantingZone.first.y-location.y,2);
-            if (closestPlantingZoneDistance != -1.0) {
-                if (distance < closestPlantingZoneDistance) {
-                    closestPlantingZoneDistance = distance;
-                    closestPlantingZone = plantingZone.first;
-                }
-            } else {
+    for (auto const& plantingZone : plantingZones) {
+        if (plantingZone.second != nullptr)
+            continue;
+
+        float distance = (this->location + plantingZone.first.rotatedBy(sf::degrees(rotation))  - location).lengthSq();
+
+        if (closestPlantingZoneDistance != -1.0) {
+            if (distance < closestPlantingZoneDistance) {
                 closestPlantingZoneDistance = distance;
                 closestPlantingZone = plantingZone.first;
             }
+        } else {
+            closestPlantingZoneDistance = distance;
+            closestPlantingZone = plantingZone.first;
         }
     }
 
