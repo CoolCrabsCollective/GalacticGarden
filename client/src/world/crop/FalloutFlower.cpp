@@ -12,8 +12,10 @@ float FalloutFlower::getTimeToMaturity() const {
 }
 
 FalloutFlower::FalloutFlower(Asteroid& asteroid, sf::Vector2f relLocation) 
-    : Crop(asteroid, relLocation) {
-    sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_FALLOUT_FLOWER), true);
+    : Crop(asteroid, 
+           relLocation, 
+           asteroid.getSpace().getAssets().get(GameAssets::TEXTURE_PLANT_GROWING), 
+           asteroid.getSpace().getAssets().get(GameAssets::TEXTURE_FALLOUT_FLOWER)) {
     health = 5.0f;
 }
 
