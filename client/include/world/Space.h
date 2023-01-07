@@ -23,7 +23,7 @@ protected:
     mutable std::vector<Entity*> entities_draw_list;
     std::map<uint64_t, std::list<Entity*>> spacialMap;
 
-    std::vector<Entity*> enemies;
+    int enemy_count = 0;
     int max_enemy_count = 3;
     float spawn_delay = 100.0f;
     float time_since_last_spawn = .0f;
