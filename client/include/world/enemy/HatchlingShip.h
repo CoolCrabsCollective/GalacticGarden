@@ -5,16 +5,17 @@
 #pragma once
 
 #include "EnemyShip.h"
-#include "../crop/Crop.h"
+#include "world/crop/Crop.h"
+#include "world/enemy/TractorBeam.h"
 
 class HatchlingShip : public EnemyShip {
 protected:
-    void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
-    
     sf::Vector2f velocityNormalized = {0.f, 1.f};
     
     Asteroid* targetAsteroid = nullptr;
     sf::Vector2f targetPlant;
+
+    TractorBeam* tractorBeam = nullptr;
     
     float rotation = 0.f;
 public:
@@ -23,4 +24,6 @@ public:
     void tick(float delta) override;
     
     float getZOrder() const override;
+    
+    void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
 };
