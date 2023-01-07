@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
 #ifdef OS_SWITCH
 	mode = sf::VideoMode::getDesktopMode();
 #else
-	mode = sf::VideoMode(1920, 1080, 32);
+	mode = sf::VideoMode(160, 90, 32);
 #endif
 
 	std::shared_ptr<sf::RenderWindow> window = std::make_shared<sf::RenderWindow>(mode, "Galactic Garden");
