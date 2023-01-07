@@ -4,27 +4,35 @@
 
 #include "world/crop/Crop.h"
 #include "SFML/Graphics/Sprite.hpp"
-#include "SFML/Graphics/Texture.hpp"
+#include "GameAssets.h"
+#include "world/Space.h"
 
-Crop::Crop(Space& space, sf::Vector2f location)
-	: Entity(space, location), time_since_planted(0.f) {}
+Crop::Crop(Asteroid& asteroid, sf::Vector2f relLocation)
+	: Entity(asteroid.getSpace(), 
+             asteroid.getLocation() + relLocation.rotatedBy(sf::degrees(asteroid.getRotation()))), 
+             asteroid(asteroid),
+             relLocation(relLocation), timeSincePlanted(0.f), health(0) {
 
-void Crop::tick(float delta) {
-    time_since_planted += delta;
+    sprite.setTexture(*getSpace().getAssets().get(GameAssets::WHITE_PIXEL), true);
 }
 
-bool Crop::is_ready() const {
-    return time_since_planted >= get_time_to_maturity();
+void Crop::tick(float delta) {
+    timeSincePlanted += delta;
+    location = asteroid.getLocation() + relLocation.rotatedBy(sf::degrees(asteroid.getRotation()));
+}
+
+bool Crop::isReady() const {
+    return timeSincePlanted >= getTimeToMaturity();
 }
 
 void Crop::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    sprite.setOrigin({0.5f * sprite.getTexture()->getSize().x, 0.5f * sprite.getTexture()->getSize().y});
-    sprite.setPosition({location.x, location.y});
-    sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
+    sprite.setOrigin({0.5f * sprite.getTexture()->getSize().x, 1.0f * sprite.getTexture()->getSize().y});
+    sprite.setPosition(location);
+    sprite.setScale({ 0.5f / sprite.getTexture()->getSize().x, 0.5f / sprite.getTexture()->getSize().y });
     target.draw(sprite);
 }
 
-void Crop::damage(int value) {
+void Crop::damage(float value) {
     this->health -= value;
 }
 

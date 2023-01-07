@@ -8,24 +8,33 @@
 #include "SFML/Graphics/Drawable.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/RenderTarget.hpp"
+#include "world/Asteroid.h"
+
+#include "world/crop/CropType.h"
 
 class Crop : public Entity {
 protected:
-    float time_since_planted = 0.f;
-    int health;
+
+    Asteroid& asteroid;
+    const sf::Vector2f relLocation;
+    
+    float timeSincePlanted = 0.f;
+    float health;
     mutable sf::Sprite sprite;
+    
 public:
-    explicit Crop(Space& space, sf::Vector2f location);
+    explicit Crop(Asteroid& asteroid, 
+                  sf::Vector2f relLocation);
 		
-    bool is_ready() const;
+    bool isReady() const;
 	
     void tick(float delta) override;
 	
 	void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 	
-	virtual float get_time_to_maturity() const = 0;
+	virtual float getTimeToMaturity() const = 0;
 
-    void damage(int value);
+    void damage(float value);
 
     bool shouldBeRemoved() const override;
 };
