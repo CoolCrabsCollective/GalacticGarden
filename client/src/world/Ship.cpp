@@ -14,7 +14,7 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 	
 	this->sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_SHIP), true);
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
-    float origin_y_pos = (sprite.getTexture()->getSize().y / 2.0f) - 8.f;
+    float origin_y_pos = (sprite.getTexture()->getSize().y / 2.0f);
     normalAnimeSprite.setOrigin({sprite.getTexture()->getSize().x / 2.0f, origin_y_pos});
     boostAnimeSprite.setOrigin({sprite.getTexture()->getSize().x / 2.0f, origin_y_pos});
 

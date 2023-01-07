@@ -51,5 +51,4 @@ void Anime::resetAnimation() {
     animationSprite->setTexture(*frames.at(0));
     currentFrame = 1;
     timeSinceLastFrame = 0;
-    isAnimating = false;
 }
