@@ -98,7 +98,7 @@ void Space::tick(float delta) {
 
         if(list.empty())
             spacialMap.erase(oldKey);
-        
+
 		if(!spacialMap.contains(newKey))
 			spacialMap[newKey] = { entity };
 		else
