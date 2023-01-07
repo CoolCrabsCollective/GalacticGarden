@@ -5,7 +5,6 @@
 #include "world/Space.h"
 #include "world/enemy/EnemyShip.h"
 #include "SFML/Graphics/RenderTarget.hpp"
-#include "world/weapon/Lazer.h"
 #include "GameAssets.h"
 
 EnemyShip::EnemyShip(Space &space, sf::Vector2f location) 
@@ -39,7 +38,7 @@ void EnemyShip::tick(float delta) {
             continue;
         
         if(Lazer* lazer = dynamic_cast<Lazer*>(entity)) {
-            if (lazer->getFraction() == FRIENDLY) {
+            if (lazer->getFraction() != fraction) {
                 redness = 1.0f;
                 health -= lazer->getDamage();
                 lazer->consume();
