@@ -35,6 +35,8 @@ public:
 
 	wiz::AssetLoader& getAssets() const;
 
+    const std::vector<Entity *> &getEntities() const;
+
 };
 
 

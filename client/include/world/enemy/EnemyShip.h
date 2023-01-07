@@ -8,12 +8,12 @@
 #include "world/Entity.h"
 
 class EnemyShip : public Entity {
-public:
-    explicit EnemyShip(Space& space, sf::Vector2f location);
 protected:
     void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
     mutable sf::Sprite sprite;
+    float speed;
 public:
+    explicit EnemyShip(Space& space, sf::Vector2f location);
     void tick(float delta) override;
 };
 

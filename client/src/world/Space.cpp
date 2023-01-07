@@ -11,10 +11,9 @@ Space::Space(wiz::AssetLoader& assets)
 	: assets(assets), entities(), ship(*this, { 0.0f, 0.0f }) {
 	entities.push_back(&ship);
 	entities.push_back(new Asteroid(*this, { 0.0f, 3.0f }, 0.0f, { 0.0f, 0.0f }, 10.0f ));
-    entities.push_back(new FalloutFlower(*this, { 1.0, 3.f}));
     entities.push_back(new HatchlingShip(*this, {-1.0f, -1.0f}));
 	entities.push_back(new Asteroid(*this, { 0.0f, -3.0f }, 0.0f, { 0.0f, 0.0f }, -1.0f));
-
+    entities.push_back(new FalloutFlower(*this, { 1.0, 3.f}));
 }
 
 void Space::tick(float delta) {
@@ -42,4 +41,8 @@ const Ship& Space::getShip() const {
 
 wiz::AssetLoader& Space::getAssets() const {
 	return assets;
+}
+
+const std::vector<Entity *> &Space::getEntities() const {
+    return entities;
 }
