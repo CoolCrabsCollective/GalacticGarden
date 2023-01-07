@@ -23,7 +23,7 @@ public:
   void updatePos(sf::Vector2f& moveVec);
 
 private:
-    float moveSpeed = 5.0;
+    float moveSpeed = 0.001;
     sf::Vector2f moveDir = {0.0, 0.0};
 
     void processInput();

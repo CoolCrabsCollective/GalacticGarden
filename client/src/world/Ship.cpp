@@ -13,7 +13,7 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 }
 
 void Ship::tick(float delta) {
-  sf::Vector2f newPos = {moveDir.x*delta*moveSpeed, moveDir.y*delta*moveSpeed};
+  sf::Vector2f newPos = {moveDir.x*delta*moveSpeed + this->location.x, moveDir.y*delta*moveSpeed + this->location.y};
   updatePos(newPos);
 }
 
@@ -44,8 +44,8 @@ void Ship::processInput() {
 
   float yAxisInput = connected ? sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) :
                      (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
-                     ? 100.00 : ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) ||
-                                  sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) ? -100.00 : 0.00));
+                     ? -100.00 : ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) ||
+                                  sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) ? 100.00 : 0.00));
 
   sf::Vector2f moveVec = {xAxisInput, yAxisInput};
 
