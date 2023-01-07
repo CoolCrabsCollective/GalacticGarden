@@ -26,7 +26,6 @@ void HatchlingShip::tick(float delta) {
     if(targetAsteroid && !targetAsteroid->isPlanted(targetPlant))
         targetAsteroid = nullptr;
     
-    
     if(!targetAsteroid) {
         // find a target crop
         Crop* closestCrop = nullptr;
@@ -98,11 +97,7 @@ void HatchlingShip::tick(float delta) {
 }
 
 void HatchlingShip::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
-    sprite.setPosition({location.x, location.y});
-    sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
-
-    sprite.setRotation(sf::degrees(rotation));
-    target.draw(sprite);
+    EnemyShip::draw(target, states);
 
     if(tractorBeam)
         tractorBeam->draw(target, states);
