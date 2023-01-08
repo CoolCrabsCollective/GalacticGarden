@@ -40,7 +40,7 @@ protected:
     bool isBoosting = false;
     bool isIdle = true;
 
-    Fraction fraction = FRIENDLY;
+    Faction fraction = FRIENDLY;
 
     sf::Shader* damageShader = nullptr;
     float redness = 0.0f;
