@@ -12,7 +12,7 @@ HatchlingShip::HatchlingShip(Space &space, sf::Vector2f location)
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_HATCHLING));
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
     targetAsteroid = nullptr;
-    speed = 0.001f;
+    speed = 0.01f;
     damage = 1;
 }
 
@@ -30,7 +30,9 @@ void HatchlingShip::tick(float delta) {
         // find a target crop
         Crop* closestCrop = nullptr;
 
-        for (Entity* entity : space.getEntities()) {
+        std::vector<Entity*> closeEntities = space.getAllEntitiesInRect(location, {plant_search_range, plant_search_range});
+
+        for (Entity* entity : closeEntities) {
             if (Crop* potentialCrop = dynamic_cast<Crop*>(entity)) {
                 
                 if(potentialCrop->shouldBeRemoved())

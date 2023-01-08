@@ -7,6 +7,7 @@
 #include "world/Asteroid.h"
 #include "world/enemy/HatchlingShip.h"
 #include "world/station/GayStation.h"
+#include "world/weapon/SmallLaser.h"
 #include <iostream>
 #include "util/MathUtil.h"
 #include "world/AsteroidBelt.h"
@@ -14,13 +15,12 @@
 using namespace MathUtil;
 
 Space::Space(wiz::AssetLoader& assets) 
-    : assets(assets), entities(), ship(*this, { 0.0f, 0.0f }), spacialMap() {
+    : assets(assets), entities(), ship(*this, { 0.0f, 0.0f }), gayStation(*this, {10.0f, .0f}), spacialMap() {
     entities.push_back(&ship);
-    entities.push_back(new GayStation(*this, {10.0f, .0f}));
-    entities.push_back(new AsteroidBelt(*this));
+    entities.push_back(&gayStation);
 
     spawnAsteroids();
-    
+
 	initSpacialMap();
 }
 
@@ -46,7 +46,7 @@ void Space::spawnAsteroids() {
         
         if(overlap)
             continue;
-        
+
         float velX = static_cast<float>(rand() / (RAND_MAX + 1.0) * 2.0 - 1.0) * 1.0f;
         float velY = static_cast<float>(rand() / (RAND_MAX + 1.0) * 2.0 - 1.0) * 1.0f;
         float angVel = static_cast<float>(rand() / (RAND_MAX + 1.0) * 2.0 - 1.0) * 100.0f;
@@ -267,4 +267,8 @@ wiz::AssetLoader& Space::getAssets() const {
 
 const std::vector<Entity*> &Space::getEntities() const {
     return entities;
+}
+
+GayStation& Space::getGayStation() {
+    return gayStation;
 }

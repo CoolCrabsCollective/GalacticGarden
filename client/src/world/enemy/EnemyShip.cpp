@@ -54,6 +54,8 @@ void EnemyShip::tick(float delta) {
     if (redness > 0.0f) {
         redness -= delta / 1000;
     }
+
+    time_since_last_fire += (delta / 1000);
 }
 
 void EnemyShip::fire() {
