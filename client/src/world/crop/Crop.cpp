@@ -6,6 +6,7 @@
 #include "SFML/Graphics/Sprite.hpp"
 #include "GameAssets.h"
 #include "world/Space.h"
+#include "util/SpriteUtil.h"
 
 Crop::Crop(Asteroid& asteroid, 
            sf::Vector2f relLocation,
@@ -20,16 +21,35 @@ Crop::Crop(Asteroid& asteroid,
              plantGrowing(plantGrowing),
              grown(grown),
       progress(space.getAssets()){
+    
+    sprite.setTexture(*plantGrowing, true);
+    SpriteUtil::setSpriteOrigin(sprite, { 0.5f, 1.0f });
+    SpriteUtil::setSpriteSize(sprite, { 0.5f, 0.5f });
+    
 }
 
 void Crop::tick(float delta) {
     if(shouldBeRemoved())
         return;
     
+    if(harvested) {
+        location += (space.getShip().getLocation() - location) * delta / 1000.0f * harvestingSpeed;
+        
+        if((space.getShip().getLocation() - location).lengthSq() < 0.1f) {
+            dead = true;
+        }
+        return;
+    }
+    
+    bool wasReady = isReady();
+    
     timeSincePlanted += delta / 1000.0f;
     location = asteroid.getLocation() + relLocation.rotatedBy(sf::degrees(asteroid.getRotation()));
     progress.setPosition(location + sf::Vector2f { 0.0f, 0.1f });
     progress.setHealth(std::min(timeSincePlanted / getTimeToMaturity(), 1.f));
+
+    if(isReady() && !wasReady)
+        sprite.setTexture(*grown, true);
 }
 
 bool Crop::isReady() const {
@@ -40,14 +60,8 @@ void Crop::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
     if(shouldBeRemoved())
         return;
     
-    if(isReady())
-        sprite.setTexture(*grown, true);
-    else
-        sprite.setTexture(*plantGrowing, true);
-    
-    sprite.setOrigin({ 0.5f * sprite.getTexture()->getSize().x, 1.0f * sprite.getTexture()->getSize().y});
     sprite.setPosition(location);
-    sprite.setScale({ 0.5f / sprite.getTexture()->getSize().x, 0.5f / sprite.getTexture()->getSize().y });
+    
     target.draw(sprite);
     if(!isReady())
         target.draw(progress);
@@ -65,7 +79,10 @@ void Crop::damage(float value) {
 }
 
 void Crop::harvest() {
-    dead = true;
+    if(harvested)
+        return;
+
+    harvested = true;
     asteroid.removeCrop(relLocation);
 }
 
@@ -79,4 +96,8 @@ Asteroid& Crop::getAsteroid() const {
 
 sf::Vector2f Crop::getLocationOnAsteroid() const {
     return relLocation;
+}
+
+bool Crop::isHarvested() {
+    return harvested;
 }

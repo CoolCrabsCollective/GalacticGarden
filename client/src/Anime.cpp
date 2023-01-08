@@ -52,3 +52,7 @@ void Anime::resetAnimation() {
     currentFrame = 1;
     timeSinceLastFrame = 0;
 }
+
+void Anime::setTimeSinceLastFrame(float timeSinceLastFrame) {
+    this->timeSinceLastFrame = timeSinceLastFrame;
+}

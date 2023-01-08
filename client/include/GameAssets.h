@@ -60,6 +60,10 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_SHIP_MOVING_2, ("gfx/ship_moving_2.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SHIP_BOOSTING_1, ("gfx/ship_boosting_1.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SHIP_BOOSTING_2, ("gfx/ship_boosting_2.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_SHIP_BOOSTING_ULTRA_1, ("gfx/ship_boosting_ultra_1.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_SHIP_BOOSTING_ULTRA_2, ("gfx/ship_boosting_ultra_2.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_SHIP_BOOSTING_ULTRA_3, ("gfx/ship_boosting_ultra_3.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_SHIP_BOOSTING_ULTRA_4, ("gfx/ship_boosting_ultra_4.png"))
 
     ASSET(wiz::TextureAsset, DIALOG_BOX, ("gfx/dialog_box.png"))
 
@@ -76,6 +80,7 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_WEAPON_SELECTION_BOX, ("gfx/ui/select/weapon_select_scroll_box.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SEED_SELECTION_BOX, ("gfx/ui/select/seed_select_scroll_box.png"))
     ASSET(wiz::TextureAsset, TEXTURE_BOOST_SELECTION_BOX, ("gfx/ui/select/boost_select_scroll_box.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_HIGHLIGHT_SELECTION_BOX, ("gfx/ui/select/highlight_scroll_box.png"))
 
     ASSET(wiz::TextureAsset, TEXTURE_LASER_DOUBLE, ("gfx/upgrades/laser_double.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LASER_TRIANGLE, ("gfx/upgrades/laser_triangle.png"))

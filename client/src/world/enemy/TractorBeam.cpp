@@ -2,16 +2,16 @@
 // Created by adrien on 07/01/23.
 //
 #include "world/enemy/TractorBeam.h"
+#include "util/SpriteUtil.h"
+
 TractorBeam::TractorBeam(Space &space) : Entity(space, sf::Vector2f{0.0f, 0.0f}) {
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_TRACTOR_BEAM));
-    // Set origin at the bottom of the tractor beam, not the middle
-    sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, static_cast<float>(sprite.getTexture()->getSize().y)});
 }
 
 void TractorBeam::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
-    sprite.setOrigin({0.5f * sprite.getTexture()->getSize().x, 0.5f * sprite.getTexture()->getSize().y});
-    sprite.setPosition({location.x, location.y});
-    sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
+    SpriteUtil::setSpriteOrigin(sprite, { 0.5f, 0.5f });
+    sprite.setPosition(location);
+    SpriteUtil::setSpriteSize(sprite, { 1.0f, 1.0f });
     sprite.setRotation(sf::degrees(rotationDegrees));
     target.draw(sprite);
 }

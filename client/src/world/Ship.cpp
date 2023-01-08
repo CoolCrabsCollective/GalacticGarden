@@ -22,6 +22,7 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
     float origin_y_pos = (sprite.getTexture()->getSize().y / 2.0f);
     normalAnimeSprite.setOrigin({sprite.getTexture()->getSize().x / 2.0f, origin_y_pos});
     boostAnimeSprite.setOrigin({sprite.getTexture()->getSize().x / 2.0f, origin_y_pos});
+    megaBoostAnimeSprite.setOrigin({sprite.getTexture()->getSize().x / 2.0f, origin_y_pos});
 
     normalAnime.insertFrame(space.getAssets().get(GameAssets::TEXTURE_SHIP_MOVING_1));
     normalAnime.insertFrame(space.getAssets().get(GameAssets::TEXTURE_SHIP_MOVING_2));
@@ -31,8 +32,16 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
     boostAnime.insertFrame(space.getAssets().get(GameAssets::TEXTURE_SHIP_BOOSTING_2));
     boostAnime.setAnimationSprite(&boostAnimeSprite);
 
+    megaBoostAnime.insertFrame(space.getAssets().get(GameAssets::TEXTURE_SHIP_BOOSTING_ULTRA_1));
+    megaBoostAnime.insertFrame(space.getAssets().get(GameAssets::TEXTURE_SHIP_BOOSTING_ULTRA_2));
+    megaBoostAnime.insertFrame(space.getAssets().get(GameAssets::TEXTURE_SHIP_BOOSTING_ULTRA_3));
+    megaBoostAnime.insertFrame(space.getAssets().get(GameAssets::TEXTURE_SHIP_BOOSTING_ULTRA_4));
+    megaBoostAnime.setAnimationSprite(&megaBoostAnimeSprite);
+
     normalAnime.startAnimation();
     boostAnime.startAnimation();
+    megaBoostAnime.startAnimation();
+    megaBoostAnime.setTimeSinceLastFrame(0.04f);
 
     damageShader = space.getAssets().get(GameAssets::DAMAGE_SHADER);
 }
@@ -40,11 +49,12 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 void Ship::tick(float delta) {
     float bad_delta = delta / 1000.f;
 
+    megaBoostAnime.runAnimation(bad_delta);
     boostAnime.runAnimation(bad_delta);
     normalAnime.runAnimation(bad_delta);
 
     constexpr float energy_per_boost = 2.f;
-    if(isBoosting && !isIdle)
+    if(isBoosting && space.getUpgradeManager().has_unlocked(BOOST_BASIC) && !isIdle)
     {
         isBoosting = energy > energy_per_boost * bad_delta;
         if(isBoosting)
@@ -75,7 +85,7 @@ void Ship::tick(float delta) {
     
     for(Entity* entity : space.getAllEntitiesInRect(location, { 2.0f, 2.0f })) {
         Crop* crop = dynamic_cast<Crop*>(entity);
-        if(crop && crop->isReady() && (crop->getLocation() - location).lengthSq() < 1.0f) {
+        if(crop && crop->isReady() && (crop->getLocation() - location).lengthSq() < 1.0f && !crop->isHarvested()) {
             crop->harvest();
             energy += crop->getEnergyGain();
         }
@@ -119,6 +129,10 @@ void Ship::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
     boostAnimeSprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
     boostAnimeSprite.setRotation(sf::degrees(rotation));
 
+    megaBoostAnimeSprite.setPosition(location);
+    megaBoostAnimeSprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
+    megaBoostAnimeSprite.setRotation(sf::degrees(rotation));
+
     if(isIdle)
     {
         damageShader->setUniform("hit_multiplier", redness);
@@ -127,13 +141,14 @@ void Ship::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
         else
             target.draw(sprite);
     }
-    else if(isBoosting)
+    else if(isBoosting && space.getUpgradeManager().has_unlocked(BOOST_BASIC))
     {
+        bool ultra = space.getUpgradeManager().has_unlocked(BOOST_ULTRA);
         damageShader->setUniform("hit_multiplier", redness);
         if (redness > 0.0f)
-            target.draw(boostAnimeSprite, damageShader);
+            target.draw(ultra ? megaBoostAnimeSprite : boostAnimeSprite, damageShader);
         else
-            target.draw(boostAnimeSprite);
+            target.draw(ultra ? megaBoostAnimeSprite: boostAnimeSprite);
     }
     else
     {

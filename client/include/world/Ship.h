@@ -47,15 +47,17 @@ protected:
     sf::Shader* damageShader = nullptr;
     float redness = 0.0f;
 
-    float energy = 100.f;
+    float energy = 1000.f;
     
     WeaponType weaponType = WeaponType::SIMPLE;
-    CropType cropType = CropType::CORN;
+    CropType cropType = CropType::FLOWER;
     
     mutable sf::Sprite normalAnimeSprite;
     Anime normalAnime;
     mutable sf::Sprite boostAnimeSprite;
     Anime boostAnime;
+    mutable sf::Sprite megaBoostAnimeSprite;
+    Anime megaBoostAnime;
     
 public:
     void setIsIdle(bool isIdle);
