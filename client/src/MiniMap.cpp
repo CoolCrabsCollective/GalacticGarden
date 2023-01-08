@@ -17,8 +17,8 @@ MiniMap::MiniMap(SpaceScreen& screen)
 void MiniMap::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
     target.setView(sf::View({ 800.0f, 450.0f }, { 1600.0f, 900.0f }));
     
-    sf::Vector2f offset = { 1410.0f, 10.0f };
-    sf::Vector2f size = { 180.0f, 180.0f };
+    sf::Vector2f offset = { 1230.0f, 10.0f };
+    sf::Vector2f size = { 360.0f, 360.0f };
 
     SpriteUtil::setSpriteOrigin(mapSprite, { 0.5f, 0.5f });
     mapSprite.setPosition(offset + size / 2.0f);
@@ -34,13 +34,22 @@ void MiniMap::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     
     for(Entity* entity : screen.getSpace().getEntities()) {
         if(dynamic_cast<Ship*>(entity)) 
-            sprite.setColor(sf::Color::White);
+            sprite.setColor(shipColor);
         else if(dynamic_cast<GayStation*>(entity))
-            sprite.setColor(sf::Color::Yellow);
-        else if(dynamic_cast<Asteroid*>(entity))
-            sprite.setColor(sf::Color::Green);
+            sprite.setColor(spaceStationColor);
+        else if(Asteroid* asteroid = dynamic_cast<Asteroid*>(entity)) {
+            if (!asteroid->has_planting_spots()) {
+                sprite.setColor(noPlantingSpotsColor);
+            } else if (asteroid->has_grown_plants()) {
+                sprite.setColor(readyAsteroidColor);
+            } else if (asteroid->is_fully_planted()) {
+                sprite.setColor(plantedAsteroidColor);
+            } else {
+                sprite.setColor(unplantedAsteroidColor);
+            }
+        }
         else if(dynamic_cast<EnemyShip*>(entity))
-            sprite.setColor(sf::Color::Red);
+            sprite.setColor(enemyShipColor);
         else
             continue;
 

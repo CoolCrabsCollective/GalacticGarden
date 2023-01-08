@@ -100,6 +100,10 @@ void SpaceScreen::setShopIsOpen(bool shopIsOpen) {
 void SpaceScreen::tick(float delta) {
     dialogBox.update(delta);
 
+    timeBetweenKeyPresses += delta;
+    if (timeBetweenKeyPresses>intervalBetweenKeyPresses)
+        canProcessKeyPress = true;
+
     if (space.paused)
         return;
 
@@ -115,6 +119,7 @@ void SpaceScreen::tick(float delta) {
         cameraPosition = space.getShip().getLocation() + space.getShip().getLocation() - smoothPosition;
 
         weaponSelectionUi.update(delta);
+        seedSelectionUi.update(delta);
     } else {
         gameoverCooldown -= delta / 1000.0f;
     }
@@ -206,76 +211,122 @@ void SpaceScreen::mouseButtonPressed(const sf::Event::MouseButtonEvent &mouseBut
 }
 
 void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
-    if(space.gameover && gameoverCooldown <= 0.0f) {
-        getGame().setScreen(new SpaceScreen(getGame()));
-        return;
-    }
-    
-    switch(keyEvent.code) {
-        case sf::Keyboard::Escape:
-            if (dialogBox.isInProgress()) {
-                dialogBox.kill();
-            }
+    if (canProcessKeyPress) {
+        timeBetweenKeyPresses = .0f;
+        canProcessKeyPress = false;
 
-            if(shopIsOpen) {
-                shopIsOpen = false;
-                space.paused = false;
-            }
-            break;
+        if (space.gameover && gameoverCooldown <= 0.0f) {
+            getGame().setScreen(new SpaceScreen(getGame()));
+            return;
+        }
 
-        case sf::Keyboard::Space:
-        case sf::Keyboard::Enter:
-            if (dialogBox.isInProgress())
-                dialogBox.interact();
-            if(shopIsOpen)
-            {
-                Upgrade upgrade = upgradeMenu.select();
-                if(space.getUpgradeManager().get_cost(upgrade) < space.getShip().getEnergy())
-                {
-                    space.getUpgradeManager().unlock(upgrade);
-                    space.getShip().buyShit(space.getUpgradeManager().get_cost(upgrade));
+        switch (keyEvent.code) {
+            case sf::Keyboard::Escape:
+                if (dialogBox.isInProgress()) {
+                    dialogBox.kill();
                 }
-            }
-            break;
-        case sf::Keyboard::F:
-            {
+
+                if (shopIsOpen) {
+                    shopIsOpen = false;
+                    space.paused = false;
+                }
+                break;
+
+            case sf::Keyboard::Space:
+            case sf::Keyboard::Enter:
+                if (dialogBox.isInProgress())
+                    dialogBox.interact();
+                if (shopIsOpen) {
+                    Upgrade upgrade = upgradeMenu.select();
+                    if (space.getUpgradeManager().get_cost(upgrade) < space.getShip().getEnergy()) {
+                        space.getUpgradeManager().unlock(upgrade);
+                        space.getShip().buyShit(space.getUpgradeManager().get_cost(upgrade));
+                    }
+                }
+                break;
+            case sf::Keyboard::F: {
                 sf::Vector2f ssVec = space.getGayStation().getLocation();
                 sf::Vector2f pVec = space.getShip().getLocation();
                 sf::Vector2f diff = ssVec - pVec;
                 float ssDis = diff.x * diff.x + diff.y * diff.y;
-                if(ssDis < SPACE_STATION_STORE_DIS_SQ)
-                {
+                if (ssDis < SPACE_STATION_STORE_DIS_SQ) {
                     shopIsOpen = !shopIsOpen;
                     space.paused = shopIsOpen;
+                } else {
+                    seedSelectionUi.changeSelection(true);
+                    space.getShip().setCropType(static_cast<CropType>(seedSelectionUi.getSelection()));
                 }
             }
-            break;
-        case sf::Keyboard::A:
-        case sf::Keyboard::Left:
-            if(shopIsOpen)
-                upgradeMenu.moveLeft();
-            break;
-        case sf::Keyboard::D:
-        case sf::Keyboard::Right:
-            if(shopIsOpen)
-                upgradeMenu.moveRight();
-            break;
-        case sf::Keyboard::Q: {
-            weaponSelectionUi.changeSelection(false);
-            space.getShip().setWeaponType(static_cast<WeaponType>(weaponSelectionUi.getSelection()));
-            break;
+                break;
+            case sf::Keyboard::Num1:
+            case sf::Keyboard::Numpad1:
+            {
+                weaponSelectionUi.setSelection(0);
+                space.getShip().setWeaponType(static_cast<WeaponType>(weaponSelectionUi.getSelection()));
+                break;
+            }
+            case sf::Keyboard::Num2:
+            case sf::Keyboard::Numpad2:
+            {
+                weaponSelectionUi.setSelection(1);
+                space.getShip().setWeaponType(static_cast<WeaponType>(weaponSelectionUi.getSelection()));
+                break;
+            }
+            case sf::Keyboard::Num3:
+            case sf::Keyboard::Numpad3:
+            {
+                weaponSelectionUi.setSelection(2);
+                space.getShip().setWeaponType(static_cast<WeaponType>(weaponSelectionUi.getSelection()));
+                break;
+            }
+            case sf::Keyboard::Num4:
+            case sf::Keyboard::Numpad4:
+            {
+                weaponSelectionUi.setSelection(3);
+                space.getShip().setWeaponType(static_cast<WeaponType>(weaponSelectionUi.getSelection()));
+                break;
+            }
+            case sf::Keyboard::Num5:
+            case sf::Keyboard::Numpad5:
+            {
+                weaponSelectionUi.setSelection(4);
+                space.getShip().setWeaponType(static_cast<WeaponType>(weaponSelectionUi.getSelection()));
+                break;
+            }
+            case sf::Keyboard::Num6:
+            case sf::Keyboard::Numpad6:
+            {
+                weaponSelectionUi.setSelection(5);
+                space.getShip().setWeaponType(static_cast<WeaponType>(weaponSelectionUi.getSelection()));
+                break;
+            }
+            case sf::Keyboard::A:
+            case sf::Keyboard::Left:
+                if (shopIsOpen)
+                    upgradeMenu.moveLeft();
+                break;
+            case sf::Keyboard::D:
+            case sf::Keyboard::Right:
+                if (shopIsOpen)
+                    upgradeMenu.moveRight();
+                break;
+            case sf::Keyboard::Q: {
+                weaponSelectionUi.changeSelection(false);
+                space.getShip().setWeaponType(static_cast<WeaponType>(weaponSelectionUi.getSelection()));
+                break;
+            }
+            case sf::Keyboard::E: {
+                weaponSelectionUi.changeSelection(true);
+                space.getShip().setWeaponType(static_cast<WeaponType>(weaponSelectionUi.getSelection()));
+                break;
+            }
+            // TODO: CHEAT - remove
+            case sf::Keyboard::V:
+                space.getShip().buyShit(-1000.f);
+                break;
+            default:
+                break;
         }
-        case sf::Keyboard::E: {
-            weaponSelectionUi.changeSelection(true);
-            space.getShip().setWeaponType(static_cast<WeaponType>(weaponSelectionUi.getSelection()));
-            break;
-        // TODO: CHEAT - remove
-        case sf::Keyboard::V:
-            space.getShip().buyShit(-1000.f);
-            break;
-        }
-        default:
-            break;
     }
 }
 
