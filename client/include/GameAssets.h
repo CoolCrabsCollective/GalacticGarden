@@ -47,8 +47,13 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_SHIP_BOOSTING_1, ("gfx/ship_boosting_1.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SHIP_BOOSTING_2, ("gfx/ship_boosting_2.png"))
 
+    ASSET(wiz::TextureAsset, DIALOG_BOX, ("gfx/dialog_box.png"))
+
     // Shaders
     ASSET(ShaderAsset, DAMAGE_SHADER, ("shaders/damage.vs", "shaders/damage.fs"))
+
+    // Fonts
+    ASSET(wiz::FontAsset, VT323_TTF, ("font/VT323-Regular.ttf"))
 }
 
 #endif //GAMETEMPLATE_GAMEASSETS_H

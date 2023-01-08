@@ -10,7 +10,6 @@
 #include "world/weapon/SmallLaser.h"
 #include <iostream>
 #include "util/MathUtil.h"
-#include "world/AsteroidBelt.h"
 
 using namespace MathUtil;
 
