@@ -28,6 +28,10 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
     energySprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ENERGY));
 
     space.paused = true;
+
+    shopText.setString("Press 'F' to open the Space Station Store");
+    shopText.setFont(*game.getAssets().get(GameAssets::VT323_TTF));
+
     dialogBox.startDialog({
         "~CAW~ We have detected the human base!",
         "Get off my asteroids you mangy chickens!",
@@ -42,7 +46,15 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                     space.paused = false;
                     printf("penis");
                }
-               );
+           );
+}
+
+bool SpaceScreen::isShopIsOpen() const {
+    return shopIsOpen;
+}
+
+void SpaceScreen::setShopIsOpen(bool shopIsOpen) {
+    SpaceScreen::shopIsOpen = shopIsOpen;
 }
 
 void SpaceScreen::tick(float delta) {
@@ -101,13 +113,27 @@ void SpaceScreen::render(sf::RenderTarget& target) {
         dim.setScale(SpaceScreen::UI_VIEW_SIZE);
         dim.setColor(sf::Color(0, 0, 0, 128));
         target.draw(dim);
+        if(shopIsOpen)
+        {
+            target.draw(upgradeMenu);
+        }
     } else {
         target.draw(energySprite);
         target.draw(energyText);
         target.draw(weaponSelectionUi);
+
+        sf::Vector2f ssVec = space.getGayStation().getLocation();
+        sf::Vector2f pVec = space.getShip().getLocation();
+        sf::Vector2f diff = ssVec - pVec;
+        float ssDis = diff.x * diff.x + diff.y * diff.y;
+        if(ssDis < SPACE_STATION_STORE_DIS_SQ)
+        {
+            shopText.setPosition({ 700.f, 500.f});
+            target.draw(shopText);
+        }
+
         target.draw(seedSelectionUi);
         target.draw(boostSelectionUi);
-        target.draw(upgradeMenu);
     }
     target.draw(dialogBox);
 }
@@ -147,8 +173,11 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
     
     switch(keyEvent.code) {
         case sf::Keyboard::Escape:
-            if(!space.gameover)
-                space.gameover = true;
+            if(shopIsOpen)
+            {
+                shopIsOpen = false;
+                space.paused = false;
+            }
             break;
 
         case sf::Keyboard::Space:
@@ -185,7 +214,19 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
         case sf::Keyboard::Numpad6:
             space.getShip().setWeaponType(WeaponType::BOMB);
             break;
-            
+        case sf::Keyboard::F:
+            {
+                sf::Vector2f ssVec = space.getGayStation().getLocation();
+                sf::Vector2f pVec = space.getShip().getLocation();
+                sf::Vector2f diff = ssVec - pVec;
+                float ssDis = diff.x * diff.x + diff.y * diff.y;
+                if(ssDis < SPACE_STATION_STORE_DIS_SQ)
+                {
+                    shopIsOpen = !shopIsOpen;
+                    space.paused = shopIsOpen;
+                }
+            }
+            break;
         default:
             break;
     }
