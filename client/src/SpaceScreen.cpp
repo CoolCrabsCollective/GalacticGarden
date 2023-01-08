@@ -124,6 +124,9 @@ void SpaceScreen::mouseWheelScrolled(const sf::Event::MouseWheelScrollEvent& mou
 }
 
 void SpaceScreen::mouseButtonPressed(const sf::Event::MouseButtonEvent &mouseButtonEvent) {
+    if (dialogBox.isInProgress())
+        dialogBox.interact();
+
     if(space.gameover && gameoverCooldown <= 0.0f) {
         getGame().setScreen(new SpaceScreen(getGame()));
         return;
@@ -209,7 +212,7 @@ void SpaceScreen::processInput(float delta) {
 //            (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) ||
 //            sf::Mouse::isButtonPressed(sf::Mouse::Button::Right));
 
-    bool isPlanting = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) || sf::Mouse::isButtonPressed(sf::Mouse::Button::Right);
+    bool isPlanting = sf::Mouse::isButtonPressed(sf::Mouse::Button::Right);
 
     if (isPlanting)
         space.getShip().plantOnAsteroid(space);
