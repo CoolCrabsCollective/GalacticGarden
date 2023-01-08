@@ -56,21 +56,33 @@ void MiniMap::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
         SpriteUtil::setSpriteSize(sprite, (entity->getVisualSize() / mapSize).cwiseMul(size));
         
         sf::Vector2f pos = offset + (entity->getLocation() - center + sf::Vector2f { mapSize / 2.0f, mapSize / 2.0f }).cwiseMul(size) / mapSize;
-        
+
         if(pos.x < offset.x 
         || pos.y < offset.y 
         || pos.x > offset.x + size.x
         || pos.y > offset.y + size.y) {
-            if(dynamic_cast<GayStation*>(entity)) {
+
+            if(dynamic_cast<GayStation*>(entity) || dynamic_cast<EnemyShip*>(entity))
+            {
                 arrowSprite.setRotation((entity->getLocation() - center).angle() + sf::degrees(90.0f));
-                
+
                 pos.x = fmax(pos.x, offset.x);
                 pos.x = fmin(pos.x, offset.x + size.x);
                 pos.y = fmax(pos.y, offset.y);
                 pos.y = fmin(pos.y, offset.y + size.y);
-
-                arrowSprite.setColor(sf::Color::Yellow);
                 arrowSprite.setPosition(pos);
+
+                if(dynamic_cast<GayStation*>(entity))
+                {
+                    arrowSprite.setColor(spaceStationColor);
+                    SpriteUtil::setSpriteSize(arrowSprite, { 32.0f, 32.0f });
+                }
+                else if(dynamic_cast<EnemyShip*>(entity))
+                {
+                    arrowSprite.setColor(enemyShipColor);
+                    SpriteUtil::setSpriteSize(arrowSprite, { 16.0f, 16.0f });
+                }
+
                 target.draw(arrowSprite);
             }
             continue;   

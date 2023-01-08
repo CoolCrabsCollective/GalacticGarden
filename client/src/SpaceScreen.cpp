@@ -16,9 +16,9 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
         gameOverMenu(*this),
         miniMap(*this),
         dialogBox(game.getAssets().get(GameAssets::VT323_TTF),  game.getAssets().get(GameAssets::DIALOG_BOX)),
-        weaponSelectionUi(*this, WEAPON),
-        seedSelectionUi(*this, SEED),
-        boostSelectionUi(*this, BOOSTER),
+        weaponSelectionUi(*this, WEAPON, &space.getUpgradeManager()),
+        seedSelectionUi(*this, SEED, &space.getUpgradeManager()),
+        boostSelectionUi(*this, BOOSTER, &space.getUpgradeManager()),
         upgradeMenu(space, space.getUpgradeManager()) {
     weaponSelectionUi.setEnableScroll(true);
 
@@ -226,9 +226,7 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
             case sf::Keyboard::Escape:
                 if (dialogBox.isInProgress()) {
                     dialogBox.kill();
-                }
-
-                if (shopIsOpen) {
+                } else if (shopIsOpen) {
                     shopIsOpen = false;
                     space.paused = false;
                 }
