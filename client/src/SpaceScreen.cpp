@@ -89,22 +89,21 @@ void SpaceScreen::render(sf::RenderTarget& target) {
 
     // ui
     target.setView(sf::View(SpaceScreen::UI_VIEW_SIZE / 2.0f, SpaceScreen::UI_VIEW_SIZE));
-    target.draw(energySprite);
-    target.draw(energyText);
     if (space.gameover)
         target.draw(gameOverMenu);
-    if (space.paused) {
+    else if (space.paused) {
         dim.setTexture(*getAssets().get(GameAssets::WHITE_PIXEL));
         dim.setPosition({ 0.0f, 0.0f });
         dim.setScale(SpaceScreen::UI_VIEW_SIZE);
         dim.setColor(sf::Color(0, 0, 0, 128));
         target.draw(dim);
+    } else {
+        target.draw(energySprite);
+        target.draw(energyText);
+        target.draw(weaponSelectionUi);
+        target.draw(upgradeMenu);
     }
-
-    target.draw(weaponSelectionUi);
-
     target.draw(dialogBox);
-    target.draw(upgradeMenu);
 }
 
 void SpaceScreen::show() {
