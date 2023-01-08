@@ -218,6 +218,7 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
             break;
 
         case sf::Keyboard::Space:
+        case sf::Keyboard::Enter:
             if (dialogBox.isInProgress())
                 dialogBox.interact();
             break;
