@@ -32,6 +32,9 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     sf::Sound sound;
     sf::Music* music;
 
+    sf::Text shopText;
+    bool shopIsOpen = false;
+
     sf::Sprite background;
     Space space;
     MiniMap miniMap;
@@ -49,6 +52,8 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     
     GameOverMenu gameOverMenu;
     float gameoverCooldown = 1.5f;
+
+    const float SPACE_STATION_STORE_DIS_SQ = 200.f;
 
     PictureDialogBox dialogBox;
 
@@ -83,6 +88,10 @@ public:
     void mouseWheelScrolled(const sf::Event::MouseWheelScrollEvent& mouseWheelScrollEvent) override;
 
     const Space& getSpace() const;
+
+    bool isShopIsOpen() const;
+
+    void setShopIsOpen(bool shopIsOpen);
 };
 
 #endif //LD52_CLIENT_SPACESCREEN_H
