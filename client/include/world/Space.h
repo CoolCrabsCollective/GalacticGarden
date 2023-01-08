@@ -71,7 +71,7 @@ public:
     sf::Vector2f getNearestFriendly(sf::Vector2f pos);
 
     bool gameover = false; // why is this public
-
+    bool paused = false;
 
     UpgradeManager &getUpgradeManager();
 

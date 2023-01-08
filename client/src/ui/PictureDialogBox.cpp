@@ -74,7 +74,7 @@ PictureDialogBox::PictureDialogBox(sf::Font *font1, sf::Texture *background)
 
 void PictureDialogBox::startDialog(std::vector<std::string> lines, std::vector<std::string> names,
                                    std::vector<sf::Texture *> textures, std::function<void()> callback) {
-    DialogBox::startDialog(lines);
+    DialogBox::startDialog(lines, callback);
     this->names = names;
     this->textures = textures;
 }

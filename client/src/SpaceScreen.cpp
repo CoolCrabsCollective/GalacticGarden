@@ -23,6 +23,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
     shipSmoothVelocity = { 0.0f, 0.0f };
     energySprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ENERGY));
 
+    space.paused = true;
     dialogBox.startDialog({
         "~CAW~ We have detected the human base!",
         "We're not going out that easy...",
@@ -34,11 +35,18 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                getGame().getAssets().get(GameAssets::TEXTURE_COSMIC_CROW_ICON)
                },
                [&]() {
-                }
+                    space.paused = false;
+                    printf("penis");
+               }
                );
 }
 
 void SpaceScreen::tick(float delta) {
+    dialogBox.update(delta);
+
+    if (space.paused)
+        return;
+
     if(!space.gameover) {
         processInput(delta);
         space.tick(delta);
@@ -49,8 +57,6 @@ void SpaceScreen::tick(float delta) {
 
         smoothPosition = smoothPosition * trans + (space.getShip().getLocation()) * (1.0f - trans);
         cameraPosition = space.getShip().getLocation() + space.getShip().getLocation() - smoothPosition;
-
-        dialogBox.update(delta);
     } else {
         gameoverCooldown -= delta / 1000.0f;
     }
