@@ -267,6 +267,10 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
             weaponSelectionUi.changeSelection(true);
             space.getShip().setWeaponType(static_cast<WeaponType>(weaponSelectionUi.getSelection()));
             break;
+        // TODO: CHEAT - remove
+        case sf::Keyboard::V:
+            space.getShip().buyShit(-1000.f);
+            break;
         }
         default:
             break;
