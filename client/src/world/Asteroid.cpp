@@ -146,32 +146,7 @@ float Asteroid::getAngularVelocity() const {
     return angularVelocity;
 }
 
-const std::optional<sf::Vector2f> Asteroid::getClosestAvailablePlantingZone(sf::Vector2f location) const {
-    std::optional<sf::Vector2f> closestPlantingZone;
-    float closestPlantingZoneDistance = -1.0;
-
-    for (auto const& plantingZone : plantingZones) {
-        if (plantingZone.second != nullptr)
-            continue;
-
-        float distance = (this->location + plantingZone.first.rotatedBy(sf::degrees(rotation))  - location).lengthSq();
-
-        if (closestPlantingZoneDistance != -1.0) {
-            if (distance < closestPlantingZoneDistance) {
-                closestPlantingZoneDistance = distance;
-                closestPlantingZone = plantingZone.first;
-            }
-        } else {
-            closestPlantingZoneDistance = distance;
-            closestPlantingZone = plantingZone.first;
-        }
-    }
-
-    return closestPlantingZone;
-}
-
 bool Asteroid::isPlanted(sf::Vector2f plant) const {
-
     if(!plantingZones.contains(plant))
         throw std::runtime_error("Invalid location");
     

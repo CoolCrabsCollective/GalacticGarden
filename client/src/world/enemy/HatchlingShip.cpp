@@ -12,14 +12,27 @@ HatchlingShip::HatchlingShip(Space &space, sf::Vector2f location)
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_HATCHLING));
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
     targetAsteroid = nullptr;
-    speed = 0.001f;
+    speed = 0.05f;
     damage = 1;
 }
 
 void HatchlingShip::tick(float delta) {
 
     EnemyShip::tick(delta);
-    
+
+    sf::Vector2f nearestFriendly = space.getNearestFriendly(location);
+
+    sf::Vector2f distanceToNearestFriendly = nearestFriendly - location;
+
+    if (distanceToNearestFriendly.lengthSq() < min_friendly_target_range) {
+        if (tractorBeam) {
+            delete tractorBeam;
+            tractorBeam = nullptr;
+        }
+        attackFriendly(distanceToNearestFriendly);
+        return;
+    }
+
     if(shouldBeRemoved())
         return;
     
@@ -30,7 +43,9 @@ void HatchlingShip::tick(float delta) {
         // find a target crop
         Crop* closestCrop = nullptr;
 
-        for (Entity* entity : space.getEntities()) {
+        std::vector<Entity*> closeEntities = space.getAllEntitiesInRect(location, {plant_search_range, plant_search_range});
+
+        for (Entity* entity : closeEntities) {
             if (Crop* potentialCrop = dynamic_cast<Crop*>(entity)) {
                 
                 if(potentialCrop->shouldBeRemoved())
@@ -80,19 +95,21 @@ void HatchlingShip::tick(float delta) {
             tractorBeam = nullptr;
         }
 
-        if(tractorBeam)
-        {
+        if(tractorBeam) {
             tractorBeam->setLocation(location + velocityNormalized);
             tractorBeam->setRotationDegrees(this->rotation);
         }
 
-        return;
+    } else if (tractorBeam) {
+        delete tractorBeam;
+        tractorBeam = nullptr;
     }
 
     velocityNormalized = distanceToCrop.normalized();
 
     // move towards crop
-    this->location += velocityNormalized * speed;
+    if(distanceToCrop.lengthSq() >= 0.9f)
+        this->location += velocityNormalized * speed;
     this->rotation = velocityNormalized.angle().asDegrees() + 90.0f;
 }
 
@@ -105,4 +122,14 @@ void HatchlingShip::draw(sf::RenderTarget &target, const sf::RenderStates &state
 
 float HatchlingShip::getZOrder() const {
     return 2.f;
+}
+
+void HatchlingShip::attackFriendly(sf::Vector2f distanceToFriendly) {
+    fire();
+
+    velocityNormalized = distanceToFriendly.normalized();
+
+    if(distanceToFriendly.lengthSq() >= 7.f)
+        this->location += velocityNormalized * speed;
+    this->rotation = velocityNormalized.angle().asDegrees() + 90.0f;
 }

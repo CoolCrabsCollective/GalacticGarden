@@ -2,12 +2,14 @@
 // Created by cedric on 1/6/23.
 //
 
+#include <algorithm>
 #include "world/Space.h"
 #include "world/Ship.h"
 #include "GameAssets.h"
 #include "world/weapon/SmallLaser.h"
 #include "world/crop/Crop.h"
 #include "world/Asteroid.h"
+#include "world/Seed.h"
 #include "util/MathUtil.h"
 
 Ship::Ship(Space& space, const sf::Vector2f& location) 
@@ -29,6 +31,8 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 
     normalAnime.startAnimation();
     boostAnime.startAnimation();
+
+    damageShader = space.getAssets().get(GameAssets::DAMAGE_SHADER);
 }
 
 void Ship::tick(float delta) {
@@ -73,6 +77,26 @@ void Ship::tick(float delta) {
             energy += crop->getEnergyGain();
         }
     }
+
+    if (redness > 0.0f) {
+        redness -= delta / 1000;
+    }
+
+    for(Entity* entity : space.getAllEntitiesInRect(location, { 1.0f, 1.0f })) {
+        if(entity->shouldBeRemoved())
+            continue;
+
+        if(Lazer* lazer = dynamic_cast<Lazer*>(entity)) {
+            if (lazer->getFraction() != fraction) {
+                redness = 1.0f;
+                energy -= lazer->getDamage()*10;
+                lazer->consume();
+            }
+        }
+    }
+
+    if (energy <= .0f)
+        space.gameover = true;
 }
 
 float Ship::getRotation() const {
@@ -94,15 +118,27 @@ void Ship::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
 
     if(isIdle)
     {
-        target.draw(sprite);
+        damageShader->setUniform("hit_multiplier", redness);
+        if (redness > 0.0f)
+            target.draw(sprite, damageShader);
+        else
+            target.draw(sprite);
     }
     else if(isBoosting)
     {
-        target.draw(boostAnimeSprite);
+        damageShader->setUniform("hit_multiplier", redness);
+        if (redness > 0.0f)
+            target.draw(boostAnimeSprite, damageShader);
+        else
+            target.draw(boostAnimeSprite);
     }
     else
     {
-        target.draw(normalAnimeSprite);
+        damageShader->setUniform("hit_multiplier", redness);
+        if (redness > 0.0f)
+            target.draw(normalAnimeSprite, damageShader);
+        else
+            target.draw(normalAnimeSprite);
     }
 }
 
@@ -179,22 +215,62 @@ void Ship::setRotation(float rotationRad) {
 void Ship::plantOnAsteroid(Space& space) {
     if(time_since_last_plant >= plant_delay) {
         sf::Vector2f shipLocation = space.getShip().getLocation();
-
+        std::vector<plantzone_t> seedrics;
         std::vector<Entity *> entities = space.getAllEntitiesInRect(this->location, {6, 6});
 
         for (Entity *entity: entities) {
             Asteroid *asteroid = dynamic_cast<Asteroid *>(entity);
 
-            if (asteroid != nullptr) {
-                std::optional<sf::Vector2f> closestPlantingZone = asteroid->getClosestAvailablePlantingZone(shipLocation);
-                if (closestPlantingZone.has_value()) {
-                    asteroid->plant(CropType::FLOWER, closestPlantingZone.value());
+            if (asteroid == nullptr)
+                continue;
+
+            std::vector<plantzone_t> cedrics = getClosestAvailablePlantingZones(*asteroid);
+
+            for(const auto& cedric : cedrics)
+            {
+                seedrics.push_back(cedric);
+            }
+        }
+        std::sort(seedrics.begin(), seedrics.end(), [&](const plantzone_t& a, const plantzone_t & b){
+            float distanceA = ((a.second->getLocation() + a.first.rotatedBy(sf::degrees(a.second->getRotation()))) - this->location).lengthSq();
+            float distanceB = ((a.second->getLocation() + b.first.rotatedBy(sf::degrees(a.second->getRotation()))) - this->location).lengthSq();
+
+            return distanceA < distanceB;
+        });
+
+        if(!seedrics.empty()) {
+            for(auto& zone : seedrics) {
+                if(!seed_thrown.contains(zone) || !seed_thrown[zone]) {
+                   seed_thrown[zone] = true;
+
+                    Seed* newSeed = new Seed(space, location, zone.second, zone.first);
+                    newSeed->setRotationDegrees(this->rotation);
+                    this->space.addEntity((newSeed));
+
                     time_since_last_plant = .0f;
+                   break;
                 }
-                break;
             }
         }
     }
+}
+
+std::vector<plantzone_t> Ship::getClosestAvailablePlantingZones(Asteroid& asteroid) {
+    std::vector<plantzone_t> ret;
+
+    for (const auto &plantingLocation : asteroid.getPlantingLocations()) {
+        if (!asteroid.isPlanted(plantingLocation))
+            ret.emplace_back(plantingLocation, &asteroid);
+    }
+
+    std::sort(ret.begin(), ret.end(), [&](const plantzone_t& a, const plantzone_t & b){
+        float distanceA = ((asteroid.getLocation() + a.first.rotatedBy(sf::degrees(asteroid.getRotation()))) - this->location).lengthSq();
+        float distanceB = ((asteroid.getLocation() + b.first.rotatedBy(sf::degrees(asteroid.getRotation()))) - this->location).lengthSq();
+
+        return distanceA < distanceB;
+    });
+
+    return ret;
 }
 
 void Ship::setLazerType(LazerType lazer_type) {
@@ -212,6 +288,10 @@ bool Ship::energy_for_shot(int shot_count) {
 
 int Ship::getEnergy() const {
     return energy;
+}
+
+std::map<plantzone_t, bool, PlantZoneCompare> &Ship::getSeedThrown() {
+    return seed_thrown;
 }
 
 void Ship::setIsBoosting(bool isBoosting) {

@@ -10,7 +10,7 @@
 
 class SmallLaser : public Lazer {
 protected:
-    const float speed = 8.f;
+    const float speed = 40.f;
     float lifetime = 2.f;
     
     const sf::Vector2f direction;

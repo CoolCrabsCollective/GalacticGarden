@@ -33,7 +33,7 @@ void SmallEnemyLaser::draw(sf::RenderTarget &target, const sf::RenderStates &sta
 }
 
 float SmallEnemyLaser::getZOrder() const {
-    return 5.f;
+    return 1.f;
 }
 
 float SmallEnemyLaser::getDamage() {

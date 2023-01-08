@@ -7,20 +7,21 @@
 #include "world/Asteroid.h"
 #include "world/enemy/HatchlingShip.h"
 #include "world/station/GayStation.h"
+#include "world/weapon/SmallLaser.h"
 #include <iostream>
 #include "util/MathUtil.h"
 #include "world/AsteroidBelt.h"
+#include "world/Seed.h"
 
 using namespace MathUtil;
 
 Space::Space(wiz::AssetLoader& assets) 
-    : assets(assets), entities(), ship(*this, { 0.0f, 0.0f }), spacialMap() {
+    : assets(assets), entities(), ship(*this, { 0.0f, 0.0f }), gayStation(*this, {10.0f, .0f}), spacialMap() {
     entities.push_back(&ship);
-    entities.push_back(new GayStation(*this, {10.0f, .0f}));
-    entities.push_back(new AsteroidBelt(*this));
+    entities.push_back(&gayStation);
 
     spawnAsteroids();
-    
+
 	initSpacialMap();
 }
 
@@ -46,7 +47,7 @@ void Space::spawnAsteroids() {
         
         if(overlap)
             continue;
-        
+
         float velX = static_cast<float>(rand() / (RAND_MAX + 1.0) * 2.0 - 1.0) * 1.0f;
         float velY = static_cast<float>(rand() / (RAND_MAX + 1.0) * 2.0 - 1.0) * 1.0f;
         float angVel = static_cast<float>(rand() / (RAND_MAX + 1.0) * 2.0 - 1.0) * 100.0f;
@@ -197,6 +198,7 @@ void Space::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
     });
 
     for(Entity* entity : entities_draw_list) {
+
         if(entity->getLocation().x + entity->getVisualSize().x / 2.0f >= start.x
            && entity->getLocation().y + entity->getVisualSize().y / 2.0f >= start.y
            && entity->getLocation().x - entity->getVisualSize().x / 2.0f <= end.x
@@ -267,4 +269,15 @@ wiz::AssetLoader& Space::getAssets() const {
 
 const std::vector<Entity*> &Space::getEntities() const {
     return entities;
+}
+
+GayStation& Space::getGayStation() {
+    return gayStation;
+}
+
+sf::Vector2f Space::getNearestFriendly(sf::Vector2f pos) {
+    float distanceToShip = (ship.getLocation() - pos).lengthSq();
+    float distanceToGayStation = (gayStation.getLocation() - pos).lengthSq();
+
+    return distanceToShip < distanceToGayStation ? ship.getLocation() : gayStation.getLocation();
 }

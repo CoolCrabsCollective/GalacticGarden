@@ -39,8 +39,8 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_SOIL, ("gfx/soil.png"))
     ASSET(wiz::TextureAsset, TEXTURE_ENERGY, ("gfx/energy.png"))
     ASSET(wiz::TextureAsset, TEXTURE_PLANT_GROWING, ("gfx/plant_growing.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_SEED, ("gfx/seed_rick.png"))
     ASSET(wiz::TextureAsset, TEXTURE_GAY_STATION, ("gfx/gay_station.png"))
-
 
     ASSET(wiz::TextureAsset, TEXTURE_SHIP, ("gfx/ship.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SHIP_MOVING_1, ("gfx/ship_moving_1.png"))

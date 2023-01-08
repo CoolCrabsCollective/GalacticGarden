@@ -11,6 +11,7 @@
 #include "WIZ/asset/AssetLoader.h"
 #include "Entity.h"
 #include "Ship.h"
+#include "world/station/GayStation.h"
 #include <list>
 
 class Space : public Tickable, public sf::Drawable {
@@ -19,6 +20,7 @@ protected:
 	std::vector<Entity*> entities;
 
     Ship ship;
+    GayStation gayStation;
     
     mutable std::vector<Entity*> entities_draw_list;
     std::map<uint64_t, std::list<Entity*>> spacialMap;
@@ -41,6 +43,8 @@ public:
 
     Ship& getShip();
 
+    GayStation& getGayStation();
+
     const Ship& getShip() const;
 
 	wiz::AssetLoader& getAssets() const;
@@ -51,6 +55,10 @@ public:
 											  sf::Vector2f size) const;
 
     void addEntity(Entity* entity);
+
+    sf::Vector2f getNearestFriendly(sf::Vector2f pos);
+
+    bool gameover = false;
 
 private:
 	void initSpacialMap();

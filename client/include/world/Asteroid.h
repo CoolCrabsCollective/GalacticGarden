@@ -71,8 +71,6 @@ public:
         return sf::Vector2f { size, size };
     }
 
-    const std::optional<sf::Vector2f> getClosestAvailablePlantingZone(sf::Vector2f location) const;
-
 private:
     void generatePlantingZones(int count);
 };
