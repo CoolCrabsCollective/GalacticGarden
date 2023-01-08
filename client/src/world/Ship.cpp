@@ -218,6 +218,10 @@ void Ship::fire() {
     }
 }
 
+void Ship::setCropType(CropType crop_type) {
+    this->cropType = crop_type;
+}
+
 void Ship::setRotation(float rotationRad) {
     this->rotation = rotationRad;
 }
@@ -252,7 +256,7 @@ void Ship::plantOnAsteroid(Space& space) {
                 if(!seed_thrown.contains(zone) || !seed_thrown[zone]) {
                    seed_thrown[zone] = true;
 
-                    Seed* newSeed = new Seed(space, location, zone.second, zone.first);
+                    Seed* newSeed = new Seed(space, location, zone.second, zone.first, cropType);
                     newSeed->setRotationDegrees(this->rotation);
                     this->space.addEntity((newSeed));
 
@@ -317,4 +321,11 @@ const sf::Vector2f& Ship::getMoveVelocity() const {
 
 void Ship::buyShit(float cost) {
     energy -= cost;
+}
+WeaponType Ship::getWeaponType() const {
+    return weaponType;
+}
+
+CropType Ship::getCropType() const {
+    return cropType;
 }

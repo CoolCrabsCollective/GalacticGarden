@@ -220,12 +220,19 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
             break;
 
         case sf::Keyboard::Space:
+        case sf::Keyboard::Enter:
             if (dialogBox.isInProgress())
                 dialogBox.interact();
             if(shopIsOpen)
-                upgradeMenu.select();
+            {
+                Upgrade upgrade = upgradeMenu.select();
+                if(space.getUpgradeManager().get_cost(upgrade) < space.getShip().getEnergy())
+                {
+                    space.getUpgradeManager().unlock(upgrade);
+                    space.getShip().buyShit(space.getUpgradeManager().get_cost(upgrade));
+                }
+            }
             break;
-
         case sf::Keyboard::Num1:
         case sf::Keyboard::Numpad1:
             space.getShip().setWeaponType(WeaponType::SIMPLE);
@@ -278,17 +285,6 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
             if(shopIsOpen)
                 upgradeMenu.moveRight();
             break;
-        case sf::Keyboard::Enter:
-            if(shopIsOpen)
-            {
-                Upgrade upgrade = upgradeMenu.select();
-                if(space.getUpgradeManager().get_cost(upgrade) < space.getShip().getEnergy())
-                {
-                    space.getUpgradeManager().unlock(upgrade);
-                    space.getShip().buyShit(space.getUpgradeManager().get_cost(upgrade));
-                }
-            }
-             break;
         default:
             break;
     }
