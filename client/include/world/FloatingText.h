@@ -7,9 +7,17 @@
 
 
 #include "Entity.h"
+#include "SFML/Graphics/Text.hpp"
 
 class FloatingText : public Entity {
-
+    mutable sf::Text text;
+    
+public:
+    FloatingText(Space& space, 
+                 sf::Vector2f location,
+                 std::string text,
+                 sf::Color color,
+                 float duration);
 };
 
 
