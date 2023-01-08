@@ -49,6 +49,9 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_BOMB, ("gfx/bomb.png"))
     ASSET(wiz::TextureAsset, TEXTURE_EXPLOSION_PARTICLE, ("gfx/explosion_particle.png"))
 
+    ASSET(wiz::TextureAsset, TEXTURE_CORN, ("gfx/corn.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_CORN_YOUNG, ("gfx/corn_young.png"))
+
     ASSET(wiz::TextureAsset, TEXTURE_SHIP, ("gfx/ship.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SHIP_MOVING_1, ("gfx/ship_moving_1.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SHIP_MOVING_2, ("gfx/ship_moving_2.png"))

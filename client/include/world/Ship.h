@@ -46,7 +46,10 @@ protected:
     float redness = 0.0f;
 
     float energy = 100.f;
+    
     WeaponType weaponType = WeaponType::SIMPLE;
+    CropType cropType = CropType::CORN;
+    
     mutable sf::Sprite normalAnimeSprite;
     Anime normalAnime;
     mutable sf::Sprite boostAnimeSprite;
@@ -77,7 +80,13 @@ public:
 
     float getRotation() const;
 
+    WeaponType getWeaponType() const;
+
+    CropType getCropType() const;
+
     void setWeaponType(WeaponType lazer_type);
+
+    void setCropType(CropType crop_type);
 
     std::vector<std::pair<sf::Vector2f, Asteroid*>> getClosestAvailablePlantingZones(Asteroid& asteroid);
 
