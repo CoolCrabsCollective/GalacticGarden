@@ -281,3 +281,7 @@ sf::Vector2f Space::getNearestFriendly(sf::Vector2f pos) {
 
     return distanceToShip < distanceToGayStation ? ship.getLocation() : gayStation.getLocation();
 }
+
+UpgradeManager &Space::getUpgradeManager() {
+    return upgradeManager;
+}
