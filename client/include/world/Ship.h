@@ -50,7 +50,7 @@ protected:
     float energy = 10.f;
     
     WeaponType weaponType = WeaponType::SIMPLE;
-    CropType cropType = CropType::CORN;
+    CropType cropType = CropType::FLOWER;
     
     mutable sf::Sprite normalAnimeSprite;
     Anime normalAnime;

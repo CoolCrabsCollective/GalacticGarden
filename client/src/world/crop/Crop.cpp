@@ -32,6 +32,15 @@ void Crop::tick(float delta) {
     if(shouldBeRemoved())
         return;
     
+    if(harvested) {
+        location += (space.getShip().getLocation() - location) * delta / 1000.0f * harvestingSpeed;
+        
+        if((space.getShip().getLocation() - location).lengthSq() < 0.1f) {
+            dead = true;
+        }
+        return;
+    }
+    
     bool wasReady = isReady();
     
     timeSincePlanted += delta / 1000.0f;
@@ -70,7 +79,10 @@ void Crop::damage(float value) {
 }
 
 void Crop::harvest() {
-    dead = true;
+    if(harvested)
+        return;
+
+    harvested = true;
     asteroid.removeCrop(relLocation);
 }
 
@@ -84,4 +96,8 @@ Asteroid& Crop::getAsteroid() const {
 
 sf::Vector2f Crop::getLocationOnAsteroid() const {
     return relLocation;
+}
+
+bool Crop::isHarvested() {
+    return harvested;
 }

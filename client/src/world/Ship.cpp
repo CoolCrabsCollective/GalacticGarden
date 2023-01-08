@@ -85,7 +85,7 @@ void Ship::tick(float delta) {
     
     for(Entity* entity : space.getAllEntitiesInRect(location, { 2.0f, 2.0f })) {
         Crop* crop = dynamic_cast<Crop*>(entity);
-        if(crop && crop->isReady() && (crop->getLocation() - location).lengthSq() < 1.0f) {
+        if(crop && crop->isReady() && (crop->getLocation() - location).lengthSq() < 1.0f && !crop->isHarvested()) {
             crop->harvest();
             energy += crop->getEnergyGain();
         }
