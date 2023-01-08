@@ -59,10 +59,10 @@ void UpgradeMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states)
                 sf::Text price;
                 int price_value = upgradeManager.get_cost(upgradeBlock[index]);
                 price.setString(std::to_string(price_value));
-                price.setPosition({xPos + offsetX + 2, yPos + 30.f});
+                price.setPosition({xPos + offsetX + 20, yPos + 140.f});
+                price.setCharacterSize(96);
                 price.setFont(*space.getAssets().get(GameAssets::VT323_TTF));
                 target.draw(price);
-
                 offsetX += 300;
             }
         }
