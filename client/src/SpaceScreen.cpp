@@ -107,6 +107,8 @@ void SpaceScreen::tick(float delta) {
 
         smoothPosition = smoothPosition * trans + (space.getShip().getLocation()) * (1.0f - trans);
         cameraPosition = space.getShip().getLocation() + space.getShip().getLocation() - smoothPosition;
+
+        weaponSelectionUi.update(delta);
     } else {
         gameoverCooldown -= delta / 1000.0f;
     }
@@ -233,35 +235,6 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
                 }
             }
             break;
-        case sf::Keyboard::Num1:
-        case sf::Keyboard::Numpad1:
-            space.getShip().setWeaponType(WeaponType::SIMPLE);
-            break;
-        
-        case sf::Keyboard::Num2:
-        case sf::Keyboard::Numpad2:
-            space.getShip().setWeaponType(WeaponType::DOUBLE);
-            break;
-        
-        case sf::Keyboard::Num3:
-        case sf::Keyboard::Numpad3:
-            space.getShip().setWeaponType(WeaponType::TRIANGLE);
-            break;
-        
-        case sf::Keyboard::Num4:
-        case sf::Keyboard::Numpad4:
-            space.getShip().setWeaponType(WeaponType::FOUR_WAY);
-            break;
-            
-        case sf::Keyboard::Num5:
-        case sf::Keyboard::Numpad5:
-            space.getShip().setWeaponType(WeaponType::CRAZY);
-            break;
-
-        case sf::Keyboard::Num6:
-        case sf::Keyboard::Numpad6:
-            space.getShip().setWeaponType(WeaponType::BOMB);
-            break;
         case sf::Keyboard::F:
             {
                 sf::Vector2f ssVec = space.getGayStation().getLocation();
@@ -285,6 +258,16 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
             if(shopIsOpen)
                 upgradeMenu.moveRight();
             break;
+        case sf::Keyboard::Q: {
+            weaponSelectionUi.changeSelection(false);
+            space.getShip().setWeaponType(static_cast<WeaponType>(weaponSelectionUi.getSelection()));
+            break;
+        }
+        case sf::Keyboard::E: {
+            weaponSelectionUi.changeSelection(true);
+            space.getShip().setWeaponType(static_cast<WeaponType>(weaponSelectionUi.getSelection()));
+            break;
+        }
         default:
             break;
     }
@@ -296,7 +279,7 @@ void SpaceScreen::windowClosed() {
 
 void SpaceScreen::processInput(float delta) {
     bool connected = sf::Joystick::isConnected(0);
-    // TODO: figure out why TF fetching the joystick name doesn't work
+    // TODO: figure out why SFML fetching the joystick name doesn't work
     mappingFound = connected;
 //    if (connected) {
 //        sf::Joystick::Identification id = sf::Joystick::getIdentification(0);

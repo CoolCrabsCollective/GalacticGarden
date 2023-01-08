@@ -35,6 +35,15 @@ void Bomb::tick(float delta) {
     
     location += velocity * delta / 1000.0f;
     lifetime -= delta / 1000.0f;
+
+    for(Entity* entity : space.getAllEntitiesInRect(location, { 1.0f, 1.0f })) {
+        if(EnemyShip* ship = dynamic_cast<EnemyShip*>(entity)) {
+            if((ship->getLocation() - location).lengthSq() < MathUtil::pow2(1.0f)) {
+                lifetime = 0.0f;
+                break;
+            }
+        }
+    }
     
     if(lifetime <= 0.0f) {
         lifetime = 0.0f;
