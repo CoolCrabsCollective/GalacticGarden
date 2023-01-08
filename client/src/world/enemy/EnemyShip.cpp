@@ -40,22 +40,18 @@ void EnemyShip::tick(float delta) {
         
         if(Lazer* lazer = dynamic_cast<Lazer*>(entity)) {
             if (lazer->getFraction() != fraction) {
-                redness = 1.0f;
-                health -= lazer->getDamage();
+                damage(lazer->getDamage());
                 lazer->consume();
-                if (health <= 0.0f) {
-                    health = 0.0f;
+                if(health <= 0.0f)
                     return;
-                }
             }
         }
     }
 
-    if (redness > 0.0f) {
+    if(redness > 0.0f)
         redness -= delta / 1000;
-    }
 
-    time_since_last_fire += (delta / 1000);
+    time_since_last_fire += delta / 1000.0f;
 }
 
 void EnemyShip::fire() {
@@ -69,4 +65,12 @@ void EnemyShip::fire() {
 
 bool EnemyShip::shouldBeRemoved() const {
     return health == 0.0f;
+}
+
+void EnemyShip::damage(float amount) {
+    redness = 1.0f;
+    health -= amount;
+    
+    if(health <= 0.0f)
+        health = 0.0f;
 }
