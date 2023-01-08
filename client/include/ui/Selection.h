@@ -8,18 +8,28 @@
 #include "SFML/Graphics/Drawable.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Text.hpp"
+#include "WIZ/asset/TextureAsset.h"
+#include "SelectionScroll.h"
 
 class SpaceScreen;
 
 class Selection : public sf::Drawable {
+    mutable sf::Text text;
     mutable sf::Sprite backdrop;
     mutable sf::Sprite item;
-    mutable sf::Text text;
+
+protected:
+    std::string itemName;
+    SelectionScroll* selectionScroll = nullptr;
+
 public:
-    explicit Selection(SpaceScreen& screen);
+    explicit Selection(SpaceScreen& screen, SelectionType type);
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
+    bool isEnableScroll() const;
+
+    void setEnableScroll(bool enableScroll);
 };
 
 #endif //LD52_CLIENT_SELECTION_H

@@ -19,7 +19,7 @@
 namespace GameAssets {
 	extern std::vector<const wiz::AssetBase*> ALL;
 
-  ASSET(TextAsset, CONTROLLER_DB, ("gamecontrollerdb.txt"))
+    ASSET(TextAsset, CONTROLLER_DB, ("gamecontrollerdb.txt"))
 
 	ASSET(wiz::MusicAsset, GREENLIFE, ("music/greenlife.ogg"))
 	ASSET(wiz::SoundAsset, JUMP, ("sfx/jump.ogg"))
@@ -62,7 +62,12 @@ namespace GameAssets {
     ASSET(wiz::FontAsset, VT323_TTF, ("font/VT323-Regular.ttf"))
 
     // UI
-    ASSET(wiz::TextureAsset, TEXTURE_WEAPON_SELECT_BACKDROP, ("gfx/ui/weapon_select/weapon_select_dropdown.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_WEAPON_SELECT_BACKDROP, ("gfx/ui/select/weapon_select_backdrop.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_SEED_SELECT_BACKDROP, ("gfx/ui/select/seed_select_backdrop.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_BOOST_SELECT_BACKDROP, ("gfx/ui/select/boost_select_backdrop.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_WEAPON_SELECTION_BOX, ("gfx/ui/select/weapon_select_scroll_box.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_SEED_SELECTION_BOX, ("gfx/ui/select/seed_select_scroll_box.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_BOOST_SELECTION_BOX, ("gfx/ui/select/boost_select_scroll_box.png"))
 
 
     ASSET(wiz::TextureAsset, TEXTURE_LASER_DOUBLE, ("gfx/upgrades/laser_double.png"))

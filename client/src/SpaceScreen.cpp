@@ -16,8 +16,12 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
         gameOverMenu(*this),
         miniMap(*this),
         dialogBox(game.getAssets().get(GameAssets::VT323_TTF),  game.getAssets().get(GameAssets::DIALOG_BOX)),
-        weaponSelectionUi(*this),
+        weaponSelectionUi(*this, WEAPON),
+        seedSelectionUi(*this, SEED),
+        boostSelectionUi(*this, BOOSTER),
         upgradeMenu(space, space.getUpgradeManager()) {
+    weaponSelectionUi.setEnableScroll(true);
+
     mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
     smoothPosition = cameraPosition = space.getShip().getLocation();
     shipSmoothVelocity = { 0.0f, 0.0f };
@@ -101,6 +105,8 @@ void SpaceScreen::render(sf::RenderTarget& target) {
         target.draw(energySprite);
         target.draw(energyText);
         target.draw(weaponSelectionUi);
+        target.draw(seedSelectionUi);
+        target.draw(boostSelectionUi);
         target.draw(upgradeMenu);
     }
     target.draw(dialogBox);
