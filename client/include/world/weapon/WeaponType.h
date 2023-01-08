@@ -6,13 +6,13 @@
 #define LD52_CLIENT_WEAPONTYPE_H
 
 enum WeaponType {
-    SIMPLE,
+    SIMPLE = 0,
     DOUBLE,
     TRIANGLE,
     FOUR_WAY,
     CRAZY,
-    BOMB
-    
+    BOMB,
+    LENGTH
 };
 
 #endif //LD52_CLIENT_WEAPONTYPE_H
