@@ -62,7 +62,7 @@ void UpgradeMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states)
         indexSelected = 0;
     }
 
-    for(int i = 0; i < displayedItems.size(); i++)
+    for(size_t i = 0; i < displayedItems.size(); i++)
     {
         const Upgrade& upgrade = displayedItems[i];
 
