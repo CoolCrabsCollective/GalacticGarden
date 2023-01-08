@@ -22,6 +22,7 @@ protected:
     const sf::Color plantedAsteroidColor = sf::Color(0x4d, 0x9b, 0xe6);
     const sf::Color readyAsteroidColor = sf::Color(0x1e, 0xbc, 0x73);
     const sf::Color enemyShipColor = sf::Color(0xe8, 0x3b, 0x3b);
+
 public:
     explicit MiniMap(SpaceScreen& screen);
 
