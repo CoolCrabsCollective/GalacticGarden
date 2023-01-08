@@ -29,6 +29,8 @@ public:
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
     
+    bool isDamaging();
+    
 private:
     static float opacity(float value);
 };

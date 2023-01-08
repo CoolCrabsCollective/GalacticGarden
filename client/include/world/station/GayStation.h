@@ -21,7 +21,7 @@ protected:
     float bob_speed = .3f;
     float bob_max_displacement = .1f;
 
-    Fraction fraction = FRIENDLY;
+    Faction fraction = FRIENDLY;
     float health = 10.0f;
 
     sf::Shader* damageShader = nullptr;
