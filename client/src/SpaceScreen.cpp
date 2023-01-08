@@ -9,20 +9,28 @@
 #include "GameAssets.h"
 
 SpaceScreen::SpaceScreen(wiz::Game& game)
-	: Screen(game), space(game.getAssets()), mappingDatabase(), gameOverMenu(*this) {
+	: Screen(game), space(game.getAssets()), mappingDatabase(), gameOverMenu(*this), dialogBox(game.getAssets().get(GameAssets::VT323_TTF),  game.getAssets().get(GameAssets::DIALOG_BOX)) {
     mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
     cameraPosition = space.getShip().getLocation();
     energySprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ENERGY));
+
+    dialogBox.startDialog({
+        "Another one...",
+        "I need to find her...",
+        "Why is is always the kids?...",
+    });
 }
 
 void SpaceScreen::tick(float delta) {
-    if(!gameover) {
+    if(!space.gameover) {
         processInput(delta);
         space.tick(delta);
         
         float trans = pow(0.99f, delta);
 
         cameraPosition = cameraPosition * trans + space.getShip().getLocation() * (1.0f - trans);
+
+        dialogBox.update(delta);
     } else {
         gameoverCooldown -= delta / 1000.0f;
     }
@@ -35,7 +43,7 @@ void SpaceScreen::render(sf::RenderTarget& target) {
     vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
     background.setScale(vec);
     energySprite.setPosition({50.f, 900.f});
-    energySprite.setScale({4.f, 4.f});
+    energySprite.setScale({8.0f * 16.0f / energySprite.getTexture()->getSize().x, 8.0f * 16.0f / energySprite.getTexture()->getSize().y});
 
     energyText.setString(std::to_string(space.getShip().getEnergy()));
     energyText.setPosition({ 175.f, 925.f});
@@ -54,8 +62,10 @@ void SpaceScreen::render(sf::RenderTarget& target) {
     target.setView(sf::View(SpaceScreen::UI_VIEW_SIZE / 2.0f, SpaceScreen::UI_VIEW_SIZE));
     target.draw(energySprite);
     target.draw(energyText);
-    if(gameover)
+    if(space.gameover)
         target.draw(gameOverMenu);
+
+    target.draw(dialogBox);
 }
 
 void SpaceScreen::show() {
@@ -76,24 +86,29 @@ void SpaceScreen::mouseWheelScrolled(const sf::Event::MouseWheelScrollEvent& mou
 }
 
 void SpaceScreen::mouseButtonPressed(const sf::Event::MouseButtonEvent &mouseButtonEvent) {
-    if(gameover && gameoverCooldown <= 0.0f) {
+    if(space.gameover && gameoverCooldown <= 0.0f) {
         getGame().setScreen(new SpaceScreen(getGame()));
         return;
     }
 }
 
 void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
-    if(gameover && gameoverCooldown <= 0.0f) {
+    if(space.gameover && gameoverCooldown <= 0.0f) {
         getGame().setScreen(new SpaceScreen(getGame()));
         return;
     }
     
     switch(keyEvent.code) {
         case sf::Keyboard::Escape:
-            if(!gameover)
-                gameover = true;
+            if(!space.gameover)
+                space.gameover = true;
             break;
-        
+
+        case sf::Keyboard::Space:
+            if (dialogBox.isInProgress())
+                dialogBox.interact();
+            break;
+
         case sf::Keyboard::Num1:
         case sf::Keyboard::Numpad1:
             space.getShip().setLazerType(LazerType::SIMPLE);

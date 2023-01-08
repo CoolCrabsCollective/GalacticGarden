@@ -25,6 +25,10 @@ void HatchlingShip::tick(float delta) {
     sf::Vector2f distanceToNearestFriendly = nearestFriendly - location;
 
     if (distanceToNearestFriendly.lengthSq() < min_friendly_target_range) {
+        if (tractorBeam) {
+            delete tractorBeam;
+            tractorBeam = nullptr;
+        }
         attackFriendly(distanceToNearestFriendly);
         return;
     }

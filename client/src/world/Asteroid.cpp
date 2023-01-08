@@ -20,7 +20,7 @@ Asteroid::Asteroid(Space& space,
                    int plantingZoneCount) 
 	: Entity(space, location) {
 	
-	sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ASTEROID), true);
+	sprite.setTexture(*space.getAssets().get(size < 3.0f ? GameAssets::TEXTURE_ASTEROID : GameAssets::TEXTURE_LARGE_ASTEROID), true);
 	sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
 
     zoneSprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_SOIL), true);

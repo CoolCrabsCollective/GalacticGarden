@@ -31,6 +31,8 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 
     normalAnime.startAnimation();
     boostAnime.startAnimation();
+
+    damageShader = space.getAssets().get(GameAssets::DAMAGE_SHADER);
 }
 
 void Ship::tick(float delta) {
@@ -75,6 +77,26 @@ void Ship::tick(float delta) {
             energy += crop->getEnergyGain();
         }
     }
+
+    if (redness > 0.0f) {
+        redness -= delta / 1000;
+    }
+
+    for(Entity* entity : space.getAllEntitiesInRect(location, { 1.0f, 1.0f })) {
+        if(entity->shouldBeRemoved())
+            continue;
+
+        if(Lazer* lazer = dynamic_cast<Lazer*>(entity)) {
+            if (lazer->getFraction() != fraction) {
+                redness = 1.0f;
+                energy -= lazer->getDamage()*10;
+                lazer->consume();
+            }
+        }
+    }
+
+    if (energy <= .0f)
+        space.gameover = true;
 }
 
 float Ship::getRotation() const {
@@ -96,15 +118,27 @@ void Ship::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
 
     if(isIdle)
     {
-        target.draw(sprite);
+        damageShader->setUniform("hit_multiplier", redness);
+        if (redness > 0.0f)
+            target.draw(sprite, damageShader);
+        else
+            target.draw(sprite);
     }
     else if(isBoosting)
     {
-        target.draw(boostAnimeSprite);
+        damageShader->setUniform("hit_multiplier", redness);
+        if (redness > 0.0f)
+            target.draw(boostAnimeSprite, damageShader);
+        else
+            target.draw(boostAnimeSprite);
     }
     else
     {
-        target.draw(normalAnimeSprite);
+        damageShader->setUniform("hit_multiplier", redness);
+        if (redness > 0.0f)
+            target.draw(normalAnimeSprite, damageShader);
+        else
+            target.draw(normalAnimeSprite);
     }
 }
 
