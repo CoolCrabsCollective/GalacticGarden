@@ -22,7 +22,8 @@ void MiniMap::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     sprite.setPosition(offset + size / 2.0f);
     sprite.setScale(size);
     target.draw(sprite);
-    float mapSize = Space::MAP_RADIUS * 2.0f;
+    float mapSize = 50.0f;
+    sf::Vector2f center = screen.getSpace().getShip().getLocation();
     
     for(Entity* entity : screen.getSpace().getEntities()) {
         if(dynamic_cast<Ship*>(entity)) 
@@ -36,9 +37,18 @@ void MiniMap::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
         else
             continue;
 
-        //sprite.setScale((entity->getVisualSize() / mapSize).cwiseMul(size));
-        sprite.setScale({ 2.0f, 2.0f });
-        sprite.setPosition(offset + (entity->getLocation() + sf::Vector2f { mapSize / 2.0f, mapSize / 2.0f }).cwiseMul(size) / mapSize);
+        sprite.setScale((entity->getVisualSize() / mapSize).cwiseMul(size));
+        //sprite.setScale({ 2.0f, 2.0f });
+        
+        sf::Vector2f pos = offset + (entity->getLocation() - center + sf::Vector2f { mapSize / 2.0f, mapSize / 2.0f }).cwiseMul(size) / mapSize;
+        
+        if(pos.x < offset.x 
+        || pos.y < offset.y 
+        || pos.x > offset.x + size.x
+        || pos.y > offset.y + size.y)
+            continue;
+        
+        sprite.setPosition(pos);
         target.draw(sprite);
     }
 }

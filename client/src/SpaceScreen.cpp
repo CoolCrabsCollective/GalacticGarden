@@ -5,6 +5,7 @@
 #include "SpaceScreen.h"
 #include "SFML/Window/Touch.hpp"
 #include <string>
+#include <X11/Xlibint.h>
 #include "GameAssets.h"
 #include "MiniMap.h"
 
@@ -18,7 +19,8 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
         weaponSelectionUi(*this),
         upgradeMenu(space, space.getUpgradeManager()) {
     mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
-    cameraPosition = space.getShip().getLocation();
+    smoothPosition = cameraPosition = space.getShip().getLocation();
+    shipSmoothVelocity = { 0.0f, 0.0f };
     energySprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ENERGY));
 
     dialogBox.startDialog({
@@ -35,7 +37,10 @@ void SpaceScreen::tick(float delta) {
         
         float trans = pow(0.99f, delta);
 
-        cameraPosition = cameraPosition * trans + space.getShip().getLocation() * (1.0f - trans);
+        shipSmoothVelocity = shipSmoothVelocity * trans + space.getShip().getMoveVelocity() * (1.0f - trans);
+        
+        smoothPosition = smoothPosition * trans + (space.getShip().getLocation()) * (1.0f - trans);
+        cameraPosition = space.getShip().getLocation() + space.getShip().getLocation() - smoothPosition;
 
         dialogBox.update(delta);
     } else {
