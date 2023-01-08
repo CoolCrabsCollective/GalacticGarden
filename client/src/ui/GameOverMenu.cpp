@@ -19,7 +19,7 @@ GameOverMenu::GameOverMenu(SpaceScreen& screen) {
     gameover.setPosition({ 0.0f, 0.0f });
     gameover.setScale({ vec.x, vec.y / 4.0f * 16.0f / 9.0f });
 
-    text.setString("Consider getting good, loser.\n\nPress any key to restart");
+    text.setString("The Cosmic Crows have defeated you and are now eating your vegetables.\n\nPress any key to restart");
     text.setScale({2.f, 2.f});
     text.setFont(*screen.getAssets().get(GameAssets::VT323_TTF));
     text.setFillColor(sf::Color::White);

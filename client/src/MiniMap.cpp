@@ -69,7 +69,7 @@ void MiniMap::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
                 pos.y = fmax(pos.y, offset.y);
                 pos.y = fmin(pos.y, offset.y + size.y);
 
-                arrowSprite.setColor(sf::Color::Yellow);
+                arrowSprite.setColor(spaceStationColor);
                 arrowSprite.setPosition(pos);
                 target.draw(arrowSprite);
             }
