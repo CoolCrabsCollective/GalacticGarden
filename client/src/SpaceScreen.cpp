@@ -68,11 +68,11 @@ void SpaceScreen::render(sf::RenderTarget& target) {
     vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
     vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
     background.setScale(vec);
-    energySprite.setPosition({50.f, 900.f});
+    energySprite.setPosition({50.f, 50.f});
     energySprite.setScale({8.0f * 16.0f / energySprite.getTexture()->getSize().x, 8.0f * 16.0f / energySprite.getTexture()->getSize().y});
 
     energyText.setString(std::to_string(space.getShip().getEnergy()));
-    energyText.setPosition({ 175.f, 925.f});
+    energyText.setPosition({ 175.f, 75.f});
     energyText.setScale({2.f, 2.f});
     energyText.setFillColor(sf::Color::White);
     energyText.setFont(*space.getAssets().get(GameAssets::SANS_TTF));

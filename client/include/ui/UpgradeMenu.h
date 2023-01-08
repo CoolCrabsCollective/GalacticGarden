@@ -13,6 +13,7 @@
 class UpgradeMenu : public sf::Drawable {
 protected:
     mutable sf::Sprite sprite;
+    Space& space;
 
     std::vector<std::vector<std::vector<Upgrade>>> upgradeTree{
             {{BOOST_BASIC}, {BOOST_ULTRA}},
