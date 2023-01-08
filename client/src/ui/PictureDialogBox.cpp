@@ -40,12 +40,12 @@ void PictureDialogBox::draw(sf::RenderTarget &target, const sf::RenderStates &st
     text.setFont(*font);
     text.setString(first_string);
     text.setScale({1.2f, 1.2f});
-    text.setPosition({250.0f, 620.0f - 30.0f});
+    text.setPosition({200.0f, 620.0f - 30.0f});
     text.setOutlineColor(sf::Color::Black);
     text.setFillColor(sf::Color::Black);
     target.draw(text);
 
-    text.setPosition({250.0f, 620.0f});
+    text.setPosition({200.0f, 620.0f});
     text.setString(second_string);
     target.draw(text);
 
