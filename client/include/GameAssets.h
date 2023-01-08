@@ -46,6 +46,9 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_GAY_STATION, ("gfx/gay_station.png"))
     ASSET(wiz::TextureAsset, TEXTURE_COSMIC_CROW_ICON, ("gfx/cosmic_crow_icon.png"))
     ASSET(wiz::TextureAsset, TEXTURE_CELESTIAL_CHAD_ICON, ("gfx/celestial_chad_icon.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_LORD_CROW_ICON, ("gfx/lord_crow_icon.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_CADET_CANDICE_ICON, ("gfx/cadet_candice_icon.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_NARRATOR_ICON, ("gfx/narrator_icon.png"))
     ASSET(wiz::TextureAsset, TEXTURE_BOMB, ("gfx/bomb.png"))
     ASSET(wiz::TextureAsset, TEXTURE_EXPLOSION_PARTICLE, ("gfx/explosion_particle.png"))
 
@@ -74,7 +77,6 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_SEED_SELECTION_BOX, ("gfx/ui/select/seed_select_scroll_box.png"))
     ASSET(wiz::TextureAsset, TEXTURE_BOOST_SELECTION_BOX, ("gfx/ui/select/boost_select_scroll_box.png"))
 
-
     ASSET(wiz::TextureAsset, TEXTURE_LASER_DOUBLE, ("gfx/upgrades/laser_double.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LASER_TRIANGLE, ("gfx/upgrades/laser_triangle.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LASER_FOUR_WAY, ("gfx/white_pixel.png"))
@@ -85,6 +87,7 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_BOOST_ULTRA, ("gfx/upgrades/boost_ultra.png"))
 
     ASSET(wiz::TextureAsset, TEXTURE_LOCKED, ("gfx/upgrades/too_costly.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_SELECTED, ("gfx/upgrades/select.png"))
 }
 
 #endif //GAMETEMPLATE_GAMEASSETS_H

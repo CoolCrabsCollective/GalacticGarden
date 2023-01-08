@@ -30,6 +30,8 @@ public:
     bool isInProgress() const override;
 
     void interact() override;
+
+    void kill();
 };
 
 
