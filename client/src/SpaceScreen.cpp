@@ -277,10 +277,7 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
             if(shopIsOpen)
                 upgradeMenu.moveRight();
             break;
-        case sf::Keyboard::Enter:
-            if(shopIsOpen)
-                upgradeMenu.select();
-            break;
+
         default:
             break;
     }

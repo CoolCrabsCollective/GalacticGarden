@@ -70,7 +70,7 @@ void PictureDialogBox::draw(sf::RenderTarget &target, const sf::RenderStates &st
     transmissionText.setFont(*font);
     transmissionText.setString("Incoming Transmission (SPACE to continue, ESC to skip)");
     transmissionText.setScale({0.8f, 0.8f});
-    transmissionText.setPosition({125.0f, 825.f});
+    transmissionText.setPosition({125.0f, 925.f});
     transmissionText.setOutlineColor(sf::Color::Black);
     transmissionText.setFillColor(sf::Color::White);
     target.draw(transmissionText);
