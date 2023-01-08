@@ -11,6 +11,7 @@
 #include <iostream>
 #include "util/MathUtil.h"
 #include "world/AsteroidBelt.h"
+#include "world/Seed.h"
 
 using namespace MathUtil;
 
@@ -197,6 +198,7 @@ void Space::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
     });
 
     for(Entity* entity : entities_draw_list) {
+
         if(entity->getLocation().x + entity->getVisualSize().x / 2.0f >= start.x
            && entity->getLocation().y + entity->getVisualSize().y / 2.0f >= start.y
            && entity->getLocation().x - entity->getVisualSize().x / 2.0f <= end.x

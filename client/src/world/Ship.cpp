@@ -2,6 +2,7 @@
 // Created by cedric on 1/6/23.
 //
 
+#include <algorithm>
 #include "world/Space.h"
 #include "world/Ship.h"
 #include "GameAssets.h"

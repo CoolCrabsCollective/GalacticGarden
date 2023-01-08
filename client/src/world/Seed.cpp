@@ -4,7 +4,7 @@
 
 #include "world/Seed.h"
 
-Seed::Seed(Space &space, const sf::Vector2f& location, Asteroid* targetAsteroid, const sf::Vector2f& targetPlantingZone) : Entity(space, sf::Vector2f{0.0f, 0.0f}), location(location), targetAsteroid(targetAsteroid), targetPlantingZone(targetPlantingZone) {
+Seed::Seed(Space &space, const sf::Vector2f& location, Asteroid* targetAsteroid, const sf::Vector2f& targetPlantingZone) : Entity(space, location), location(location), targetAsteroid(targetAsteroid), targetPlantingZone(targetPlantingZone) {
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_SEED));
     // Set origin at the bottom of the tractor beam, not the middle
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, static_cast<float>(sprite.getTexture()->getSize().y)});
