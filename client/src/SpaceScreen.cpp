@@ -15,7 +15,8 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
         gameOverMenu(*this),
         miniMap(*this),
         dialogBox(game.getAssets().get(GameAssets::VT323_TTF),  game.getAssets().get(GameAssets::DIALOG_BOX)),
-        weaponSelectionUi(*this) {
+        weaponSelectionUi(*this),
+        upgradeMenu(space, space.getUpgradeManager()) {
     mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
     cameraPosition = space.getShip().getLocation();
     energySprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ENERGY));
@@ -77,6 +78,7 @@ void SpaceScreen::render(sf::RenderTarget& target) {
     target.draw(dialogBox);
 
     target.draw(weaponSelectionUi);
+    target.draw(upgradeMenu);
 }
 
 void SpaceScreen::show() {

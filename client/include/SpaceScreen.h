@@ -25,6 +25,7 @@
 
 #include "WIZ/ui/DialogBox.h"
 #include "ui/WeaponSelection.h"
+#include "ui/UpgradeMenu.h"
 
 class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
     std::string name = "SpaceScreen";
@@ -52,6 +53,7 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     wiz::DialogBox dialogBox;
 
     WeaponSelection weaponSelectionUi;
+    UpgradeMenu upgradeMenu;
 
 public:
     constexpr const static sf::Vector2f UI_VIEW_SIZE = { 1920.0f, 1080.0f };
