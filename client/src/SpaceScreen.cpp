@@ -137,27 +137,32 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
 
         case sf::Keyboard::Num1:
         case sf::Keyboard::Numpad1:
-            space.getShip().setLazerType(LazerType::SIMPLE);
+            space.getShip().setWeaponType(WeaponType::SIMPLE);
             break;
         
         case sf::Keyboard::Num2:
         case sf::Keyboard::Numpad2:
-            space.getShip().setLazerType(LazerType::DOUBLE);
+            space.getShip().setWeaponType(WeaponType::DOUBLE);
             break;
         
         case sf::Keyboard::Num3:
         case sf::Keyboard::Numpad3:
-            space.getShip().setLazerType(LazerType::TRIANGLE);
+            space.getShip().setWeaponType(WeaponType::TRIANGLE);
             break;
         
         case sf::Keyboard::Num4:
         case sf::Keyboard::Numpad4:
-            space.getShip().setLazerType(LazerType::FOUR_WAY);
+            space.getShip().setWeaponType(WeaponType::FOUR_WAY);
             break;
             
         case sf::Keyboard::Num5:
         case sf::Keyboard::Numpad5:
-            space.getShip().setLazerType(LazerType::CRAZY);
+            space.getShip().setWeaponType(WeaponType::CRAZY);
+            break;
+
+        case sf::Keyboard::Num6:
+        case sf::Keyboard::Numpad6:
+            space.getShip().setWeaponType(WeaponType::BOMB);
             break;
             
         default:
