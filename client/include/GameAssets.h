@@ -26,6 +26,7 @@ namespace GameAssets {
 	ASSET(wiz::FontAsset, SANS_TTF, ("font/sans.ttf"))
 
 	ASSET(wiz::TextureAsset, WHITE_PIXEL, ("gfx/white_pixel.png"))
+    ASSET(wiz::TextureAsset, ARROW, ("gfx/arrow.png"))
 	ASSET(wiz::TextureAsset, BACKGROUND, ("gfx/background.png"))
     ASSET(wiz::TextureAsset, LOGO, ("gfx/logo.png"))
     ASSET(wiz::TextureAsset, GAMEOVER, ("gfx/gameover.png"))
@@ -57,6 +58,19 @@ namespace GameAssets {
 
     // Fonts
     ASSET(wiz::FontAsset, VT323_TTF, ("font/VT323-Regular.ttf"))
+
+    // UI
+    ASSET(wiz::TextureAsset, TEXTURE_WEAPON_SELECT_BACKDROP, ("gfx/ui/weapon_select/weapon_select_dropdown.png"))
+
+
+    ASSET(wiz::TextureAsset, TEXTURE_LASER_DOUBLE, ("gfx/white_pixel.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_LASER_TRIANGLE, ("gfx/white_pixel.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_LASER_FOUR_WAY, ("gfx/white_pixel.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_LASER_CRAZY, ("gfx/white_pixel.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_NUKE_SIMPLE, ("gfx/white_pixel.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_FLAMETHROWER_SIMPLE, ("gfx/white_pixel.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_BOOST_BASIC, ("gfx/white_pixel.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_BOOST_ULTRA, ("gfx/white_pixel.png"))
 }
 
 #endif //GAMETEMPLATE_GAMEASSETS_H

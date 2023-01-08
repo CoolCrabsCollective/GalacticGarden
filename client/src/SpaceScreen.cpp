@@ -7,11 +7,20 @@
 #include <string>
 #include <X11/Xlibint.h>
 #include "GameAssets.h"
+#include "MiniMap.h"
 
 SpaceScreen::SpaceScreen(wiz::Game& game)
-	: Screen(game), space(game.getAssets()), mappingDatabase(), gameOverMenu(*this), dialogBox(game.getAssets().get(GameAssets::VT323_TTF),  game.getAssets().get(GameAssets::DIALOG_BOX)) {
+	: Screen(game),
+        space(game.getAssets()),
+        mappingDatabase(),
+        gameOverMenu(*this),
+        miniMap(*this),
+        dialogBox(game.getAssets().get(GameAssets::VT323_TTF),  game.getAssets().get(GameAssets::DIALOG_BOX)),
+        weaponSelectionUi(*this),
+        upgradeMenu(space, space.getUpgradeManager()) {
     mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
-    cameraPosition = space.getShip().getLocation();
+    smoothPosition = cameraPosition = space.getShip().getLocation();
+    shipSmoothVelocity = { 0.0f, 0.0f };
     energySprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ENERGY));
 
     dialogBox.startDialog({
@@ -36,7 +45,10 @@ void SpaceScreen::tick(float delta) {
         
         float trans = pow(0.99f, delta);
 
-        cameraPosition = cameraPosition * trans + space.getShip().getLocation() * (1.0f - trans);
+        shipSmoothVelocity = shipSmoothVelocity * trans + space.getShip().getMoveVelocity() * (1.0f - trans);
+
+        smoothPosition = smoothPosition * trans + (space.getShip().getLocation()) * (1.0f - trans);
+        cameraPosition = space.getShip().getLocation() + space.getShip().getLocation() - smoothPosition;
 
         dialogBox.update(delta);
     } else {
@@ -66,6 +78,9 @@ void SpaceScreen::render(sf::RenderTarget& target) {
 	target.setView(sf::View(cameraPosition, Space::VIEW_SIZE * zoom));
 	target.draw(space);
 
+    // mini map
+    target.draw(miniMap);
+
     // ui
     target.setView(sf::View(SpaceScreen::UI_VIEW_SIZE / 2.0f, SpaceScreen::UI_VIEW_SIZE));
     target.draw(energySprite);
@@ -73,7 +88,10 @@ void SpaceScreen::render(sf::RenderTarget& target) {
     if(space.gameover)
         target.draw(gameOverMenu);
 
+    target.draw(weaponSelectionUi);
+
     target.draw(dialogBox);
+    target.draw(upgradeMenu);
 }
 
 void SpaceScreen::show() {
@@ -90,7 +108,7 @@ void SpaceScreen::hide() {
 
 void SpaceScreen::mouseWheelScrolled(const sf::Event::MouseWheelScrollEvent& mouseWheelScrollEvent) {
     zoom -= mouseWheelScrollEvent.delta;
-    zoom = max(zoom, 1.0f);
+    zoom = fmax(zoom, 1.0f);
 }
 
 void SpaceScreen::mouseButtonPressed(const sf::Event::MouseButtonEvent &mouseButtonEvent) {
@@ -145,10 +163,6 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
         default:
             break;
     }
-}
-
-const std::string& SpaceScreen::getName() const {
-	return name;
 }
 
 void SpaceScreen::windowClosed() {
@@ -210,4 +224,12 @@ void SpaceScreen::processInput(float delta) {
         rotation = pos.angle().asDegrees();
     }
     space.getShip().setRotation(rotation + 90.0f);
+}
+
+const std::string& SpaceScreen::getName() const {
+    return name;
+}
+
+const Space& SpaceScreen::getSpace() const {
+    return space;
 }

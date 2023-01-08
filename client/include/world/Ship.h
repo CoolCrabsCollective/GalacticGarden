@@ -44,28 +44,21 @@ protected:
 
     sf::Shader* damageShader = nullptr;
     float redness = 0.0f;
-public:
-    void setIsIdle(bool isIdle);
 
-protected:
+    float energy = 100.f;
+    LazerType lazerType = LazerType::SIMPLE;
     mutable sf::Sprite normalAnimeSprite;
     Anime normalAnime;
     mutable sf::Sprite boostAnimeSprite;
     Anime boostAnime;
+    
 public:
+    void setIsIdle(bool isIdle);
+
     void setIsBoosting(bool isBoosting);
 
-public:
     int getEnergy() const;
 
-protected:
-
-    float energy = 100.f;
-    LazerType lazerType = LazerType::SIMPLE;
-
-    bool energy_for_shot(int shot_count);
-
-public:
 	Ship(Space& space, const sf::Vector2f& location);
 
     float getZOrder() const override;
@@ -89,4 +82,10 @@ public:
     std::vector<std::pair<sf::Vector2f, Asteroid*>> getClosestAvailablePlantingZones(Asteroid& asteroid);
 
     std::map<plantzone_t, bool, PlantZoneCompare> &getSeedThrown();
+
+    const sf::Vector2f& getMoveVelocity() const;
+
+protected:
+
+    bool energy_for_shot(int shot_count);
 };

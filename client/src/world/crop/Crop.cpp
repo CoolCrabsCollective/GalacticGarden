@@ -18,7 +18,8 @@ Crop::Crop(Asteroid& asteroid,
              timeSincePlanted(0.f), 
              health(0),
              plantGrowing(plantGrowing),
-             grown(grown) {
+             grown(grown),
+      progress(space.getAssets()){
 }
 
 void Crop::tick(float delta) {
@@ -27,6 +28,8 @@ void Crop::tick(float delta) {
     
     timeSincePlanted += delta / 1000.0f;
     location = asteroid.getLocation() + relLocation.rotatedBy(sf::degrees(asteroid.getRotation()));
+    progress.setPosition(location);
+    progress.setHealth(std::min(timeSincePlanted / getTimeToMaturity(), 1.f));
 }
 
 bool Crop::isReady() const {
@@ -46,6 +49,8 @@ void Crop::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
     sprite.setPosition(location);
     sprite.setScale({ 0.5f / sprite.getTexture()->getSize().x, 0.5f / sprite.getTexture()->getSize().y });
     target.draw(sprite);
+    if(!isReady())
+        target.draw(progress);
 }
 
 void Crop::damage(float value) {

@@ -11,12 +11,13 @@
 #include "world/Asteroid.h"
 #include "world/Seed.h"
 #include "util/MathUtil.h"
+#include "util/SpriteUtil.h"
 
 Ship::Ship(Space& space, const sf::Vector2f& location) 
 	: Entity(space, location) {
 	
 	this->sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_SHIP), true);
-    sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
+    SpriteUtil::setSpriteOrigin(sprite, { 0.5f, 0.5f });
     float origin_y_pos = (sprite.getTexture()->getSize().y / 2.0f);
     normalAnimeSprite.setOrigin({sprite.getTexture()->getSize().x / 2.0f, origin_y_pos});
     boostAnimeSprite.setOrigin({sprite.getTexture()->getSize().x / 2.0f, origin_y_pos});
@@ -214,7 +215,6 @@ void Ship::setRotation(float rotationRad) {
 
 void Ship::plantOnAsteroid(Space& space) {
     if(time_since_last_plant >= plant_delay) {
-        sf::Vector2f shipLocation = space.getShip().getLocation();
         std::vector<plantzone_t> seedrics;
         std::vector<Entity *> entities = space.getAllEntitiesInRect(this->location, {6, 6});
 
@@ -300,4 +300,8 @@ void Ship::setIsBoosting(bool isBoosting) {
 
 void Ship::setIsIdle(bool isIdle) {
     this->isIdle = isIdle;
+}
+
+const sf::Vector2f& Ship::getMoveVelocity() const {
+    return moveVelocity;
 }

@@ -20,8 +20,12 @@
 #include "WIZ/input/Mapping.h"
 #include "WIZ/input/MappingDatabase.h"
 #include "ui/GameOverMenu.h"
+#include "MiniMap.h"
+
 #include "WIZ/ui/DialogBox.h"
 #include "ui/PictureDialogBox.h"
+#include "ui/WeaponSelection.h"
+#include "ui/UpgradeMenu.h"
 
 class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
     std::string name = "SpaceScreen";
@@ -30,13 +34,14 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
 
     sf::Sprite background;
     Space space;
+    MiniMap miniMap;
 
     wiz::MappingDatabase mappingDatabase;
     wiz::Mapping mapping;
     bool controllerDisconnected = true;
     bool mappingFound = false;
     
-    sf::Vector2f cameraPosition;
+    sf::Vector2f smoothPosition, cameraPosition, shipSmoothVelocity;
     float zoom = 1.0f;
     
     sf::Sprite energySprite;
@@ -46,6 +51,9 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     float gameoverCooldown = 1.5f;
 
     PictureDialogBox dialogBox;
+
+    WeaponSelection weaponSelectionUi;
+    UpgradeMenu upgradeMenu;
 
 public:
     constexpr const static sf::Vector2f UI_VIEW_SIZE = { 1920.0f, 1080.0f };
@@ -71,6 +79,8 @@ public:
     void processInput(float delta);
 
     void mouseWheelScrolled(const sf::Event::MouseWheelScrollEvent& mouseWheelScrollEvent) override;
+
+    const Space& getSpace() const;
 };
 
 #endif //LD52_CLIENT_SPACESCREEN_H
