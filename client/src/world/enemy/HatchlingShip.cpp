@@ -80,8 +80,7 @@ void HatchlingShip::tick(float delta) {
             tractorBeam = nullptr;
         }
 
-        if(tractorBeam)
-        {
+        if(tractorBeam) {
             tractorBeam->setLocation(location + velocityNormalized);
             tractorBeam->setRotationDegrees(this->rotation);
         }

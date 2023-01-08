@@ -8,6 +8,7 @@
 #include "world/weapon/SmallLaser.h"
 #include "world/crop/Crop.h"
 #include "world/Asteroid.h"
+#include "world/Seed.h"
 
 Ship::Ship(Space& space, const sf::Vector2f& location) 
 	: Entity(space, location) {
@@ -120,22 +121,62 @@ void Ship::setRotation(float rotationRad) {
 void Ship::plantOnAsteroid(Space& space) {
     if(time_since_last_plant >= plant_delay) {
         sf::Vector2f shipLocation = space.getShip().getLocation();
-
+        std::vector<plantzone_t> seedrics;
         std::vector<Entity *> entities = space.getAllEntitiesInRect(this->location, {6, 6});
 
         for (Entity *entity: entities) {
             Asteroid *asteroid = dynamic_cast<Asteroid *>(entity);
 
-            if (asteroid != nullptr) {
-                std::optional<sf::Vector2f> closestPlantingZone = asteroid->getClosestAvailablePlantingZone(shipLocation);
-                if (closestPlantingZone.has_value()) {
-                    asteroid->plant(CropType::FLOWER, closestPlantingZone.value());
+            if (asteroid == nullptr)
+                continue;
+
+            std::vector<plantzone_t> cedrics = getClosestAvailablePlantingZones(*asteroid);
+
+            for(const auto& cedric : cedrics)
+            {
+                seedrics.push_back(cedric);
+            }
+        }
+        std::sort(seedrics.begin(), seedrics.end(), [&](const plantzone_t& a, const plantzone_t & b){
+            float distanceA = ((a.second->getLocation() + a.first.rotatedBy(sf::degrees(a.second->getRotation()))) - this->location).lengthSq();
+            float distanceB = ((a.second->getLocation() + b.first.rotatedBy(sf::degrees(a.second->getRotation()))) - this->location).lengthSq();
+
+            return distanceA < distanceB;
+        });
+
+        if(!seedrics.empty()) {
+            for(auto& zone : seedrics) {
+                if(!seed_thrown.contains(zone) || !seed_thrown[zone]) {
+                   seed_thrown[zone] = true;
+
+                    Seed* newSeed = new Seed(space, location, zone.second, zone.first);
+                    newSeed->setRotationDegrees(this->rotation);
+                    this->space.addEntity((newSeed));
+
                     time_since_last_plant = .0f;
+                   break;
                 }
-                break;
             }
         }
     }
+}
+
+std::vector<plantzone_t> Ship::getClosestAvailablePlantingZones(Asteroid& asteroid) {
+    std::vector<plantzone_t> ret;
+
+    for (const auto &plantingLocation : asteroid.getPlantingLocations()) {
+        if (!asteroid.isPlanted(plantingLocation))
+            ret.emplace_back(plantingLocation, &asteroid);
+    }
+
+    std::sort(ret.begin(), ret.end(), [&](const plantzone_t& a, const plantzone_t & b){
+        float distanceA = ((asteroid.getLocation() + a.first.rotatedBy(sf::degrees(asteroid.getRotation()))) - this->location).lengthSq();
+        float distanceB = ((asteroid.getLocation() + b.first.rotatedBy(sf::degrees(asteroid.getRotation()))) - this->location).lengthSq();
+
+        return distanceA < distanceB;
+    });
+
+    return ret;
 }
 
 void Ship::setLazerType(LazerType lazer_type) {
@@ -153,4 +194,8 @@ bool Ship::energy_for_shot(int shot_count) {
 
 float Ship::getEnergy() const {
     return energy;
+}
+
+std::map<plantzone_t, bool, PlantZoneCompare> &Ship::getSeedThrown() {
+    return seed_thrown;
 }

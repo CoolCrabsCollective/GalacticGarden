@@ -37,6 +37,7 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_SOIL, ("gfx/soil.png"))
     ASSET(wiz::TextureAsset, TEXTURE_ENERGY, ("gfx/energy.png"))
     ASSET(wiz::TextureAsset, TEXTURE_PLANT_GROWING, ("gfx/plant_growing.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_SEED, ("gfx/seed_rick.png"))
 
     // Shaders
     ASSET(ShaderAsset, DAMAGE_SHADER, ("shaders/damage.vs", "shaders/damage.fs"))

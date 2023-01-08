@@ -4,10 +4,22 @@
 
 #pragma once
 
+#include <unordered_map>
 #include "Entity.h"
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 #include "world/weapon/LazerType.h"
+#include "Asteroid.h"
+
+typedef std::pair<sf::Vector2f, Asteroid*> plantzone_t;
+
+struct PlantZoneCompare {
+    bool operator() (const plantzone_t & lhs, const plantzone_t & rhs) const {
+        return lhs.second < rhs.second ||
+               (lhs.second == rhs.second && (lhs.first.x < rhs.first.x ||
+               (lhs.first.x == rhs.first.x && lhs.first.y < rhs.first.y)));
+    }
+};
 
 class Ship : public Entity {
 protected:
@@ -21,6 +33,7 @@ protected:
     float acc = 10.f; // 10 units per second ^ 2
     sf::Vector2f moveVelocity = { 0.f, 0.f };
     bool rotateLeft = false, rotateRight = false;
+    std::map<plantzone_t, bool, PlantZoneCompare> seed_thrown;
 public:
     float getEnergy() const;
 
@@ -51,4 +64,8 @@ public:
     float getRotation() const;
 
     void setLazerType(LazerType lazer_type);
+
+    std::vector<std::pair<sf::Vector2f, Asteroid*>> getClosestAvailablePlantingZones(Asteroid& asteroid);
+
+    std::map<plantzone_t, bool, PlantZoneCompare> &getSeedThrown();
 };
