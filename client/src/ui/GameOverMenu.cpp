@@ -9,7 +9,6 @@
 
 
 GameOverMenu::GameOverMenu(SpaceScreen& screen) {
-
     dim.setTexture(*screen.getAssets().get(GameAssets::WHITE_PIXEL));
     dim.setPosition({ 0.0f, 0.0f });
     dim.setScale(SpaceScreen::UI_VIEW_SIZE);
