@@ -28,4 +28,6 @@ public:
     void tick(float delta) override;
     
     float getZOrder() const override;
+
+    void attackFriendly(sf::Vector2f distanceToFriendly);
 };

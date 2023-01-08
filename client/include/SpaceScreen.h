@@ -43,7 +43,6 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     sf::Text energyText;
     
     GameOverMenu gameOverMenu;
-    bool gameover = false;
     float gameoverCooldown = 1.5f;
 
     wiz::DialogBox dialogBox;

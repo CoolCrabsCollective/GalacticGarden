@@ -10,6 +10,8 @@
 #include "world/weapon/SmallLaser.h"
 #include <iostream>
 #include "util/MathUtil.h"
+#include "world/AsteroidBelt.h"
+#include "world/Seed.h"
 
 using namespace MathUtil;
 
@@ -196,6 +198,7 @@ void Space::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
     });
 
     for(Entity* entity : entities_draw_list) {
+
         if(entity->getLocation().x + entity->getVisualSize().x / 2.0f >= start.x
            && entity->getLocation().y + entity->getVisualSize().y / 2.0f >= start.y
            && entity->getLocation().x - entity->getVisualSize().x / 2.0f <= end.x
@@ -270,4 +273,11 @@ const std::vector<Entity*> &Space::getEntities() const {
 
 GayStation& Space::getGayStation() {
     return gayStation;
+}
+
+sf::Vector2f Space::getNearestFriendly(sf::Vector2f pos) {
+    float distanceToShip = (ship.getLocation() - pos).lengthSq();
+    float distanceToGayStation = (gayStation.getLocation() - pos).lengthSq();
+
+    return distanceToShip < distanceToGayStation ? ship.getLocation() : gayStation.getLocation();
 }

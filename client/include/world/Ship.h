@@ -11,6 +11,7 @@
 #include "world/weapon/LazerType.h"
 #include "Asteroid.h"
 #include "world/anime/Anime.h"
+#include "world/weapon/Lazer.h"
 
 typedef std::pair<sf::Vector2f, Asteroid*> plantzone_t;
 
@@ -38,6 +39,11 @@ protected:
     std::map<plantzone_t, bool, PlantZoneCompare> seed_thrown;
     bool isBoosting = false;
     bool isIdle = true;
+
+    Fraction fraction = FRIENDLY;
+
+    sf::Shader* damageShader = nullptr;
+    float redness = 0.0f;
 public:
     void setIsIdle(bool isIdle);
 
