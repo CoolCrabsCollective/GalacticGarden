@@ -35,7 +35,7 @@ void SpaceScreen::render(sf::RenderTarget& target) {
     vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
     background.setScale(vec);
     energySprite.setPosition({50.f, 900.f});
-    energySprite.setScale({4.f, 4.f});
+    energySprite.setScale({8.0f * 16.0f / energySprite.getTexture()->getSize().x, 8.0f * 16.0f / energySprite.getTexture()->getSize().y});
 
     energyText.setString(std::to_string(space.getShip().getEnergy()));
     energyText.setPosition({ 175.f, 925.f});
