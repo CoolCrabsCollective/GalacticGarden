@@ -16,17 +16,22 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
         gameOverMenu(*this),
         miniMap(*this),
         dialogBox(game.getAssets().get(GameAssets::VT323_TTF),  game.getAssets().get(GameAssets::DIALOG_BOX)),
-        weaponSelectionUi(*this),
+        weaponSelectionUi(*this, WEAPON),
+        seedSelectionUi(*this, SEED),
+        boostSelectionUi(*this, BOOSTER),
         upgradeMenu(space, space.getUpgradeManager()) {
+    weaponSelectionUi.setEnableScroll(true);
+
     mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
     smoothPosition = cameraPosition = space.getShip().getLocation();
     shipSmoothVelocity = { 0.0f, 0.0f };
     energySprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ENERGY));
 
+    space.paused = true;
     dialogBox.startDialog({
         "~CAW~ We have detected the human base!",
-        "We're not going out that easy...",
-        "~CAW~ I'm hungry",
+        "Get off my asteroids you mangy chickens!",
+        "~CAW~ Mmmmm space flowers",
     }, {"Cosmic Crow", "Celestial Chad",
         "Cosmic Crow"},
               {getGame().getAssets().get(GameAssets::TEXTURE_COSMIC_CROW_ICON),
@@ -34,11 +39,18 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                getGame().getAssets().get(GameAssets::TEXTURE_COSMIC_CROW_ICON)
                },
                [&]() {
-                }
+                    space.paused = false;
+                    printf("penis");
+               }
                );
 }
 
 void SpaceScreen::tick(float delta) {
+    dialogBox.update(delta);
+
+    if (space.paused)
+        return;
+
     if(!space.gameover) {
         processInput(delta);
         space.tick(delta);
@@ -49,8 +61,6 @@ void SpaceScreen::tick(float delta) {
 
         smoothPosition = smoothPosition * trans + (space.getShip().getLocation()) * (1.0f - trans);
         cameraPosition = space.getShip().getLocation() + space.getShip().getLocation() - smoothPosition;
-
-        dialogBox.update(delta);
     } else {
         gameoverCooldown -= delta / 1000.0f;
     }
@@ -62,11 +72,11 @@ void SpaceScreen::render(sf::RenderTarget& target) {
     vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
     vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
     background.setScale(vec);
-    energySprite.setPosition({50.f, 900.f});
+    energySprite.setPosition({50.f, 50.f});
     energySprite.setScale({8.0f * 16.0f / energySprite.getTexture()->getSize().x, 8.0f * 16.0f / energySprite.getTexture()->getSize().y});
 
     energyText.setString(std::to_string(space.getShip().getEnergy()));
-    energyText.setPosition({ 175.f, 925.f});
+    energyText.setPosition({ 175.f, 75.f});
     energyText.setScale({2.f, 2.f});
     energyText.setFillColor(sf::Color::White);
     energyText.setFont(*space.getAssets().get(GameAssets::SANS_TTF));
@@ -83,15 +93,23 @@ void SpaceScreen::render(sf::RenderTarget& target) {
 
     // ui
     target.setView(sf::View(SpaceScreen::UI_VIEW_SIZE / 2.0f, SpaceScreen::UI_VIEW_SIZE));
-    target.draw(energySprite);
-    target.draw(energyText);
-    if(space.gameover)
+    if (space.gameover)
         target.draw(gameOverMenu);
-
-    target.draw(weaponSelectionUi);
-
+    else if (space.paused) {
+        dim.setTexture(*getAssets().get(GameAssets::WHITE_PIXEL));
+        dim.setPosition({ 0.0f, 0.0f });
+        dim.setScale(SpaceScreen::UI_VIEW_SIZE);
+        dim.setColor(sf::Color(0, 0, 0, 128));
+        target.draw(dim);
+    } else {
+        target.draw(energySprite);
+        target.draw(energyText);
+        target.draw(weaponSelectionUi);
+        target.draw(seedSelectionUi);
+        target.draw(boostSelectionUi);
+        target.draw(upgradeMenu);
+    }
     target.draw(dialogBox);
-    target.draw(upgradeMenu);
 }
 
 void SpaceScreen::show() {
@@ -112,6 +130,9 @@ void SpaceScreen::mouseWheelScrolled(const sf::Event::MouseWheelScrollEvent& mou
 }
 
 void SpaceScreen::mouseButtonPressed(const sf::Event::MouseButtonEvent &mouseButtonEvent) {
+    if (dialogBox.isInProgress())
+        dialogBox.interact();
+
     if(space.gameover && gameoverCooldown <= 0.0f) {
         getGame().setScreen(new SpaceScreen(getGame()));
         return;
@@ -202,7 +223,7 @@ void SpaceScreen::processInput(float delta) {
 //            (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) ||
 //            sf::Mouse::isButtonPressed(sf::Mouse::Button::Right));
 
-    bool isPlanting = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) || sf::Mouse::isButtonPressed(sf::Mouse::Button::Right);
+    bool isPlanting = sf::Mouse::isButtonPressed(sf::Mouse::Button::Right);
 
     if (isPlanting)
         space.getShip().plantOnAsteroid(space);

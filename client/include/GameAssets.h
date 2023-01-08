@@ -19,7 +19,7 @@
 namespace GameAssets {
 	extern std::vector<const wiz::AssetBase*> ALL;
 
-  ASSET(TextAsset, CONTROLLER_DB, ("gamecontrollerdb.txt"))
+    ASSET(TextAsset, CONTROLLER_DB, ("gamecontrollerdb.txt"))
 
 	ASSET(wiz::MusicAsset, GREENLIFE, ("music/greenlife.ogg"))
 	ASSET(wiz::SoundAsset, JUMP, ("sfx/jump.ogg"))
@@ -64,17 +64,24 @@ namespace GameAssets {
     ASSET(wiz::FontAsset, VT323_TTF, ("font/VT323-Regular.ttf"))
 
     // UI
-    ASSET(wiz::TextureAsset, TEXTURE_WEAPON_SELECT_BACKDROP, ("gfx/ui/weapon_select/weapon_select_dropdown.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_WEAPON_SELECT_BACKDROP, ("gfx/ui/select/weapon_select_backdrop.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_SEED_SELECT_BACKDROP, ("gfx/ui/select/seed_select_backdrop.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_BOOST_SELECT_BACKDROP, ("gfx/ui/select/boost_select_backdrop.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_WEAPON_SELECTION_BOX, ("gfx/ui/select/weapon_select_scroll_box.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_SEED_SELECTION_BOX, ("gfx/ui/select/seed_select_scroll_box.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_BOOST_SELECTION_BOX, ("gfx/ui/select/boost_select_scroll_box.png"))
 
 
-    ASSET(wiz::TextureAsset, TEXTURE_LASER_DOUBLE, ("gfx/white_pixel.png"))
-    ASSET(wiz::TextureAsset, TEXTURE_LASER_TRIANGLE, ("gfx/white_pixel.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_LASER_DOUBLE, ("gfx/upgrades/laser_double.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_LASER_TRIANGLE, ("gfx/upgrades/laser_triangle.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LASER_FOUR_WAY, ("gfx/white_pixel.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LASER_CRAZY, ("gfx/white_pixel.png"))
-    ASSET(wiz::TextureAsset, TEXTURE_NUKE_SIMPLE, ("gfx/white_pixel.png"))
-    ASSET(wiz::TextureAsset, TEXTURE_FLAMETHROWER_SIMPLE, ("gfx/white_pixel.png"))
-    ASSET(wiz::TextureAsset, TEXTURE_BOOST_BASIC, ("gfx/white_pixel.png"))
-    ASSET(wiz::TextureAsset, TEXTURE_BOOST_ULTRA, ("gfx/white_pixel.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_NUKE_SIMPLE, ("gfx/upgrades/nuke.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_FLAMETHROWER_SIMPLE, ("gfx/upgrades/flame_thrower.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_BOOST_BASIC, ("gfx/upgrades/boost_basic.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_BOOST_ULTRA, ("gfx/upgrades/boost_ultra.png"))
+
+    ASSET(wiz::TextureAsset, TEXTURE_LOCKED, ("gfx/upgrades/too_costly.png"))
 }
 
 #endif //GAMETEMPLATE_GAMEASSETS_H

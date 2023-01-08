@@ -66,6 +66,14 @@ void PictureDialogBox::draw(sf::RenderTarget &target, const sf::RenderStates &st
     speakerText.setOutlineColor(sf::Color::Black);
     speakerText.setFillColor(sf::Color::Black);
     target.draw(speakerText);
+
+    transmissionText.setFont(*font);
+    transmissionText.setString("Incoming Transmission (space to skip)");
+    transmissionText.setScale({0.8f, 0.8f});
+    transmissionText.setPosition({125.0f, 825.f});
+    transmissionText.setOutlineColor(sf::Color::Black);
+    transmissionText.setFillColor(sf::Color::White);
+    target.draw(transmissionText);
 }
 
 PictureDialogBox::PictureDialogBox(sf::Font *font1, sf::Texture *background)
@@ -74,7 +82,7 @@ PictureDialogBox::PictureDialogBox(sf::Font *font1, sf::Texture *background)
 
 void PictureDialogBox::startDialog(std::vector<std::string> lines, std::vector<std::string> names,
                                    std::vector<sf::Texture *> textures, std::function<void()> callback) {
-    DialogBox::startDialog(lines);
+    DialogBox::startDialog(lines, callback);
     this->names = names;
     this->textures = textures;
 }

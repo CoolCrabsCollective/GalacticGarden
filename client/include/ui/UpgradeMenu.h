@@ -12,7 +12,8 @@
 
 class UpgradeMenu : public sf::Drawable {
 protected:
-    mutable sf::Sprite sprite;
+    mutable sf::Sprite locked;
+    Space& space;
 
     std::vector<std::vector<std::vector<Upgrade>>> upgradeTree{
             {{BOOST_BASIC}, {BOOST_ULTRA}},
@@ -21,7 +22,7 @@ protected:
             {{FLAMETHROWER_SIMPLE}},
     };
 
-    std::unordered_map<Upgrade, sf::Texture*> upgrade_texture;
+    std::unordered_map<Upgrade, sf::Sprite*> upgrade_sprites;
     UpgradeManager& upgradeManager;
     bool upgradeBlockComplete(const std::vector<Upgrade>& upgradeBlock) const;
 public:

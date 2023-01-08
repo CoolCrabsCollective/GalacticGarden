@@ -24,7 +24,7 @@
 
 #include "WIZ/ui/DialogBox.h"
 #include "ui/PictureDialogBox.h"
-#include "ui/WeaponSelection.h"
+#include "ui/Selection.h"
 #include "ui/UpgradeMenu.h"
 
 class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
@@ -52,8 +52,12 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
 
     PictureDialogBox dialogBox;
 
-    WeaponSelection weaponSelectionUi;
+    Selection weaponSelectionUi;
+    Selection seedSelectionUi;
+    Selection boostSelectionUi;
     UpgradeMenu upgradeMenu;
+
+    mutable sf::Sprite dim;
 
 public:
     constexpr const static sf::Vector2f UI_VIEW_SIZE = { 1920.0f, 1080.0f };

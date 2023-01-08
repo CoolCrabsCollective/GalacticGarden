@@ -13,6 +13,7 @@ class PictureDialogBox : public wiz::DialogBox {
 
     mutable sf::Sprite speakerSprite;
     mutable sf::Text speakerText;
+    mutable sf::Text transmissionText;
 
 public:
     PictureDialogBox(sf::Font *font1, sf::Texture *background);
