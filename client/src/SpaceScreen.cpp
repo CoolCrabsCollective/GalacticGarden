@@ -26,8 +26,8 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
     space.paused = true;
     dialogBox.startDialog({
         "~CAW~ We have detected the human base!",
-        "We're not going out that easy...",
-        "~CAW~ I'm hungry",
+        "Get off my asteroids you mangy chickens!",
+        "~CAW~ Mmmmm space flowers",
     }, {"Cosmic Crow", "Celestial Chad",
         "Cosmic Crow"},
               {getGame().getAssets().get(GameAssets::TEXTURE_COSMIC_CROW_ICON),
