@@ -16,7 +16,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
 }
 
 void SpaceScreen::tick(float delta) {
-    if(!gameover) {
+    if(!space.gameover) {
         processInput(delta);
         space.tick(delta);
         
@@ -54,7 +54,7 @@ void SpaceScreen::render(sf::RenderTarget& target) {
     target.setView(sf::View(SpaceScreen::UI_VIEW_SIZE / 2.0f, SpaceScreen::UI_VIEW_SIZE));
     target.draw(energySprite);
     target.draw(energyText);
-    if(gameover)
+    if(space.gameover)
         target.draw(gameOverMenu);
 }
 
@@ -76,22 +76,22 @@ void SpaceScreen::mouseWheelScrolled(const sf::Event::MouseWheelScrollEvent& mou
 }
 
 void SpaceScreen::mouseButtonPressed(const sf::Event::MouseButtonEvent &mouseButtonEvent) {
-    if(gameover && gameoverCooldown <= 0.0f) {
+    if(space.gameover && gameoverCooldown <= 0.0f) {
         getGame().setScreen(new SpaceScreen(getGame()));
         return;
     }
 }
 
 void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
-    if(gameover && gameoverCooldown <= 0.0f) {
+    if(space.gameover && gameoverCooldown <= 0.0f) {
         getGame().setScreen(new SpaceScreen(getGame()));
         return;
     }
     
     switch(keyEvent.code) {
         case sf::Keyboard::Escape:
-            if(!gameover)
-                gameover = true;
+            if(!space.gameover)
+                space.gameover = true;
             break;
         
         case sf::Keyboard::Num1:
