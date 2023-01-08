@@ -81,6 +81,7 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_BOOST_SELECTION_BOX, ("gfx/ui/select/boost_select_scroll_box.png"))
     ASSET(wiz::TextureAsset, TEXTURE_HIGHLIGHT_SELECTION_BOX, ("gfx/ui/select/highlight_scroll_box.png"))
 
+    ASSET(wiz::TextureAsset, TEXTURE_LASER_SIMPLE, ("gfx/upgrades/laser_simple.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LASER_DOUBLE, ("gfx/upgrades/laser_double.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LASER_TRIANGLE, ("gfx/upgrades/laser_triangle.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LASER_FOUR_WAY, ("gfx/upgrades/laser_quad.png"))

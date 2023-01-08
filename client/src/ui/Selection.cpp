@@ -52,7 +52,7 @@ Selection::Selection(SpaceScreen& screen, SelectionType type, UpgradeManager* up
     backdrop.setScale(size);
 
     sf::Vector2f itemOffset = { backdrop.getLocalBounds().width / 5.f + 2.4f, backdrop.getLocalBounds().height - 115.f };
-    sf::Vector2f itemSize = { 1.f, 1.f };
+    sf::Vector2f itemSize = { 1.5f, 1.5f };
 
     item.setPosition(pos + itemOffset);
     item.setScale(itemSize);

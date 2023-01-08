@@ -27,7 +27,7 @@ class WeaponTextureGetter {
 public:
     WeaponTextureGetter(wiz::AssetLoader& assets) {
         weaponTextures =
-                {assets.get(GameAssets::TEXTURE_SMALL_LAZER),
+                {assets.get(GameAssets::TEXTURE_LASER_SIMPLE),
                  assets.get(GameAssets::TEXTURE_LASER_DOUBLE),
                  assets.get(GameAssets::TEXTURE_LASER_TRIANGLE),
                  assets.get(GameAssets::TEXTURE_LASER_FOUR_WAY),
