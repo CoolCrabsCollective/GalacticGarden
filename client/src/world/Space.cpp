@@ -60,7 +60,6 @@ void Space::spawnAsteroids() {
         entities.push_back(ass);
 }
 
-
 void Space::initSpacialMap() {
 
     spacialMap.clear();

@@ -5,7 +5,6 @@
 #ifndef LD52_CLIENT_SPACESCREEN_H
 #define LD52_CLIENT_SPACESCREEN_H
 
-
 #include "GameAssets.h"
 #include "WIZ/game/Screen.h"
 #include "SFML/Graphics/Texture.hpp"
@@ -22,6 +21,7 @@
 #include "WIZ/input/MappingDatabase.h"
 #include "ui/GameOverMenu.h"
 #include "WIZ/ui/DialogBox.h"
+#include "ui/PictureDialogBox.h"
 
 class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
     std::string name = "SpaceScreen";
@@ -45,7 +45,7 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     GameOverMenu gameOverMenu;
     float gameoverCooldown = 1.5f;
 
-    wiz::DialogBox dialogBox;
+    PictureDialogBox dialogBox;
 
 public:
     constexpr const static sf::Vector2f UI_VIEW_SIZE = { 1920.0f, 1080.0f };
@@ -72,6 +72,5 @@ public:
 
     void mouseWheelScrolled(const sf::Event::MouseWheelScrollEvent& mouseWheelScrollEvent) override;
 };
-
 
 #endif //LD52_CLIENT_SPACESCREEN_H
