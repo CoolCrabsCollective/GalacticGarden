@@ -60,6 +60,10 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_SHIP_MOVING_2, ("gfx/ship_moving_2.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SHIP_BOOSTING_1, ("gfx/ship_boosting_1.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SHIP_BOOSTING_2, ("gfx/ship_boosting_2.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_SHIP_BOOSTING_ULTRA_1, ("gfx/ship_boosting_ultra_1.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_SHIP_BOOSTING_ULTRA_2, ("gfx/ship_boosting_ultra_2.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_SHIP_BOOSTING_ULTRA_3, ("gfx/ship_boosting_ultra_3.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_SHIP_BOOSTING_ULTRA_4, ("gfx/ship_boosting_ultra_4.png"))
 
     ASSET(wiz::TextureAsset, DIALOG_BOX, ("gfx/dialog_box.png"))
 

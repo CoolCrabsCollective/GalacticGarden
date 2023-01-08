@@ -21,6 +21,7 @@ protected:
     void tickAnimation();
 
 public:
+    void setTimeSinceLastFrame(float timeSinceLastFrame);
 
     void insertFrame(sf::Texture* attackTexture);
     void setAnimationSprite(sf::Sprite* sprite);

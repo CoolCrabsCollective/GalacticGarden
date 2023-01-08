@@ -35,7 +35,7 @@ Selection::Selection(SpaceScreen& screen, SelectionType type) {
 
     switch (type) {
         case WEAPON:
-            selectionScroll = new SelectionScroll(screen, type, 5, pos);
+            selectionScroll = new SelectionScroll(screen, type, WeaponType::LENGTH, pos);
             item.setTexture(*weaponTextureGetter->get().at(selectionScroll->getSelection()));
             break;
         case SEED:
@@ -66,6 +66,11 @@ Selection::Selection(SpaceScreen& screen, SelectionType type) {
 }
 
 void Selection::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
+    if (selectionScroll->isEnableScroll()) {
+        // TODO: check that this was already down for selection change
+        item.setTexture(*weaponTextureGetter->get().at(selectionScroll->getSelection()));
+    }
+
     target.draw(backdrop);
     target.draw(item);
     target.draw(text);
