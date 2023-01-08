@@ -56,6 +56,8 @@ public:
 
     void addEntity(Entity* entity);
 
+    sf::Vector2f getNearestFriendly(sf::Vector2f pos);
+
 private:
 	void initSpacialMap();
     void removeEntities();

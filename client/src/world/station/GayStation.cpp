@@ -22,7 +22,7 @@ void GayStation::tick(float delta) {
 
     bobbingDisplacement += (delta / 1000)*(bobbingDirection ? bob_speed : -bob_speed);
 
-    for(Entity* entity : space.getAllEntitiesInRect(location, { 1.0f, 1.0f })) {
+    for(Entity* entity : space.getAllEntitiesInRect(location, { 5.0f, 2.0f })) {
         if(entity->shouldBeRemoved())
             continue;
 
