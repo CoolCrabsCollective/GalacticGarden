@@ -8,7 +8,7 @@
 
 #include "util/MathUtil.h"
 
-Selection::Selection(SpaceScreen& screen, SelectionType type) {
+Selection::Selection(SpaceScreen& screen, SelectionType type, UpgradeManager* upgradeManager) {
     weaponTextureGetter = new WeaponTextureGetter(screen.getAssets());
     seedTextureGetter = new SeedTextureGetter(screen.getAssets());
 
@@ -36,15 +36,15 @@ Selection::Selection(SpaceScreen& screen, SelectionType type) {
 
     switch (type) {
         case WEAPON:
-            selectionScroll = new SelectionScroll(screen, type, WeaponType::LENGTH, pos);
+            selectionScroll = new SelectionScroll(screen, type, WeaponType::LENGTH, pos, upgradeManager);
             item.setTexture(*weaponTextureGetter->get().at(selectionScroll->getSelection()));
             break;
         case SEED:
-            selectionScroll = new SelectionScroll(screen, type, CropType::CROP_LENGTH, pos);
+            selectionScroll = new SelectionScroll(screen, type, CropType::CROP_LENGTH, pos, upgradeManager);
             item.setTexture(*seedTextureGetter->get().at(selectionScroll->getSelection()));
             break;
         case BOOSTER:
-            selectionScroll = new SelectionScroll(screen, type, 5, pos);
+            selectionScroll = new SelectionScroll(screen, type, 5, pos, upgradeManager);
             break;
     }
 

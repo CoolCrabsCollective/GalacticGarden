@@ -16,6 +16,7 @@ enum Upgrade {
 
     // NUKES
     NUKE_SIMPLE,
+    WEAPON_UPGRADE_LENGTH,
 
     // FLAMETHROWER
     FLAMETHROWER_SIMPLE,
