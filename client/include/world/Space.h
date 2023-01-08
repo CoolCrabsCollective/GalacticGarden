@@ -62,7 +62,6 @@ private:
     void manageEnemies();
     void spawnEnemy(sf::Vector2f pos);
     
-    void spawnAsteroidBelt();
     void spawnAsteroids();
 
 };
