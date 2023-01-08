@@ -12,7 +12,7 @@ HatchlingShip::HatchlingShip(Space &space, sf::Vector2f location)
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_HATCHLING));
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
     targetAsteroid = nullptr;
-    speed = 0.01f;
+    speed = 0.05f;
     damage = 1;
 }
 
@@ -87,13 +87,16 @@ void HatchlingShip::tick(float delta) {
             tractorBeam->setRotationDegrees(this->rotation);
         }
 
-        return;
+    } else if (tractorBeam) {
+        delete tractorBeam;
+        tractorBeam = nullptr;
     }
 
     velocityNormalized = distanceToCrop.normalized();
 
     // move towards crop
-    this->location += velocityNormalized * speed;
+    if(distanceToCrop.lengthSq() >= 1.0f)
+        this->location += velocityNormalized * speed;
     this->rotation = velocityNormalized.angle().asDegrees() + 90.0f;
 }
 
