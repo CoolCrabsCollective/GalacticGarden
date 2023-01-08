@@ -150,6 +150,8 @@ void SpaceScreen::render(sf::RenderTarget& target) {
         if(shopIsOpen)
         {
             target.draw(upgradeMenu);
+            target.draw(energySprite);
+            target.draw(energyText);
         }
     } else {
         target.draw(energySprite);
@@ -222,9 +224,15 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
             if (dialogBox.isInProgress())
                 dialogBox.interact();
             if(shopIsOpen)
-                upgradeMenu.select();
+            {
+                Upgrade upgrade = upgradeMenu.select();
+                if(space.getUpgradeManager().get_cost(upgrade) < space.getShip().getEnergy())
+                {
+                    space.getUpgradeManager().unlock(upgrade);
+                    space.getShip().buyShit(space.getUpgradeManager().get_cost(upgrade));
+                }
+            }
             break;
-
         case sf::Keyboard::Num1:
         case sf::Keyboard::Numpad1:
             space.getShip().setWeaponType(WeaponType::SIMPLE);
@@ -277,7 +285,6 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
             if(shopIsOpen)
                 upgradeMenu.moveRight();
             break;
-
         default:
             break;
     }

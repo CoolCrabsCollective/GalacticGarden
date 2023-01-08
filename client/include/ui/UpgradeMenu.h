@@ -33,6 +33,6 @@ public:
 
     void moveLeft();
     void moveRight();
-    void select();
+    Upgrade select();
     void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
 };

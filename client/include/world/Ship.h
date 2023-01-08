@@ -32,9 +32,11 @@ protected:
     float time_since_last_plant = 0.f;
     float rotation = 0.0f;
     float maxSpeed = 4.f; // 4 units per second
-    float maxSpeedBoost = 40.f;
+    float maxSpeedBasicBoost = 15.f;
+    float maxSpeedUltraBoost = 40.f;
     float acc = 10.f; // 10 units per second ^ 2
-    float boostAcc = 20.f;
+    float boostBasicAcc = 15.f;
+    float boostUltraAcc = 20.f;
     sf::Vector2f moveVelocity = { 0.f, 0.f };
     std::map<plantzone_t, bool, PlantZoneCompare> seed_thrown;
     bool isBoosting = false;
@@ -61,6 +63,8 @@ public:
     void setIsBoosting(bool isBoosting);
 
     int getEnergy() const;
+
+    void buyShit(float cost);
 
 	Ship(Space& space, const sf::Vector2f& location);
 
