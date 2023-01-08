@@ -15,7 +15,7 @@ void TitleScreen::tick(float delta) {
 
 	logo.setOrigin(sf::Vector2f(logo.getTextureRect().getSize() / 2));
 	logo.setPosition(vec / 2.0f);
-	logo.setScale(sf::Vector2f(10.0f, 10.0f));
+	logo.setScale(sf::Vector2f(2.0f, 2.0f));
 
 	vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
 	vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
