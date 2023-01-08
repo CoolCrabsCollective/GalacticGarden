@@ -11,6 +11,7 @@
 #include "world/crop/FalloutFlower.h"
 #include "util/MathUtil.h"
 #include "world/crop/RadioActiveCorn.h"
+#include "util/SpriteUtil.h"
 
 Asteroid::Asteroid(Space& space, 
 				   const sf::Vector2f& location, 
@@ -72,13 +73,13 @@ float Asteroid::getZOrder() const {
 
 void Asteroid::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
 	sprite.setPosition(location);
-	sprite.setScale({ size / sprite.getTexture()->getSize().x, size / sprite.getTexture()->getSize().y });
+    SpriteUtil::setSpriteSize(sprite, { size, size });
 	sprite.setRotation(sf::degrees(rotation));
 	target.draw(sprite);
 	
 	for(auto &[key, value] : plantingZones) {
         zoneSprite.setPosition(location + key.rotatedBy(sf::degrees(rotation)));
-        zoneSprite.setScale({ 1.f / (zoneSprite.getTexture()->getSize().x * 4.f), 1.f / (zoneSprite.getTexture()->getSize().y * 4.f)});
+        SpriteUtil::setSpriteSize(zoneSprite, { 0.25f, 0.25f });
         if(value == nullptr)
             target.draw(zoneSprite);
 	}
