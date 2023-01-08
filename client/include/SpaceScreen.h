@@ -21,6 +21,8 @@
 #include "WIZ/input/Mapping.h"
 #include "WIZ/input/MappingDatabase.h"
 #include "ui/GameOverMenu.h"
+#include "MiniMap.h"
+
 
 class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
     std::string name = "SpaceScreen";
@@ -29,6 +31,7 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
 
     sf::Sprite background;
     Space space;
+    MiniMap miniMap;
 
     wiz::MappingDatabase mappingDatabase;
     wiz::Mapping mapping;
@@ -68,6 +71,8 @@ public:
     void processInput(float delta);
 
     void mouseWheelScrolled(const sf::Event::MouseWheelScrollEvent& mouseWheelScrollEvent) override;
+
+    const Space& getSpace() const;
 };
 
 

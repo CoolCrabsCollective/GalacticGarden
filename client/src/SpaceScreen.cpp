@@ -5,11 +5,15 @@
 #include "SpaceScreen.h"
 #include "SFML/Window/Touch.hpp"
 #include <string>
-#include <X11/Xlibint.h>
 #include "GameAssets.h"
+#include "MiniMap.h"
 
 SpaceScreen::SpaceScreen(wiz::Game& game)
-	: Screen(game), space(game.getAssets()), mappingDatabase(), gameOverMenu(*this) {
+	: Screen(game), 
+        space(game.getAssets()), 
+        mappingDatabase(), 
+        gameOverMenu(*this),
+        miniMap(*this) {
     mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
     cameraPosition = space.getShip().getLocation();
     energySprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ENERGY));
@@ -50,6 +54,9 @@ void SpaceScreen::render(sf::RenderTarget& target) {
 	target.setView(sf::View(cameraPosition, Space::VIEW_SIZE * zoom));
 	target.draw(space);
 
+    // mini map
+    target.draw(miniMap);
+    
     // ui
     target.setView(sf::View(SpaceScreen::UI_VIEW_SIZE / 2.0f, SpaceScreen::UI_VIEW_SIZE));
     target.draw(energySprite);
@@ -72,7 +79,7 @@ void SpaceScreen::hide() {
 
 void SpaceScreen::mouseWheelScrolled(const sf::Event::MouseWheelScrollEvent& mouseWheelScrollEvent) {
     zoom -= mouseWheelScrollEvent.delta;
-    zoom = max(zoom, 1.0f);
+    zoom = fmax(zoom, 1.0f);
 }
 
 void SpaceScreen::mouseButtonPressed(const sf::Event::MouseButtonEvent &mouseButtonEvent) {
@@ -122,10 +129,6 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
         default:
             break;
     }
-}
-
-const std::string& SpaceScreen::getName() const {
-	return name;
 }
 
 void SpaceScreen::windowClosed() {
@@ -187,4 +190,12 @@ void SpaceScreen::processInput(float delta) {
         rotation = pos.angle().asDegrees();
     }
     space.getShip().setRotation(rotation + 90.0f);
+}
+
+const std::string& SpaceScreen::getName() const {
+    return name;
+}
+
+const Space& SpaceScreen::getSpace() const {
+    return space;
 }

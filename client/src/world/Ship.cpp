@@ -214,7 +214,6 @@ void Ship::setRotation(float rotationRad) {
 
 void Ship::plantOnAsteroid(Space& space) {
     if(time_since_last_plant >= plant_delay) {
-        sf::Vector2f shipLocation = space.getShip().getLocation();
         std::vector<plantzone_t> seedrics;
         std::vector<Entity *> entities = space.getAllEntitiesInRect(this->location, {6, 6});
 
