@@ -15,11 +15,11 @@ void UpgradeManager::unlock(Upgrade upgrade) {
     has_upgraded[upgrade] = true;
 }
 
-float UpgradeManager::get_cost(Upgrade upgrade) {
+float UpgradeManager::get_cost(Upgrade upgrade) const {
     return upgrade_cost.at(upgrade);
 }
 
-bool UpgradeManager::has_unlocked(Upgrade upgrade) {
+bool UpgradeManager::has_unlocked(Upgrade upgrade) const {
     return has_upgraded.at(upgrade);
 }
 

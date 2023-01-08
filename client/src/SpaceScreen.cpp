@@ -16,7 +16,8 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
         gameOverMenu(*this),
         miniMap(*this),
         dialogBox(game.getAssets().get(GameAssets::VT323_TTF),  game.getAssets().get(GameAssets::DIALOG_BOX)),
-        weaponSelectionUi(*this) {
+        weaponSelectionUi(*this),
+        upgradeMenu(space, space.getUpgradeManager()) {
     mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
     smoothPosition = cameraPosition = space.getShip().getLocation();
     shipSmoothVelocity = { 0.0f, 0.0f };
@@ -37,7 +38,7 @@ void SpaceScreen::tick(float delta) {
         float trans = pow(0.99f, delta);
 
         shipSmoothVelocity = shipSmoothVelocity * trans + space.getShip().getMoveVelocity() * (1.0f - trans);
-        
+
         smoothPosition = smoothPosition * trans + (space.getShip().getLocation()) * (1.0f - trans);
         cameraPosition = space.getShip().getLocation() + space.getShip().getLocation() - smoothPosition;
 
@@ -79,9 +80,10 @@ void SpaceScreen::render(sf::RenderTarget& target) {
     if(space.gameover)
         target.draw(gameOverMenu);
 
-    target.draw(dialogBox);
-
     target.draw(weaponSelectionUi);
+
+    target.draw(dialogBox);
+    target.draw(upgradeMenu);
 }
 
 void SpaceScreen::show() {

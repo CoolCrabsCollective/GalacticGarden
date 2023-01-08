@@ -34,6 +34,6 @@ public:
     explicit UpgradeManager(std::initializer_list<std::pair<const Upgrade, float>> costs);
 
     void unlock(Upgrade upgrade);
-    float get_cost(Upgrade upgrade);
-    bool has_unlocked(Upgrade upgrade);
+    float get_cost(Upgrade upgrade) const;
+    bool has_unlocked(Upgrade upgrade) const;
 };
