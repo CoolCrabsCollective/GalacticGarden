@@ -23,7 +23,6 @@ namespace GameAssets {
 
 	ASSET(wiz::MusicAsset, GREENLIFE, ("music/greenlife.ogg"))
 	ASSET(wiz::SoundAsset, JUMP, ("sfx/jump.ogg"))
-	ASSET(wiz::FontAsset, SANS_TTF, ("font/sans.ttf"))
 
 	ASSET(wiz::TextureAsset, WHITE_PIXEL, ("gfx/white_pixel.png"))
     ASSET(wiz::TextureAsset, ARROW, ("gfx/arrow.png"))
