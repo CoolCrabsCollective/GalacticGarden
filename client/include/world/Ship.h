@@ -47,7 +47,7 @@ protected:
     sf::Shader* damageShader = nullptr;
     float redness = 0.0f;
 
-    float energy = 1000.f;
+    float energy = 10.f;
     
     WeaponType weaponType = WeaponType::SIMPLE;
     CropType cropType = CropType::FLOWER;
