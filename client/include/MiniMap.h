@@ -11,8 +11,17 @@
 class SpaceScreen;
 
 class MiniMap : public sf::Drawable {
+protected:
     SpaceScreen& screen;
     mutable sf::Sprite mapSprite, sprite, arrowSprite;
+
+    const sf::Color shipColor = sf::Color::White;
+    const sf::Color spaceStationColor = sf::Color::Yellow;
+    const sf::Color noPlantingSpotsColor = sf::Color(128, 128, 128, 255);
+    const sf::Color unplantedAsteroidColor = sf::Color(128, 128, 128, 255);
+    const sf::Color plantedAsteroidColor = sf::Color::Blue;
+    const sf::Color readyAsteroidColor = sf::Color::Green;
+    const sf::Color enemyShipColor = sf::Color::Red;
 public:
     explicit MiniMap(SpaceScreen& screen);
 

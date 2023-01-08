@@ -71,6 +71,10 @@ public:
         return sf::Vector2f { size, size };
     }
 
+    bool is_fully_planted();
+    bool has_grown_plants();
+    bool has_planting_spots();
+
 private:
     void generatePlantingZones(int count);
 };

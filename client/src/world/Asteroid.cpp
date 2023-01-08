@@ -165,3 +165,26 @@ Crop* Asteroid::getCrop(sf::Vector2f plant) {
         throw std::runtime_error("Invalid location");
     return plantingZones[plant];
 }
+
+bool Asteroid::is_fully_planted() {
+
+    for(auto & [key, value] : plantingZones)
+    {
+        if(value == nullptr)
+            return false;
+    }
+    return true;
+}
+
+bool Asteroid::has_planting_spots() {
+    return !plantingZones.empty();
+}
+
+bool Asteroid::has_grown_plants() {
+    for(auto & [key, value] : plantingZones)
+    {
+        if(value != nullptr && value->isReady())
+            return true;
+    }
+    return false;
+}
