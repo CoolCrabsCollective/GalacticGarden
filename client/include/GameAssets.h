@@ -68,11 +68,13 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_LASER_DOUBLE, ("gfx/upgrades/laser_double.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LASER_TRIANGLE, ("gfx/upgrades/laser_triangle.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LASER_FOUR_WAY, ("gfx/white_pixel.png"))
-    ASSET(wiz::TextureAsset, TEXTURE_LASER_CRAZY, ("gfx/upgrades/flame_thrower.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_LASER_CRAZY, ("gfx/white_pixel.png"))
     ASSET(wiz::TextureAsset, TEXTURE_NUKE_SIMPLE, ("gfx/upgrades/nuke.png"))
-    ASSET(wiz::TextureAsset, TEXTURE_FLAMETHROWER_SIMPLE, ("gfx/white_pixel.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_FLAMETHROWER_SIMPLE, ("gfx/upgrades/flame_thrower.png"))
     ASSET(wiz::TextureAsset, TEXTURE_BOOST_BASIC, ("gfx/upgrades/boost_basic.png"))
     ASSET(wiz::TextureAsset, TEXTURE_BOOST_ULTRA, ("gfx/upgrades/boost_ultra.png"))
+
+    ASSET(wiz::TextureAsset, TEXTURE_LOCKED, ("gfx/upgrades/too_costly.png"))
 }
 
 #endif //GAMETEMPLATE_GAMEASSETS_H
