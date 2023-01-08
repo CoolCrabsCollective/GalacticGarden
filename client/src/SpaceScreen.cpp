@@ -38,7 +38,7 @@ void SpaceScreen::tick(float delta) {
         float trans = pow(0.99f, delta);
 
         shipSmoothVelocity = shipSmoothVelocity * trans + space.getShip().getMoveVelocity() * (1.0f - trans);
-        
+
         smoothPosition = smoothPosition * trans + (space.getShip().getLocation()) * (1.0f - trans);
         cameraPosition = space.getShip().getLocation() + space.getShip().getLocation() - smoothPosition;
 
@@ -80,9 +80,9 @@ void SpaceScreen::render(sf::RenderTarget& target) {
     if(space.gameover)
         target.draw(gameOverMenu);
 
-    target.draw(dialogBox);
-
     target.draw(weaponSelectionUi);
+
+    target.draw(dialogBox);
     target.draw(upgradeMenu);
 }
 
