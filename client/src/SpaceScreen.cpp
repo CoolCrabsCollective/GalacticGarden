@@ -24,10 +24,18 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
     energySprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ENERGY));
 
     dialogBox.startDialog({
-        "Another one...",
-        "I need to find her...",
-        "Why is is always the kids?...",
-    });
+        "~CAW~ We have detected the human base!",
+        "We're not going out that easy...",
+        "~CAW~ I'm hungry",
+    }, {"Cosmic Crow", "Celestial Chad",
+        "Cosmic Crow"},
+              {getGame().getAssets().get(GameAssets::TEXTURE_COSMIC_CROW_ICON),
+               getGame().getAssets().get(GameAssets::TEXTURE_CELESTIAL_CHAD_ICON),
+               getGame().getAssets().get(GameAssets::TEXTURE_COSMIC_CROW_ICON)
+               },
+               [&]() {
+                }
+               );
 }
 
 void SpaceScreen::tick(float delta) {
@@ -38,7 +46,7 @@ void SpaceScreen::tick(float delta) {
         float trans = pow(0.99f, delta);
 
         shipSmoothVelocity = shipSmoothVelocity * trans + space.getShip().getMoveVelocity() * (1.0f - trans);
-        
+
         smoothPosition = smoothPosition * trans + (space.getShip().getLocation()) * (1.0f - trans);
         cameraPosition = space.getShip().getLocation() + space.getShip().getLocation() - smoothPosition;
 
@@ -80,9 +88,9 @@ void SpaceScreen::render(sf::RenderTarget& target) {
     if(space.gameover)
         target.draw(gameOverMenu);
 
-    target.draw(dialogBox);
-
     target.draw(weaponSelectionUi);
+
+    target.draw(dialogBox);
     target.draw(upgradeMenu);
 }
 

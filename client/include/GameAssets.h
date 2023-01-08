@@ -26,9 +26,12 @@ namespace GameAssets {
 	ASSET(wiz::FontAsset, SANS_TTF, ("font/sans.ttf"))
 
 	ASSET(wiz::TextureAsset, WHITE_PIXEL, ("gfx/white_pixel.png"))
+    ASSET(wiz::TextureAsset, ARROW, ("gfx/arrow.png"))
+    ASSET(wiz::TextureAsset, CIRCLE, ("gfx/circle.png"))
 	ASSET(wiz::TextureAsset, BACKGROUND, ("gfx/background.png"))
     ASSET(wiz::TextureAsset, LOGO, ("gfx/logo.png"))
     ASSET(wiz::TextureAsset, GAMEOVER, ("gfx/gameover.png"))
+    ASSET(wiz::TextureAsset, MAP_BG, ("gfx/map_bg.png"))
 	ASSET(wiz::TextureAsset, TEXTURE_ASTEROID, ("gfx/ass_steroid2.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LARGE_ASTEROID, ("gfx/large_ass.png"))
     ASSET(wiz::TextureAsset, TEXTURE_FALLOUT_FLOWER, ("gfx/fallout_flower.png"))
@@ -41,6 +44,8 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_PLANT_GROWING, ("gfx/plant_growing.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SEED, ("gfx/seed_rick.png"))
     ASSET(wiz::TextureAsset, TEXTURE_GAY_STATION, ("gfx/gay_station.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_COSMIC_CROW_ICON, ("gfx/cosmic_crow_icon.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_CELESTIAL_CHAD_ICON, ("gfx/celestial_chad_icon.png"))
 
     ASSET(wiz::TextureAsset, TEXTURE_SHIP, ("gfx/ship.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SHIP_MOVING_1, ("gfx/ship_moving_1.png"))
