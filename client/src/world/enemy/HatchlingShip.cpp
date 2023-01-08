@@ -19,7 +19,16 @@ HatchlingShip::HatchlingShip(Space &space, sf::Vector2f location)
 void HatchlingShip::tick(float delta) {
 
     EnemyShip::tick(delta);
-    
+
+    sf::Vector2f nearestFriendly = space.getNearestFriendly(location);
+
+    sf::Vector2f distanceToNearestFriendly = nearestFriendly - location;
+
+    if (distanceToNearestFriendly.lengthSq() < min_friendly_target_range) {
+        attackFriendly(distanceToNearestFriendly);
+        return;
+    }
+
     if(shouldBeRemoved())
         return;
     
@@ -95,7 +104,7 @@ void HatchlingShip::tick(float delta) {
     velocityNormalized = distanceToCrop.normalized();
 
     // move towards crop
-    if(distanceToCrop.lengthSq() >= 1.0f)
+    if(distanceToCrop.lengthSq() >= 0.9f)
         this->location += velocityNormalized * speed;
     this->rotation = velocityNormalized.angle().asDegrees() + 90.0f;
 }
@@ -109,4 +118,14 @@ void HatchlingShip::draw(sf::RenderTarget &target, const sf::RenderStates &state
 
 float HatchlingShip::getZOrder() const {
     return 2.f;
+}
+
+void HatchlingShip::attackFriendly(sf::Vector2f distanceToFriendly) {
+    fire();
+
+    velocityNormalized = distanceToFriendly.normalized();
+
+    if(distanceToFriendly.lengthSq() >= 7.f)
+        this->location += velocityNormalized * speed;
+    this->rotation = velocityNormalized.angle().asDegrees() + 90.0f;
 }

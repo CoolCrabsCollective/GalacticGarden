@@ -274,3 +274,10 @@ const std::vector<Entity*> &Space::getEntities() const {
 GayStation& Space::getGayStation() {
     return gayStation;
 }
+
+sf::Vector2f Space::getNearestFriendly(sf::Vector2f pos) {
+    float distanceToShip = (ship.getLocation() - pos).lengthSq();
+    float distanceToGayStation = (gayStation.getLocation() - pos).lengthSq();
+
+    return distanceToShip < distanceToGayStation ? ship.getLocation() : gayStation.getLocation();
+}
