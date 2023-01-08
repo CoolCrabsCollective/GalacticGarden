@@ -188,6 +188,8 @@ void SpaceScreen::show() {
 
 	getGame().addWindowListener(this);
     getGame().addInputListener(this);
+    getAssets().get(GameAssets::SOUNDTRACK)->setLoop(true);
+    getAssets().get(GameAssets::SOUNDTRACK)->play();
 }
 
 void SpaceScreen::hide() {

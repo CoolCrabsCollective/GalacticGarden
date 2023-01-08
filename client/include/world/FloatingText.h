@@ -10,6 +10,8 @@
 #include "SFML/Graphics/Text.hpp"
 
 class FloatingText : public Entity {
+    float life;
+    
     mutable sf::Text text;
     
 public:
@@ -18,6 +20,16 @@ public:
                  std::string text,
                  sf::Color color,
                  float duration);
+
+    void tick(float delta) override;
+
+    void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
+
+    float getZOrder() const override;
+
+    bool shouldBeRemoved() const override;
+private:
+    float opacity() const;
 };
 
 
