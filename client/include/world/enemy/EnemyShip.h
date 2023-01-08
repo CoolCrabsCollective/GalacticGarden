@@ -14,7 +14,7 @@ protected:
     mutable sf::Sprite sprite;
     
     float speed;
-    float damage;
+    float damageAmount;
     float health = 10.0f;
     
     float rotation = 0.0f;
@@ -37,5 +37,7 @@ public:
     void fire();
 
     bool shouldBeRemoved() const override;
+    
+    void damage(float amount);
 };
 

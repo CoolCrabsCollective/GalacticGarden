@@ -62,13 +62,13 @@ void PictureDialogBox::draw(sf::RenderTarget &target, const sf::RenderStates &st
     speakerText.setFont(*font);
     speakerText.setString(this->names.at(dialogIndex));
     speakerText.setScale({0.8f, 0.8f});
-    speakerText.setPosition({150.0f, 1000.f});
+    speakerText.setPosition({140.0f, 1000.f});
     speakerText.setOutlineColor(sf::Color::Black);
     speakerText.setFillColor(sf::Color::Black);
     target.draw(speakerText);
 
     transmissionText.setFont(*font);
-    transmissionText.setString("Incoming Transmission (space to skip)");
+    transmissionText.setString("Incoming Transmission (SPACE to continue, ESC to skip)");
     transmissionText.setScale({0.8f, 0.8f});
     transmissionText.setPosition({125.0f, 825.f});
     transmissionText.setOutlineColor(sf::Color::Black);
@@ -101,4 +101,8 @@ bool PictureDialogBox::isInProgress() const {
 
 void PictureDialogBox::interact() {
     DialogBox::interact();
+}
+
+void PictureDialogBox::kill() {
+    this->dialogIndex = dialog.size() + 69;
 }

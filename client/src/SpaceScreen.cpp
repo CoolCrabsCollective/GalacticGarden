@@ -33,18 +33,52 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
     shopText.setFont(*game.getAssets().get(GameAssets::VT323_TTF));
 
     dialogBox.startDialog({
-        "~CAW~ We have detected the human base!",
-        "Get off my asteroids you mangy chickens!",
-        "~CAW~ Mmmmm space flowers",
-    }, {"Cosmic Crow", "Celestial Chad",
-        "Cosmic Crow"},
-              {getGame().getAssets().get(GameAssets::TEXTURE_COSMIC_CROW_ICON),
-               getGame().getAssets().get(GameAssets::TEXTURE_CELESTIAL_CHAD_ICON),
-               getGame().getAssets().get(GameAssets::TEXTURE_COSMIC_CROW_ICON)
+        "Commander! Lord Crow is on the line!",
+        "Put him on.",
+        "~CAW~ Master we have detected the human space station." ,
+        "~CAW~ Excellent... send in our best crows...",
+        "~CAW~ Space flowers! ~CAW~ ~CAW~",
+        "~CAW~ Oh... It's you...",
+        "~CAW~ Hi Chad...",
+        "You called me, Lord Crow.",
+        "~CAW~ Only to tell you to prepare to die earthling.",
+        "Why don't you get away from my asteroids you mangy birds?",
+        "[End Of Communication]",
+        "Oh no!",
+        "Prepare my fighter jet. Time to show these pests who's boss!",
+    },
+      {
+        "Cadet Candice",
+        "Celestial Chad",
+        "Cosmic Crow",
+        "Lord Crow",
+        "Cosmic Crow",
+        "Lord Crow",
+        "Lord Crow",
+        "Celestial Chad",
+        "Lord Crow",
+        "Celestial Chad",
+        "Narrator",
+        "Cadet Candice",
+        "Celestial Chad",
+        },
+          {
+              getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+              getGame().getAssets().get(GameAssets::TEXTURE_CELESTIAL_CHAD_ICON),
+              getGame().getAssets().get(GameAssets::TEXTURE_COSMIC_CROW_ICON),
+              getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
+              getGame().getAssets().get(GameAssets::TEXTURE_COSMIC_CROW_ICON),
+              getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
+              getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
+              getGame().getAssets().get(GameAssets::TEXTURE_CELESTIAL_CHAD_ICON),
+              getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
+              getGame().getAssets().get(GameAssets::TEXTURE_CELESTIAL_CHAD_ICON),
+              getGame().getAssets().get(GameAssets::TEXTURE_NARRATOR_ICON),
+              getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+              getGame().getAssets().get(GameAssets::TEXTURE_CELESTIAL_CHAD_ICON),
                },
                [&]() {
                     space.paused = false;
-                    printf("penis");
                }
            );
 }
@@ -173,8 +207,11 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
     
     switch(keyEvent.code) {
         case sf::Keyboard::Escape:
-            if(shopIsOpen)
-            {
+            if (dialogBox.isInProgress()) {
+                dialogBox.kill();
+            }
+
+            if(shopIsOpen) {
                 shopIsOpen = false;
                 space.paused = false;
             }

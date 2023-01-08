@@ -6,6 +6,8 @@
 #include "GameAssets.h"
 #include "world/Space.h"
 #include "util/SpriteUtil.h"
+#include "world/enemy/EnemyShip.h"
+#include "util/MathUtil.h"
 
 Bomb::Bomb(Space& space, sf::Vector2f location, sf::Vector2f direction) 
     : Entity(space, location), velocity(direction * 5.0f) {
@@ -54,6 +56,13 @@ void Bomb::tick(float delta) {
             particles.emplace_back(location + sf::Vector2f { 0.0f, 1.0f }.rotatedBy(sf::degrees(angle)), size, rot, angVel, speed);
         }
         
+        for(Entity* entity : space.getAllEntitiesInRect(location, { 10.0f, 10.0f })) {
+            if(EnemyShip* ship = dynamic_cast<EnemyShip*>(entity)) {
+                if((ship->getLocation() - location).lengthSq() < MathUtil::pow2(5.0f)) {
+                    ship->damage(10.0f);
+                }
+            }
+        }
     }
 }
 
@@ -85,4 +94,16 @@ float Bomb::opacity(float value) {
         return 1.0f;
     
     return fmax(0.0f, 1.0f - (value - 5.0f));
+}
+
+bool Bomb::shouldBeRemoved() const {
+    return explosionTime >= 2.0f;
+}
+
+sf::Vector2f Bomb::getVisualSize() const {
+    return { 5.0f, 5.0f };
+}
+
+float Bomb::getZOrder() const {
+    return 5.0f;
 }

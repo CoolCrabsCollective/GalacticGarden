@@ -8,6 +8,7 @@
 #include <vector>
 #include "world/Entity.h"
 #include "SFML/Graphics/Sprite.hpp"
+#include "Lazer.h"
 
 typedef std::tuple<sf::Vector2f, float, float, float, float> particle_t;
 
@@ -29,8 +30,16 @@ public:
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
     
-    bool isDamaging();
-    
+    inline Faction getFaction() const {
+        return Faction::FRIENDLY;
+    }
+
+    bool shouldBeRemoved() const override;
+
+    sf::Vector2f getVisualSize() const override;
+
+    float getZOrder() const override;
+
 private:
     static float opacity(float value);
 };
