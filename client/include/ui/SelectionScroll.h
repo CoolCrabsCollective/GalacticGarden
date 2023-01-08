@@ -41,12 +41,28 @@ public:
     }
 };
 
+class SeedTextureGetter {
+    std::vector<sf::Texture*> seedTextures;
+
+public:
+    SeedTextureGetter(wiz::AssetLoader& assets) {
+        seedTextures =
+                {assets.get(GameAssets::TEXTURE_FALLOUT_FLOWER),
+                 assets.get(GameAssets::TEXTURE_CORN)};
+    }
+
+    ~SeedTextureGetter() = default;
+
+    std::vector<sf::Texture *> get() {
+        return seedTextures;
+    }
+};
+
 class SelectionScroll : public sf::Drawable {
     mutable std::vector<sf::Sprite> backdrops;
     mutable std::vector<sf::Sprite> items;
     mutable sf::Sprite selectHighLight;
-    SelectionType type;
-    int selection = 1;
+    int selection = 0;
     bool enableScroll = false;
 
     float openTime = 2000.f;
@@ -58,6 +74,9 @@ class SelectionScroll : public sf::Drawable {
 
     float changeSelectionInterval = 50.f;
     float timeBetweenChange = .0f;
+
+protected:
+    SelectionType type;
 
 public:
     explicit SelectionScroll(SpaceScreen& screen, SelectionType type, int numberOfItems, sf::Vector2f selectionDisPos);
@@ -75,6 +94,8 @@ public:
     void changeSelection(bool changeToNext);
 
     void update(float delta);
+
+    SelectionType getType() const;
 };
 
 #endif //LD52_CLIENT_SELECTIONSCROLL_H

@@ -6,8 +6,9 @@
 #define LD52_CLIENT_CROPTYPE_H
 
 enum CropType {
-    FLOWER,
-    CORN
+    FLOWER = 0,
+    CORN,
+    CROP_LENGTH
 };
 
 #endif //LD52_CLIENT_CROPTYPE_H

@@ -11,6 +11,7 @@
 SelectionScroll::SelectionScroll(SpaceScreen& screen, SelectionType type, int numberOfItems,
                                  sf::Vector2f selectionDisPos) : type(type), selectionDisPos(selectionDisPos) {
     WeaponTextureGetter* weaponTextureGetter = new WeaponTextureGetter(screen.getAssets());
+    SeedTextureGetter* seedTextureGetter = new SeedTextureGetter(screen.getAssets());
 
     float currentXOffset;
 
@@ -28,7 +29,7 @@ SelectionScroll::SelectionScroll(SpaceScreen& screen, SelectionType type, int nu
                 break;
             case SEED:
                 backdrops.at(i).setTexture(*screen.getAssets().get(GameAssets::TEXTURE_SEED_SELECTION_BOX));
-                items.at(i).setTexture(*screen.getAssets().get(GameAssets::TEXTURE_GAY_STATION));
+                items.at(i).setTexture(*seedTextureGetter->get().at(i));
                 break;
             case BOOSTER:
                 backdrops.at(i).setTexture(*screen.getAssets().get(GameAssets::TEXTURE_BOOST_SELECTION_BOX));
@@ -84,6 +85,8 @@ int SelectionScroll::getSelection() const {
 
 void SelectionScroll::setSelection(int selection) {
     SelectionScroll::selection = selection;
+    enableScroll = true;
+    openDuration = .0f;
 }
 
 void SelectionScroll::changeSelection(bool changeToNext) {
@@ -96,7 +99,7 @@ void SelectionScroll::changeSelection(bool changeToNext) {
                 numberOfItems = (int) WeaponType::LENGTH;
                 break;
             case SEED:
-                //            numberOfItems = (int) WeaponType.LENGTH;
+                numberOfItems = (int) CropType::CROP_LENGTH;
                 break;
             case BOOSTER:
                 //            numberOfItems = (int) WeaponType.LENGTH;
@@ -129,4 +132,8 @@ void SelectionScroll::update(float delta) {
         }
     }
     timeBetweenChange+=delta;
+}
+
+SelectionType SelectionScroll::getType() const {
+    return type;
 }
