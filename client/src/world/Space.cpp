@@ -9,23 +9,19 @@
 #include "world/station/GayStation.h"
 #include <iostream>
 #include "util/MathUtil.h"
+#include "world/AsteroidBelt.h"
 
 using namespace MathUtil;
 
 Space::Space(wiz::AssetLoader& assets) 
     : assets(assets), entities(), ship(*this, { 0.0f, 0.0f }), spacialMap() {
     entities.push_back(&ship);
-
     entities.push_back(new GayStation(*this, {10.0f, .0f}));
+    entities.push_back(new AsteroidBelt(*this));
 
-    spawnAsteroidBelt();
     spawnAsteroids();
     
 	initSpacialMap();
-}
-
-void Space::spawnAsteroidBelt() {
-    
 }
 
 void Space::spawnAsteroids() {
@@ -42,11 +38,14 @@ void Space::spawnAsteroids() {
         
         bool overlap = false;
         for(Asteroid* other : asteroids) {
-            if(pow2(x - other->getLocation().x) + pow2(y - other->getLocation().y) > pow2(other->getVisualSize().x / 2.0f + radius)) {
+            if(pow2(x - other->getLocation().x) + pow2(y - other->getLocation().y) < pow2(other->getVisualSize().x / 2.0f + radius)) {
                 overlap = true;
                 break;
             }
         }
+        
+        if(overlap)
+            continue;
         
         float velX = static_cast<float>(rand() / (RAND_MAX + 1.0) * 2.0 - 1.0) * 1.0f;
         float velY = static_cast<float>(rand() / (RAND_MAX + 1.0) * 2.0 - 1.0) * 1.0f;
