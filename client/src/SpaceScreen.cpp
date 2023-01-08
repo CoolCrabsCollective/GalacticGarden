@@ -10,12 +10,13 @@
 #include "MiniMap.h"
 
 SpaceScreen::SpaceScreen(wiz::Game& game)
-	: Screen(game), 
-        space(game.getAssets()), 
-        mappingDatabase(), 
+	: Screen(game),
+        space(game.getAssets()),
+        mappingDatabase(),
         gameOverMenu(*this),
-        miniMap(*this), 
-        dialogBox(game.getAssets().get(GameAssets::VT323_TTF),  game.getAssets().get(GameAssets::DIALOG_BOX)) {
+        miniMap(*this),
+        dialogBox(game.getAssets().get(GameAssets::VT323_TTF),  game.getAssets().get(GameAssets::DIALOG_BOX)),
+        weaponSelectionUi(*this) {
     mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
     smoothPosition = cameraPosition = space.getShip().getLocation();
     shipSmoothVelocity = { 0.0f, 0.0f };
@@ -70,7 +71,7 @@ void SpaceScreen::render(sf::RenderTarget& target) {
 
     // mini map
     target.draw(miniMap);
-    
+
     // ui
     target.setView(sf::View(SpaceScreen::UI_VIEW_SIZE / 2.0f, SpaceScreen::UI_VIEW_SIZE));
     target.draw(energySprite);
@@ -79,6 +80,8 @@ void SpaceScreen::render(sf::RenderTarget& target) {
         target.draw(gameOverMenu);
 
     target.draw(dialogBox);
+
+    target.draw(weaponSelectionUi);
 }
 
 void SpaceScreen::show() {

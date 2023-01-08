@@ -55,6 +55,9 @@ namespace GameAssets {
 
     // Fonts
     ASSET(wiz::FontAsset, VT323_TTF, ("font/VT323-Regular.ttf"))
+
+    // UI
+    ASSET(wiz::TextureAsset, TEXTURE_WEAPON_SELECT_BACKDROP, ("gfx/ui/weapon_select/weapon_select_dropdown.png"))
 }
 
 #endif //GAMETEMPLATE_GAMEASSETS_H
