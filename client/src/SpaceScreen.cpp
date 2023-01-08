@@ -16,8 +16,12 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
         gameOverMenu(*this),
         miniMap(*this),
         dialogBox(game.getAssets().get(GameAssets::VT323_TTF),  game.getAssets().get(GameAssets::DIALOG_BOX)),
-        weaponSelectionUi(*this),
+        weaponSelectionUi(*this, WEAPON),
+        seedSelectionUi(*this, SEED),
+        boostSelectionUi(*this, BOOSTER),
         upgradeMenu(space, space.getUpgradeManager()) {
+    weaponSelectionUi.setEnableScroll(true);
+
     mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
     smoothPosition = cameraPosition = space.getShip().getLocation();
     shipSmoothVelocity = { 0.0f, 0.0f };
@@ -30,8 +34,8 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
 
     dialogBox.startDialog({
         "~CAW~ We have detected the human base!",
-        "We're not going out that easy...",
-        "~CAW~ I'm hungry",
+        "Get off my asteroids you mangy chickens!",
+        "~CAW~ Mmmmm space flowers",
     }, {"Cosmic Crow", "Celestial Chad",
         "Cosmic Crow"},
               {getGame().getAssets().get(GameAssets::TEXTURE_COSMIC_CROW_ICON),
@@ -128,6 +132,8 @@ void SpaceScreen::render(sf::RenderTarget& target) {
             target.draw(shopText);
         }
 
+        target.draw(seedSelectionUi);
+        target.draw(boostSelectionUi);
     }
     target.draw(dialogBox);
 }
@@ -181,27 +187,32 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
 
         case sf::Keyboard::Num1:
         case sf::Keyboard::Numpad1:
-            space.getShip().setLazerType(LazerType::SIMPLE);
+            space.getShip().setWeaponType(WeaponType::SIMPLE);
             break;
         
         case sf::Keyboard::Num2:
         case sf::Keyboard::Numpad2:
-            space.getShip().setLazerType(LazerType::DOUBLE);
+            space.getShip().setWeaponType(WeaponType::DOUBLE);
             break;
         
         case sf::Keyboard::Num3:
         case sf::Keyboard::Numpad3:
-            space.getShip().setLazerType(LazerType::TRIANGLE);
+            space.getShip().setWeaponType(WeaponType::TRIANGLE);
             break;
         
         case sf::Keyboard::Num4:
         case sf::Keyboard::Numpad4:
-            space.getShip().setLazerType(LazerType::FOUR_WAY);
+            space.getShip().setWeaponType(WeaponType::FOUR_WAY);
             break;
             
         case sf::Keyboard::Num5:
         case sf::Keyboard::Numpad5:
-            space.getShip().setLazerType(LazerType::CRAZY);
+            space.getShip().setWeaponType(WeaponType::CRAZY);
+            break;
+
+        case sf::Keyboard::Num6:
+        case sf::Keyboard::Numpad6:
+            space.getShip().setWeaponType(WeaponType::BOMB);
             break;
         case sf::Keyboard::F:
             {

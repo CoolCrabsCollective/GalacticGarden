@@ -12,6 +12,7 @@
 #include "world/Seed.h"
 #include "util/MathUtil.h"
 #include "util/SpriteUtil.h"
+#include "world/weapon/Bomb.h"
 
 Ship::Ship(Space& space, const sf::Vector2f& location) 
 	: Entity(space, location) {
@@ -162,32 +163,32 @@ void Ship::fire() {
 
     if(time_since_last_fire >= fire_delay)
     {
-        switch(lazerType) {
+        switch(weaponType) {
 
             case SIMPLE:
-                if(!space.getUpgradeManager().has_unlocked(LASER_SIMPLE) || !energy_for_shot(1)) return;
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 break;
             case DOUBLE:
-                if(!space.getUpgradeManager().has_unlocked(LASER_DOUBLE) ||!energy_for_shot(2)) return;
+                if(!space.getUpgradeManager().has_unlocked(LASER_DOUBLE) || !energy_for_shot(2)) return;
                 space.addEntity(new SmallLaser(space, location + (sf::Vector2f {0.25f, 0.0f}).rotatedBy(sf::degrees(rotation)), sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 space.addEntity(new SmallLaser(space, location + (sf::Vector2f {-0.25f, 0.0f}).rotatedBy(sf::degrees(rotation)), sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 break;
             case TRIANGLE:
-                if(!space.getUpgradeManager().has_unlocked(LASER_TRIANGLE) ||!energy_for_shot(3)) return;
+                if(!space.getUpgradeManager().has_unlocked(LASER_TRIANGLE) ||!energy_for_shot(1)) return;
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation - 15.0f))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 15.0f))));
                 break;
             case FOUR_WAY:
-                if(!space.getUpgradeManager().has_unlocked(LASER_FOUR_WAY) ||!energy_for_shot(4)) return;
+                if(!space.getUpgradeManager().has_unlocked(LASER_FOUR_WAY) ||!energy_for_shot(1)) return;
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 90.0f))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 180.0f))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 270.0f))));
                 break;
             case CRAZY:
-                if(!space.getUpgradeManager().has_unlocked(LASER_CRAZY) || !energy_for_shot(14)) return;
+
+                if(!space.getUpgradeManager().has_unlocked(LASER_CRAZY) || !energy_for_shot(5)) return;
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 90.0f))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 180.0f))));
@@ -202,6 +203,10 @@ void Ship::fire() {
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 45.0f))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation - 60.0f))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 60.0f))));
+                break;
+            case BOMB:
+                if(!energy_for_shot(5)) return;
+                space.addEntity(new Bomb(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 break;
         }
         
@@ -273,8 +278,8 @@ std::vector<plantzone_t> Ship::getClosestAvailablePlantingZones(Asteroid& astero
     return ret;
 }
 
-void Ship::setLazerType(LazerType lazer_type) {
-    this->lazerType = lazer_type;
+void Ship::setWeaponType(WeaponType weaponType) {
+    this->weaponType = weaponType;
 }
 
 bool Ship::energy_for_shot(int shot_count) {

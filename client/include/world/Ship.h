@@ -8,7 +8,7 @@
 #include "Entity.h"
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SFML/Graphics/Sprite.hpp"
-#include "world/weapon/LazerType.h"
+#include "world/weapon/WeaponType.h"
 #include "Asteroid.h"
 #include "world/anime/Anime.h"
 #include "world/weapon/Lazer.h"
@@ -46,7 +46,7 @@ protected:
     float redness = 0.0f;
 
     float energy = 100.f;
-    LazerType lazerType = LazerType::SIMPLE;
+    WeaponType weaponType = WeaponType::SIMPLE;
     mutable sf::Sprite normalAnimeSprite;
     Anime normalAnime;
     mutable sf::Sprite boostAnimeSprite;
@@ -77,7 +77,7 @@ public:
 
     float getRotation() const;
 
-    void setLazerType(LazerType lazer_type);
+    void setWeaponType(WeaponType lazer_type);
 
     std::vector<std::pair<sf::Vector2f, Asteroid*>> getClosestAvailablePlantingZones(Asteroid& asteroid);
 
