@@ -127,7 +127,7 @@ void SpaceScreen::render(sf::RenderTarget& target) {
     energyText.setPosition({ 175.f, 75.f});
     energyText.setScale({2.f, 2.f});
     energyText.setFillColor(sf::Color::White);
-    energyText.setFont(*space.getAssets().get(GameAssets::SANS_TTF));
+    energyText.setFont(*space.getAssets().get(GameAssets::VT323_TTF));
     
 	target.clear();
 	target.setView(sf::View({ 0.5f, 0.5f }, { 1.0f, 1.0f }));

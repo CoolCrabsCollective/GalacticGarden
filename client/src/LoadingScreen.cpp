@@ -42,7 +42,7 @@ void LoadingScreen::render(sf::RenderTarget& target) {
 void LoadingScreen::show() {
 
 	getGame().getAssets().loadAll(GameAssets::ALL);
-	getGame().getAssets().finishLoading(GameAssets::SANS_TTF);
+	getGame().getAssets().finishLoading(GameAssets::VT323_TTF);
 	getGame().getAssets().finishLoading(GameAssets::WHITE_PIXEL);
 
 	sprite.setTexture(*getGame().getAssets().get(GameAssets::WHITE_PIXEL));
@@ -50,7 +50,7 @@ void LoadingScreen::show() {
     message.setString("Loading game...");
     
 
-	message.setFont(*getGame().getAssets().get(GameAssets::SANS_TTF));
+	message.setFont(*getGame().getAssets().get(GameAssets::VT323_TTF));
 
 	getGame().addWindowListener(this);
 }

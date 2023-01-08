@@ -60,7 +60,7 @@ Selection::Selection(SpaceScreen& screen, SelectionType type) {
 
     text.setString("Single");
     text.setScale(textSize);
-    text.setFont(*screen.getAssets().get(GameAssets::SANS_TTF));
+    text.setFont(*screen.getAssets().get(GameAssets::VT323_TTF));
     text.setFillColor(sf::Color::White);
     text.setPosition(pos + textOffset);
 }
