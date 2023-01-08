@@ -7,7 +7,7 @@
 #include "world/Space.h"
 #include "GameAssets.h"
 
-SmallLaser::SmallLaser(Space &space, const sf::Vector2f &location, const sf::Vector2f &direction) 
+SmallLaser::SmallLaser(Space& space, sf::Vector2f location, sf::Vector2f direction) 
     : Lazer(space, location), direction(direction) {
     sprite.setTexture(* space.getAssets().get(GameAssets::TEXTURE_SMALL_LAZER));
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });

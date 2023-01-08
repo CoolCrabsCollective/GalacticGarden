@@ -13,7 +13,7 @@ HatchlingShip::HatchlingShip(Space &space, sf::Vector2f location)
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
     targetAsteroid = nullptr;
     speed = 0.05f;
-    damage = 1;
+    damageAmount = 1;
 }
 
 void HatchlingShip::tick(float delta) {
@@ -84,7 +84,7 @@ void HatchlingShip::tick(float delta) {
     sf::Vector2 distanceToCrop = crop->getLocation() - location;
     if(distanceToCrop.lengthSq() < 1.0f)  { // todo magic num
         
-        crop->damage(this->damage * delta / 1000.0f);
+        crop->damage(this->damageAmount * delta / 1000.0f);
         if (tractorBeam == nullptr) {
             tractorBeam = new TractorBeam(space);
         }

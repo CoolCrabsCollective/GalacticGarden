@@ -24,13 +24,16 @@
 
 #include "WIZ/ui/DialogBox.h"
 #include "ui/PictureDialogBox.h"
-#include "ui/WeaponSelection.h"
+#include "ui/Selection.h"
 #include "ui/UpgradeMenu.h"
 
 class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
     std::string name = "SpaceScreen";
     sf::Sound sound;
     sf::Music* music;
+
+    sf::Text shopText;
+    bool shopIsOpen = false;
 
     sf::Sprite background;
     Space space;
@@ -50,9 +53,13 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     GameOverMenu gameOverMenu;
     float gameoverCooldown = 1.5f;
 
+    const float SPACE_STATION_STORE_DIS_SQ = 200.f;
+
     PictureDialogBox dialogBox;
 
-    WeaponSelection weaponSelectionUi;
+    Selection weaponSelectionUi;
+    Selection seedSelectionUi;
+    Selection boostSelectionUi;
     UpgradeMenu upgradeMenu;
 
     mutable sf::Sprite dim;
@@ -83,6 +90,10 @@ public:
     void mouseWheelScrolled(const sf::Event::MouseWheelScrollEvent& mouseWheelScrollEvent) override;
 
     const Space& getSpace() const;
+
+    bool isShopIsOpen() const;
+
+    void setShopIsOpen(bool shopIsOpen);
 };
 
 #endif //LD52_CLIENT_SPACESCREEN_H

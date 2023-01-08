@@ -24,8 +24,8 @@ UpgradeMenu::UpgradeMenu(Space& space, UpgradeManager &upgradeManager) : space(s
 
 void UpgradeMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
     float offsetX = 0.f;
-    float xPos = 50.f;
-    float yPos = 1000.f;
+    float xPos = 200.f;
+    float yPos = 400.f;
 
     for(const auto& upgradeLine : upgradeTree)
     {
@@ -47,7 +47,7 @@ void UpgradeMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states)
             {
                 sf::Sprite* sprite = upgrade_sprites.at(upgradeBlock[index]);
                 sprite->setPosition({xPos + offsetX, yPos});
-                sprite->setScale({2.f, 2.f}); // will make alex cringe
+                sprite->setScale({8.f, 8.f}); // will make alex cringe
                 target.draw(*sprite);
                 locked.setPosition(sprite->getPosition());
                 locked.setScale(sprite->getScale());
@@ -59,11 +59,11 @@ void UpgradeMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states)
                 sf::Text price;
                 int price_value = upgradeManager.get_cost(upgradeBlock[index]);
                 price.setString(std::to_string(price_value));
-                price.setPosition({xPos + offsetX + 2, yPos + 30.f});
+                price.setPosition({xPos + offsetX + 20, yPos + 140.f});
+                price.setCharacterSize(96);
                 price.setFont(*space.getAssets().get(GameAssets::VT323_TTF));
                 target.draw(price);
-
-                offsetX += 100;
+                offsetX += 300;
             }
         }
     }

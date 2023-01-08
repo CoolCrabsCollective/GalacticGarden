@@ -16,14 +16,22 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
         gameOverMenu(*this),
         miniMap(*this),
         dialogBox(game.getAssets().get(GameAssets::VT323_TTF),  game.getAssets().get(GameAssets::DIALOG_BOX)),
-        weaponSelectionUi(*this),
+        weaponSelectionUi(*this, WEAPON),
+        seedSelectionUi(*this, SEED),
+        boostSelectionUi(*this, BOOSTER),
         upgradeMenu(space, space.getUpgradeManager()) {
+    weaponSelectionUi.setEnableScroll(true);
+
     mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
     smoothPosition = cameraPosition = space.getShip().getLocation();
     shipSmoothVelocity = { 0.0f, 0.0f };
     energySprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ENERGY));
 
     space.paused = true;
+
+    shopText.setString("Press 'F' to open the Space Station Store");
+    shopText.setFont(*game.getAssets().get(GameAssets::VT323_TTF));
+
     dialogBox.startDialog({
         "Commander! Lord Crow is on the line!",
         "Put him on.",
@@ -33,11 +41,11 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
         "~CAW~ Oh... It's you...",
         "~CAW~ Hi Chad...",
         "You called me, Lord Crow.",
-        "~CAW~ Only to tell you to prepare to die.",
+        "~CAW~ Only to tell you to prepare to die earthling.",
         "Why don't you get away from my asteroids you mangy birds?",
         "[End Of Communication]",
         "Oh no!",
-        "Prepare my fighter jet. Time to show these pests who's boss.",
+        "Prepare my fighter jet. Time to show these pests who's boss!",
     },
       {
         "Cadet Candice",
@@ -72,7 +80,15 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                [&]() {
                     space.paused = false;
                }
-               );
+           );
+}
+
+bool SpaceScreen::isShopIsOpen() const {
+    return shopIsOpen;
+}
+
+void SpaceScreen::setShopIsOpen(bool shopIsOpen) {
+    SpaceScreen::shopIsOpen = shopIsOpen;
 }
 
 void SpaceScreen::tick(float delta) {
@@ -131,11 +147,27 @@ void SpaceScreen::render(sf::RenderTarget& target) {
         dim.setScale(SpaceScreen::UI_VIEW_SIZE);
         dim.setColor(sf::Color(0, 0, 0, 128));
         target.draw(dim);
+        if(shopIsOpen)
+        {
+            target.draw(upgradeMenu);
+        }
     } else {
         target.draw(energySprite);
         target.draw(energyText);
         target.draw(weaponSelectionUi);
-        target.draw(upgradeMenu);
+
+        sf::Vector2f ssVec = space.getGayStation().getLocation();
+        sf::Vector2f pVec = space.getShip().getLocation();
+        sf::Vector2f diff = ssVec - pVec;
+        float ssDis = diff.x * diff.x + diff.y * diff.y;
+        if(ssDis < SPACE_STATION_STORE_DIS_SQ)
+        {
+            shopText.setPosition({ 700.f, 500.f});
+            target.draw(shopText);
+        }
+
+        target.draw(seedSelectionUi);
+        target.draw(boostSelectionUi);
     }
     target.draw(dialogBox);
 }
@@ -175,8 +207,11 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
     
     switch(keyEvent.code) {
         case sf::Keyboard::Escape:
-            if(!space.gameover)
-                space.gameover = true;
+            if(shopIsOpen)
+            {
+                shopIsOpen = false;
+                space.paused = false;
+            }
             break;
 
         case sf::Keyboard::Space:
@@ -186,29 +221,46 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
 
         case sf::Keyboard::Num1:
         case sf::Keyboard::Numpad1:
-            space.getShip().setLazerType(LazerType::SIMPLE);
+            space.getShip().setWeaponType(WeaponType::SIMPLE);
             break;
         
         case sf::Keyboard::Num2:
         case sf::Keyboard::Numpad2:
-            space.getShip().setLazerType(LazerType::DOUBLE);
+            space.getShip().setWeaponType(WeaponType::DOUBLE);
             break;
         
         case sf::Keyboard::Num3:
         case sf::Keyboard::Numpad3:
-            space.getShip().setLazerType(LazerType::TRIANGLE);
+            space.getShip().setWeaponType(WeaponType::TRIANGLE);
             break;
         
         case sf::Keyboard::Num4:
         case sf::Keyboard::Numpad4:
-            space.getShip().setLazerType(LazerType::FOUR_WAY);
+            space.getShip().setWeaponType(WeaponType::FOUR_WAY);
             break;
             
         case sf::Keyboard::Num5:
         case sf::Keyboard::Numpad5:
-            space.getShip().setLazerType(LazerType::CRAZY);
+            space.getShip().setWeaponType(WeaponType::CRAZY);
             break;
-            
+
+        case sf::Keyboard::Num6:
+        case sf::Keyboard::Numpad6:
+            space.getShip().setWeaponType(WeaponType::BOMB);
+            break;
+        case sf::Keyboard::F:
+            {
+                sf::Vector2f ssVec = space.getGayStation().getLocation();
+                sf::Vector2f pVec = space.getShip().getLocation();
+                sf::Vector2f diff = ssVec - pVec;
+                float ssDis = diff.x * diff.x + diff.y * diff.y;
+                if(ssDis < SPACE_STATION_STORE_DIS_SQ)
+                {
+                    shopIsOpen = !shopIsOpen;
+                    space.paused = shopIsOpen;
+                }
+            }
+            break;
         default:
             break;
     }
