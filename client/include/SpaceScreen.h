@@ -23,6 +23,7 @@
 #include "ui/GameOverMenu.h"
 #include "MiniMap.h"
 
+#include "WIZ/ui/DialogBox.h"
 
 class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
     std::string name = "SpaceScreen";
@@ -46,6 +47,8 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     
     GameOverMenu gameOverMenu;
     float gameoverCooldown = 1.5f;
+
+    wiz::DialogBox dialogBox;
 
 public:
     constexpr const static sf::Vector2f UI_VIEW_SIZE = { 1920.0f, 1080.0f };

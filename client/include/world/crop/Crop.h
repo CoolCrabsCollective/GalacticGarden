@@ -11,6 +11,7 @@
 #include "world/Asteroid.h"
 
 #include "world/crop/CropType.h"
+#include "ui/ProgressBar.h"
 
 class Crop : public Entity {
 protected:
@@ -25,6 +26,7 @@ protected:
     sf::Texture* plantGrowing;
     sf::Texture* grown;
     mutable sf::Sprite sprite;
+    ProgressBar progress;
     
 public:
     explicit Crop(Asteroid& asteroid, 

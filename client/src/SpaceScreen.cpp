@@ -13,10 +13,17 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
         space(game.getAssets()), 
         mappingDatabase(), 
         gameOverMenu(*this),
-        miniMap(*this) {
+        miniMap(*this), 
+        dialogBox(game.getAssets().get(GameAssets::VT323_TTF),  game.getAssets().get(GameAssets::DIALOG_BOX)) {
     mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
     cameraPosition = space.getShip().getLocation();
     energySprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ENERGY));
+
+    dialogBox.startDialog({
+        "Another one...",
+        "I need to find her...",
+        "Why is is always the kids?...",
+    });
 }
 
 void SpaceScreen::tick(float delta) {
@@ -27,6 +34,8 @@ void SpaceScreen::tick(float delta) {
         float trans = pow(0.99f, delta);
 
         cameraPosition = cameraPosition * trans + space.getShip().getLocation() * (1.0f - trans);
+
+        dialogBox.update(delta);
     } else {
         gameoverCooldown -= delta / 1000.0f;
     }
@@ -63,6 +72,8 @@ void SpaceScreen::render(sf::RenderTarget& target) {
     target.draw(energyText);
     if(space.gameover)
         target.draw(gameOverMenu);
+
+    target.draw(dialogBox);
 }
 
 void SpaceScreen::show() {
@@ -100,7 +111,12 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
             if(!space.gameover)
                 space.gameover = true;
             break;
-        
+
+        case sf::Keyboard::Space:
+            if (dialogBox.isInProgress())
+                dialogBox.interact();
+            break;
+
         case sf::Keyboard::Num1:
         case sf::Keyboard::Numpad1:
             space.getShip().setLazerType(LazerType::SIMPLE);
