@@ -9,18 +9,60 @@
 #include "world/crop/Crop.h"
 #include "world/Asteroid.h"
 #include "world/Seed.h"
+#include "util/MathUtil.h"
 
 Ship::Ship(Space& space, const sf::Vector2f& location) 
 	: Entity(space, location) {
 	
 	this->sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_SHIP), true);
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
+    float origin_y_pos = (sprite.getTexture()->getSize().y / 2.0f);
+    normalAnimeSprite.setOrigin({sprite.getTexture()->getSize().x / 2.0f, origin_y_pos});
+    boostAnimeSprite.setOrigin({sprite.getTexture()->getSize().x / 2.0f, origin_y_pos});
+
+    normalAnime.insertFrame(space.getAssets().get(GameAssets::TEXTURE_SHIP_MOVING_1));
+    normalAnime.insertFrame(space.getAssets().get(GameAssets::TEXTURE_SHIP_MOVING_2));
+    normalAnime.setAnimationSprite(&normalAnimeSprite);
+
+    boostAnime.insertFrame(space.getAssets().get(GameAssets::TEXTURE_SHIP_BOOSTING_1));
+    boostAnime.insertFrame(space.getAssets().get(GameAssets::TEXTURE_SHIP_BOOSTING_2));
+    boostAnime.setAnimationSprite(&boostAnimeSprite);
+
+    normalAnime.startAnimation();
+    boostAnime.startAnimation();
 }
 
 void Ship::tick(float delta) {
     float bad_delta = delta / 1000.f;
+
+    boostAnime.runAnimation(bad_delta);
+    normalAnime.runAnimation(bad_delta);
+
+    constexpr float energy_per_boost = 2.f;
+    if(isBoosting && !isIdle)
+    {
+        isBoosting = energy > energy_per_boost * bad_delta;
+        if(isBoosting)
+            energy -= energy_per_boost * bad_delta;
+    }
+
+    if(isBoosting)
+    {
+        if(this->moveVelocity.length() > maxSpeedBoost)
+        {
+            this->moveVelocity = this->moveVelocity.normalized() * maxSpeedBoost;
+        }
+    }
+    else if(this->moveVelocity.length() > maxSpeed){
+        this->moveVelocity = this->moveVelocity.normalized() * maxSpeed;
+   }
+
     sf::Vector2f newPos = { moveVelocity.x * bad_delta + this->location.x, moveVelocity.y * bad_delta + this->location.y };
 
+    if(newPos.lengthSq() > MathUtil::pow2(Space::MAP_RADIUS)) {
+        newPos = newPos.normalized() * Space::MAP_RADIUS;
+    }
+    
     this->location = newPos;
     time_since_last_fire += bad_delta;
     time_since_last_plant += bad_delta;
@@ -42,7 +84,27 @@ void Ship::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
 	sprite.setPosition(location);
 	sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
     sprite.setRotation(sf::degrees(rotation));
-	target.draw(sprite);
+
+    normalAnimeSprite.setPosition(location);
+    normalAnimeSprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
+    normalAnimeSprite.setRotation(sf::degrees(rotation));
+
+    boostAnimeSprite.setPosition(location);
+    boostAnimeSprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
+    boostAnimeSprite.setRotation(sf::degrees(rotation));
+
+    if(isIdle)
+    {
+        target.draw(sprite);
+    }
+    else if(isBoosting)
+    {
+        target.draw(boostAnimeSprite);
+    }
+    else
+    {
+        target.draw(normalAnimeSprite);
+    }
 }
 
 float Ship::getZOrder() const {
@@ -55,11 +117,8 @@ void Ship::moveInDirOfVec(const sf::Vector2f& moveVec, float good_delta) {
     if(moveVec.length() > 0.001f) // is not zero
         moveVecNorm = moveVec.normalized();
 
-    this->moveVelocity += moveVecNorm * acc * good_delta;
-    if(this->moveVelocity.length() > maxSpeed)
-    {
-        this->moveVelocity = this->moveVelocity.normalized() * maxSpeed;
-    }
+    float current_acc = isBoosting ? boostAcc : acc;
+    this->moveVelocity += moveVecNorm * current_acc * good_delta;
 }
 
 
@@ -184,18 +243,26 @@ void Ship::setLazerType(LazerType lazer_type) {
 }
 
 bool Ship::energy_for_shot(int shot_count) {
-    float energy_per_shot = 0.15f;
-    float energy_used = static_cast<float>(shot_count) * energy_per_shot;
+    int energy_per_shot = 1;
+    int energy_used = shot_count * energy_per_shot;
     bool success = energy_used < energy;
     if(success)
         energy -= energy_used;
     return success;
 }
 
-float Ship::getEnergy() const {
+int Ship::getEnergy() const {
     return energy;
 }
 
 std::map<plantzone_t, bool, PlantZoneCompare> &Ship::getSeedThrown() {
     return seed_thrown;
+}
+
+void Ship::setIsBoosting(bool isBoosting) {
+    this->isBoosting = isBoosting;
+}
+
+void Ship::setIsIdle(bool isIdle) {
+    this->isIdle = isIdle;
 }

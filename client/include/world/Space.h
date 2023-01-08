@@ -31,6 +31,7 @@ protected:
 public:
 	constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
 	constexpr const static float CHUNK_SIZE = 2.0f;
+    constexpr const static float MAP_RADIUS = 200.0f;
 
 	Space(wiz::AssetLoader& assets);
 
@@ -60,6 +61,9 @@ private:
 
     void manageEnemies();
     void spawnEnemy(sf::Vector2f pos);
+    
+    void spawnAsteroidBelt();
+    void spawnAsteroids();
 
 };
 

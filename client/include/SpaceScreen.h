@@ -20,10 +20,10 @@
 
 #include "WIZ/input/Mapping.h"
 #include "WIZ/input/MappingDatabase.h"
+#include "ui/GameOverMenu.h"
 
 class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
     std::string name = "SpaceScreen";
-    constexpr const static sf::Vector2f UI_VIEW_SIZE = { 1920.0f, 1080.0f };
     sf::Sound sound;
     sf::Music* music;
 
@@ -36,10 +36,18 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     bool mappingFound = false;
     
     sf::Vector2f cameraPosition;
+    float zoom = 1.0f;
+    
     sf::Sprite energySprite;
     sf::Text energyText;
+    
+    GameOverMenu gameOverMenu;
+    bool gameover = false;
+    float gameoverCooldown = 1.5f;
 
 public:
+    constexpr const static sf::Vector2f UI_VIEW_SIZE = { 1920.0f, 1080.0f };
+    
     SpaceScreen(wiz::Game& game);
 
     void tick(float delta) override;
@@ -59,6 +67,8 @@ public:
     void keyPressed(const sf::Event::KeyEvent &keyEvent) override;
 
     void processInput(float delta);
+
+    void mouseWheelScrolled(const sf::Event::MouseWheelScrollEvent& mouseWheelScrollEvent) override;
 };
 
 

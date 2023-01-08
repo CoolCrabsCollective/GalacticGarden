@@ -9,13 +9,15 @@
 #include "world/crop/Crop.h"
 #include "world/crop/CropType.h"
 #include "world/crop/FalloutFlower.h"
+#include "util/MathUtil.h"
 
 Asteroid::Asteroid(Space& space, 
 				   const sf::Vector2f& location, 
 				   float rotation,
 				   float size,
 				   const sf::Vector2f& startVelocity,
-				   float startAngVelocity) 
+				   float startAngVelocity,
+                   int plantingZoneCount) 
 	: Entity(space, location) {
 	
 	sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ASTEROID), true);
@@ -30,7 +32,7 @@ Asteroid::Asteroid(Space& space,
 	this->velocity = startVelocity;
 	this->angularVelocity = startAngVelocity;
 
-    generatePlantingZones();
+    generatePlantingZones(plantingZoneCount);
 }
 
 void Asteroid::tick(float delta) {
@@ -39,19 +41,25 @@ void Asteroid::tick(float delta) {
 	
 	std::vector<Entity*> close = space.getAllEntitiesInRect(location, extent);
 	
-	for(Entity* entity : close) {
-        Asteroid* other = dynamic_cast<Asteroid*>(entity);
+    if(location.lengthSq() > MathUtil::pow2(Space::MAP_RADIUS)) {
+        sf::Vector2f normal = -location;
+        velocity = velocity - 2.0f * velocity.dot(normal) * normal / normal.lengthSq();
+        angularVelocity = -angularVelocity;
+    } else {
+        for(Entity* entity : close) {
+            Asteroid* other = dynamic_cast<Asteroid*>(entity);
 
-        if(other) {
-            sf::Vector2f normal = other->getLocation() - location;
-            float dst2 = normal.lengthSq();
-            float normalDst = size / 2.0f + other->size / 2.0f;
-            if(dst2 < normalDst * normalDst * 7.0f / 8.0f && velocity.dot(normal) > 0.0f) {
-                velocity = velocity - 2.0f * velocity.dot(normal) * normal / normal.lengthSq();
-                angularVelocity = -angularVelocity;
+            if(other) {
+                sf::Vector2f normal = other->getLocation() - location;
+                float dst2 = normal.lengthSq();
+                float normalDst = size / 2.0f + other->size / 2.0f;
+                if(dst2 < normalDst * normalDst * 7.0f / 8.0f && velocity.dot(normal) > 0.0f) {
+                    velocity = velocity - 2.0f * velocity.dot(normal) * normal / normal.lengthSq();
+                    angularVelocity = -angularVelocity;
+                }
             }
-        }
-	}
+        }   
+    }
 	
 	this->location += this->velocity * delta / 1000.0f;
 	this->rotation += this->angularVelocity * delta / 1000.0f;
@@ -75,12 +83,12 @@ void Asteroid::draw(sf::RenderTarget& target, const sf::RenderStates& states) co
 	}
 }
 
-void Asteroid::generatePlantingZones() {
+void Asteroid::generatePlantingZones(int count) {
 	float minRadius = size / 4.0f;
 	float maxRadius = size / 2.0f * 6.0f / 8.0f;
 
-    for(int i = 0; i < 10; i++) {
-		float dir = i / 10.0f * 360.0f;
+    for(int i = 0; i < count; i++) {
+		float dir = i / static_cast<float>(count) * 360.0f;
 		float randDes = static_cast<float>(rand() / (RAND_MAX + 1.0)) * (maxRadius - minRadius) + minRadius;
 
 		plantingZones.insert(std::pair<sf::Vector2f, Crop*> {{ randDes * cosf(dir), randDes * sinf(dir)}, nullptr});

@@ -10,6 +10,7 @@
 #include "SFML/Graphics/Sprite.hpp"
 #include "world/weapon/LazerType.h"
 #include "Asteroid.h"
+#include "world/anime/Anime.h"
 
 typedef std::pair<sf::Vector2f, Asteroid*> plantzone_t;
 
@@ -30,16 +31,30 @@ protected:
     float time_since_last_plant = 0.f;
     float rotation = 0.0f;
     float maxSpeed = 4.f; // 4 units per second
+    float maxSpeedBoost = 40.f;
     float acc = 10.f; // 10 units per second ^ 2
+    float boostAcc = 20.f;
     sf::Vector2f moveVelocity = { 0.f, 0.f };
-    bool rotateLeft = false, rotateRight = false;
     std::map<plantzone_t, bool, PlantZoneCompare> seed_thrown;
+    bool isBoosting = false;
+    bool isIdle = true;
 public:
-    float getEnergy() const;
+    void setIsIdle(bool isIdle);
+
+protected:
+    mutable sf::Sprite normalAnimeSprite;
+    Anime normalAnime;
+    mutable sf::Sprite boostAnimeSprite;
+    Anime boostAnime;
+public:
+    void setIsBoosting(bool isBoosting);
+
+public:
+    int getEnergy() const;
 
 protected:
 
-    float energy = 10.f;
+    float energy = 100.f;
     LazerType lazerType = LazerType::SIMPLE;
 
     bool energy_for_shot(int shot_count);

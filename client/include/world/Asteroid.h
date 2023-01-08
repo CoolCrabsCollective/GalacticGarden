@@ -41,7 +41,8 @@ public:
                       float rotation,
                       float size,
                       const sf::Vector2f& startVelocity,
-                      float startAngVelocity);
+                      float startAngVelocity,
+                      int plantingZoneCount);
 
     void tick(float delta) override;
 
@@ -71,7 +72,7 @@ public:
     }
 
 private:
-    void generatePlantingZones();
+    void generatePlantingZones(int count);
 };
 
 

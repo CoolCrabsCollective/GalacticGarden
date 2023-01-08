@@ -5,23 +5,59 @@
 #include <algorithm>
 #include "world/Space.h"
 #include "world/Asteroid.h"
-#include "world/crop/FalloutFlower.h"
 #include "world/enemy/HatchlingShip.h"
-#include "world/weapon/SmallLaser.h"
+#include "world/station/GayStation.h"
 #include <iostream>
+#include "util/MathUtil.h"
+
+using namespace MathUtil;
 
 Space::Space(wiz::AssetLoader& assets) 
     : assets(assets), entities(), ship(*this, { 0.0f, 0.0f }), spacialMap() {
     entities.push_back(&ship);
 
-    Asteroid* a1;
-	entities.push_back(a1 = new Asteroid(*this, { 0.0f, 3.0f }, 0.0f, 5.0f, { 0.0f, 0.0f }, 10.0f ));
-	entities.push_back(new Asteroid(*this, { 2.1f, -3.1f }, 0.0f, 3.0f, { -0.5f, 1.0f }, -1.0f));
+    entities.push_back(new GayStation(*this, {10.0f, .0f}));
 
-	initSpacialMap();
+    spawnAsteroidBelt();
+    spawnAsteroids();
     
-    a1->plant(CropType::FLOWER, a1->getPlantingLocations()[0]);
-    a1->plant(CropType::FLOWER, a1->getPlantingLocations()[4]);
+	initSpacialMap();
+}
+
+void Space::spawnAsteroidBelt() {
+    
+}
+
+void Space::spawnAsteroids() {
+    std::vector<Asteroid*> asteroids;
+
+    do {
+        float x = static_cast<float>(rand() / (RAND_MAX + 1.0) * 2.0 - 1.0) * Space::MAP_RADIUS;
+        float y = static_cast<float>(rand() / (RAND_MAX + 1.0) * 2.0 - 1.0) * Space::MAP_RADIUS;
+        float radius = static_cast<float>(rand() / (RAND_MAX + 1.0)) * 2.0 + 0.5f;
+        int countPlant = round(pow2(radius));
+        
+        if(pow2(x) + pow2(y) > pow2(Space::MAP_RADIUS))
+            continue;
+        
+        bool overlap = false;
+        for(Asteroid* other : asteroids) {
+            if(pow2(x - other->getLocation().x) + pow2(y - other->getLocation().y) > pow2(other->getVisualSize().x / 2.0f + radius)) {
+                overlap = true;
+                break;
+            }
+        }
+        
+        float velX = static_cast<float>(rand() / (RAND_MAX + 1.0) * 2.0 - 1.0) * 1.0f;
+        float velY = static_cast<float>(rand() / (RAND_MAX + 1.0) * 2.0 - 1.0) * 1.0f;
+        float angVel = static_cast<float>(rand() / (RAND_MAX + 1.0) * 2.0 - 1.0) * 100.0f;
+        
+        asteroids.push_back(new Asteroid(*this, { x, y }, 0.0f, radius * 2.0f, { velX, velY }, angVel, countPlant));
+        
+    } while(asteroids.size() < 500);
+    
+    for(Asteroid* ass : asteroids)
+        entities.push_back(ass);
 }
 
 
@@ -148,7 +184,7 @@ std::vector<Entity*> Space::getAllEntitiesInRect(sf::Vector2f center,
 }
 
 void Space::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
-    sf::Vector2f viewSize = VIEW_SIZE;
+    sf::Vector2f viewSize = target.getView().getSize();
     sf::Vector2f start = target.getView().getCenter() - viewSize / 2.0f;
     sf::Vector2f end = target.getView().getCenter() + viewSize / 2.0f;
 
@@ -189,22 +225,6 @@ void Space::removeEntities() {
     }
 }
 
-Ship& Space::getShip() {
-    return ship;
-}
-
-const Ship& Space::getShip() const {
-    return ship;
-}
-
-wiz::AssetLoader& Space::getAssets() const {
-    return assets;
-}
-
-const std::vector<Entity*> &Space::getEntities() const {
-    return entities;
-}
-
 void Space::addEntity(Entity *entity) {
     entities.push_back(entity);
 
@@ -232,4 +252,20 @@ void Space::spawnEnemy(sf::Vector2f pos) {
     addEntity(new HatchlingShip(*this, pos));
     enemy_count++;
     time_since_last_spawn = 0.0f;
+}
+
+Ship& Space::getShip() {
+    return ship;
+}
+
+const Ship& Space::getShip() const {
+    return ship;
+}
+
+wiz::AssetLoader& Space::getAssets() const {
+    return assets;
+}
+
+const std::vector<Entity*> &Space::getEntities() const {
+    return entities;
 }
