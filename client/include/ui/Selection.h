@@ -21,6 +21,7 @@ class Selection : public sf::Drawable {
 protected:
     std::string itemName;
     SelectionScroll* selectionScroll = nullptr;
+    WeaponTextureGetter* weaponTextureGetter = nullptr;
 
 public:
     explicit Selection(SpaceScreen& screen, SelectionType type);
@@ -30,6 +31,12 @@ public:
     bool isEnableScroll() const;
 
     void setEnableScroll(bool enableScroll);
+
+    void changeSelection(bool changeToNext);
+
+    void update(float delta);
+
+    int getSelection() const;
 };
 
 #endif //LD52_CLIENT_SELECTION_H

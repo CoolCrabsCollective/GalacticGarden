@@ -9,13 +9,14 @@
 #include "util/MathUtil.h"
 
 Selection::Selection(SpaceScreen& screen, SelectionType type) {
+    weaponTextureGetter = new WeaponTextureGetter(screen.getAssets());
+
     float xOffset = .0f;
     float xOffsetSpacing = 50.f;
 
     switch (type) {
         case WEAPON:
             backdrop.setTexture(*screen.getAssets().get(GameAssets::TEXTURE_WEAPON_SELECT_BACKDROP));
-            item.setTexture(*screen.getAssets().get(GameAssets::TEXTURE_GAY_STATION));
             break;
         case SEED:
             xOffset = xOffsetSpacing*2.5f;
@@ -35,6 +36,7 @@ Selection::Selection(SpaceScreen& screen, SelectionType type) {
     switch (type) {
         case WEAPON:
             selectionScroll = new SelectionScroll(screen, type, 5, pos);
+            item.setTexture(*weaponTextureGetter->get().at(selectionScroll->getSelection()));
             break;
         case SEED:
             selectionScroll = new SelectionScroll(screen, type, 5, pos);
@@ -76,4 +78,16 @@ bool Selection::isEnableScroll() const {
 
 void Selection::setEnableScroll(bool enableScroll) {
     selectionScroll->setEnableScroll(enableScroll);
+}
+
+void Selection::changeSelection(bool changeToNext) {
+    selectionScroll->changeSelection(changeToNext);
+}
+
+void Selection::update(float delta) {
+    selectionScroll->update(delta);
+}
+
+int Selection::getSelection() const {
+    return selectionScroll->getSelection();
 }
