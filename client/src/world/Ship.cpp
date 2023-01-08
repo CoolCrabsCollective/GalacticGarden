@@ -51,11 +51,12 @@ void Ship::tick(float delta) {
             energy -= energy_per_boost * bad_delta;
     }
 
-    if(isBoosting)
+    if(isBoosting && space.getUpgradeManager().has_unlocked(BOOST_BASIC))
     {
-        if(this->moveVelocity.length() > maxSpeedBoost)
+        float maxBoostSpeed = space.getUpgradeManager().has_unlocked(BOOST_ULTRA) ? maxSpeedUltraBoost : maxSpeedBasicBoost;
+        if(this->moveVelocity.length() > maxBoostSpeed)
         {
-            this->moveVelocity = this->moveVelocity.normalized() * maxSpeedBoost;
+            this->moveVelocity = this->moveVelocity.normalized() * maxBoostSpeed;
         }
     }
     else if(this->moveVelocity.length() > maxSpeed){
@@ -154,7 +155,10 @@ void Ship::moveInDirOfVec(const sf::Vector2f& moveVec, float good_delta) {
     if(moveVec.length() > 0.001f) // is not zero
         moveVecNorm = moveVec.normalized();
 
-    float current_acc = isBoosting ? boostAcc : acc;
+    // garbage ternary
+    float current_acc = space.getUpgradeManager().has_unlocked(BOOST_BASIC) ?
+            (space.getUpgradeManager().has_unlocked(BOOST_ULTRA) ? boostUltraAcc : boostBasicAcc)
+            : acc;
     this->moveVelocity += moveVecNorm * current_acc * good_delta;
 }
 
@@ -214,6 +218,10 @@ void Ship::fire() {
     }
 }
 
+void Ship::setCropType(CropType crop_type) {
+    this->cropType = crop_type;
+}
+
 void Ship::setRotation(float rotationRad) {
     this->rotation = rotationRad;
 }
@@ -248,7 +256,7 @@ void Ship::plantOnAsteroid(Space& space) {
                 if(!seed_thrown.contains(zone) || !seed_thrown[zone]) {
                    seed_thrown[zone] = true;
 
-                    Seed* newSeed = new Seed(space, location, zone.second, zone.first);
+                    Seed* newSeed = new Seed(space, location, zone.second, zone.first, cropType);
                     newSeed->setRotationDegrees(this->rotation);
                     this->space.addEntity((newSeed));
 
@@ -309,4 +317,15 @@ void Ship::setIsIdle(bool isIdle) {
 
 const sf::Vector2f& Ship::getMoveVelocity() const {
     return moveVelocity;
+}
+
+void Ship::buyShit(float cost) {
+    energy -= cost;
+}
+WeaponType Ship::getWeaponType() const {
+    return weaponType;
+}
+
+CropType Ship::getCropType() const {
+    return cropType;
 }

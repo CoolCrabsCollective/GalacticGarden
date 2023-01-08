@@ -44,13 +44,9 @@ void Bomb::tick(float delta) {
         
         for(int i = 0; i < count; i++) {
             float angle = i * 360.0f / count + (rand() / (RAND_MAX + 1.0f) * 2.0f - 1.0f) * 10.0f;
-            
             float size = rand() / (RAND_MAX + 1.0f) * 2.0f + 0.5f;
-            
             float rot = rand() / (RAND_MAX + 1.0f) * 360.0f;
-            
             float angVel = rand() / (RAND_MAX + 1.0f) * 100.0f;
-            
             float speed = rand() / (RAND_MAX + 1.0f) * 4.0f;
             
             particles.emplace_back(location + sf::Vector2f { 0.0f, 1.0f }.rotatedBy(sf::degrees(angle)), size, rot, angVel, speed);

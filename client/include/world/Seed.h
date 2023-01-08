@@ -18,11 +18,14 @@ protected:
     Asteroid* targetAsteroid;
     sf::Vector2f targetPlantingZone;
     bool shouldDie = false;
+    
+    CropType cropType;
 public:
     explicit Seed(Space &space,
-                  const sf::Vector2f& location,
+                  sf::Vector2f location,
                   Asteroid* targetAsteroid,
-                  const sf::Vector2f& targetPlantingZOne);
+                  sf::Vector2f targetPlantingZone,
+                  CropType cropType);
 
     void tick(float delta) override;
     void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;

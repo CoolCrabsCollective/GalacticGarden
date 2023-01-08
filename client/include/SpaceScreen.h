@@ -53,7 +53,7 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     GameOverMenu gameOverMenu;
     float gameoverCooldown = 1.5f;
 
-    const float SPACE_STATION_STORE_DIS_SQ = 200.f;
+    const float SPACE_STATION_STORE_DIS_SQ = 100.f;
 
     PictureDialogBox dialogBox;
 

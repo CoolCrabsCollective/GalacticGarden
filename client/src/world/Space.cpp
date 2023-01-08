@@ -7,11 +7,9 @@
 #include "world/Asteroid.h"
 #include "world/enemy/HatchlingShip.h"
 #include "world/station/GayStation.h"
-#include "world/weapon/SmallLaser.h"
 #include <iostream>
 #include "util/MathUtil.h"
 #include "world/AsteroidBelt.h"
-#include "world/Seed.h"
 
 using namespace MathUtil;
 
@@ -19,6 +17,7 @@ Space::Space(wiz::AssetLoader& assets)
     : assets(assets), entities(), ship(*this, { 0.0f, 0.0f }), gayStation(*this, {10.0f, .0f}), spacialMap() {
     entities.push_back(&ship);
     entities.push_back(&gayStation);
+    entities.push_back(new AsteroidBelt(*this));
 
     spawnAsteroids();
 
@@ -198,7 +197,9 @@ void Space::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
 
     for(Entity* entity : entities_draw_list) {
 
-        if(entity->getLocation().x + entity->getVisualSize().x / 2.0f >= start.x
+        if(dynamic_cast<AsteroidBelt*>(entity)) {
+            target.draw(*entity);
+        } else if(entity->getLocation().x + entity->getVisualSize().x / 2.0f >= start.x
            && entity->getLocation().y + entity->getVisualSize().y / 2.0f >= start.y
            && entity->getLocation().x - entity->getVisualSize().x / 2.0f <= end.x
            && entity->getLocation().y - entity->getVisualSize().y / 2.0f <= end.y)

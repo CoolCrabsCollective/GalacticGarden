@@ -10,6 +10,7 @@
 #include "world/crop/CropType.h"
 #include "world/crop/FalloutFlower.h"
 #include "util/MathUtil.h"
+#include "world/crop/RadioActiveCorn.h"
 
 Asteroid::Asteroid(Space& space, 
 				   const sf::Vector2f& location, 
@@ -114,6 +115,10 @@ void Asteroid::plant(CropType cropType, sf::Vector2f relLocation) {
     {
         case FLOWER:
             newCrop = plantingZones[relLocation] = new FalloutFlower(*this, relLocation);
+            break;
+            
+        case CORN:
+            newCrop = plantingZones[relLocation] = new RadioActiveCorn(*this, relLocation);
             break;
             
         default:

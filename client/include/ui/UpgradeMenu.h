@@ -15,7 +15,7 @@ protected:
     mutable sf::Sprite locked;
     mutable sf::Sprite selected;
     Space& space;
-    mutable int indexSelected = 0;
+    mutable size_t indexSelected = 0;
 
     std::vector<std::vector<std::vector<Upgrade>>> upgradeTree{
             {{BOOST_BASIC}, {BOOST_ULTRA}},
@@ -33,6 +33,6 @@ public:
 
     void moveLeft();
     void moveRight();
-    void select();
+    Upgrade select();
     void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
 };

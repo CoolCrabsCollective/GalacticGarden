@@ -4,7 +4,16 @@
 
 #include "world/Seed.h"
 
-Seed::Seed(Space &space, const sf::Vector2f& location, Asteroid* targetAsteroid, const sf::Vector2f& targetPlantingZone) : Entity(space, location), location(location), targetAsteroid(targetAsteroid), targetPlantingZone(targetPlantingZone) {
+Seed::Seed(Space &space, 
+           sf::Vector2f location, 
+           Asteroid* targetAsteroid, 
+           sf::Vector2f targetPlantingZone,
+           CropType cropType) 
+           : Entity(space, location), 
+           location(location), 
+           targetAsteroid(targetAsteroid), 
+           targetPlantingZone(targetPlantingZone),
+           cropType(cropType) {
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_SEED));
     // Set origin at the bottom of the tractor beam, not the middle
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, static_cast<float>(sprite.getTexture()->getSize().y)});
@@ -27,7 +36,7 @@ void Seed::tick(float delta) {
     sf::Vector2f direction = targetAsteroid->getLocation() + targetPlantingZone.rotatedBy(sf::degrees(targetAsteroid->getRotation()))  - this->location;
 
     if (direction.lengthSq() <= 0.001) {
-        targetAsteroid->plant(CropType::FLOWER, targetPlantingZone);
+        targetAsteroid->plant(cropType, targetPlantingZone);
         plantzone_t zone = std::make_pair<sf::Vector2f, Asteroid*>({targetPlantingZone.x, targetPlantingZone.y}, std::move(targetAsteroid));
         shouldDie = true;
         Ship& ship = space.getShip();

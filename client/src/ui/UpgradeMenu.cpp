@@ -48,7 +48,7 @@ void UpgradeMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states)
             const std::vector<Upgrade>& upgradeBlock = upgradeLine.at(index);
             for(int i = 0; i < upgradeBlock.size(); i++)
             {
-                displayedItems.push_back(upgradeBlock[index]);
+                displayedItems.push_back(upgradeBlock[i]);
             }
         }
     }
@@ -62,7 +62,7 @@ void UpgradeMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states)
         indexSelected = 0;
     }
 
-    for(int i = 0; i < displayedItems.size(); i++)
+    for(size_t i = 0; i < displayedItems.size(); i++)
     {
         const Upgrade& upgrade = displayedItems[i];
 
@@ -118,7 +118,7 @@ void UpgradeMenu::moveRight() {
     }
 }
 
-void UpgradeMenu::select() {
-    upgradeManager.unlock(displayedItems[indexSelected]);
+Upgrade UpgradeMenu::select() {
+    return displayedItems[indexSelected];
 }
 

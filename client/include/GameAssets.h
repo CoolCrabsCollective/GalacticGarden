@@ -52,6 +52,9 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_BOMB, ("gfx/bomb.png"))
     ASSET(wiz::TextureAsset, TEXTURE_EXPLOSION_PARTICLE, ("gfx/explosion_particle.png"))
 
+    ASSET(wiz::TextureAsset, TEXTURE_CORN, ("gfx/corn.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_CORN_YOUNG, ("gfx/corn_young.png"))
+
     ASSET(wiz::TextureAsset, TEXTURE_SHIP, ("gfx/ship.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SHIP_MOVING_1, ("gfx/ship_moving_1.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SHIP_MOVING_2, ("gfx/ship_moving_2.png"))
@@ -76,8 +79,8 @@ namespace GameAssets {
 
     ASSET(wiz::TextureAsset, TEXTURE_LASER_DOUBLE, ("gfx/upgrades/laser_double.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LASER_TRIANGLE, ("gfx/upgrades/laser_triangle.png"))
-    ASSET(wiz::TextureAsset, TEXTURE_LASER_FOUR_WAY, ("gfx/white_pixel.png"))
-    ASSET(wiz::TextureAsset, TEXTURE_LASER_CRAZY, ("gfx/white_pixel.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_LASER_FOUR_WAY, ("gfx/upgrades/laser_quad.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_LASER_CRAZY, ("gfx/upgrades/laser_crazy.png"))
     ASSET(wiz::TextureAsset, TEXTURE_NUKE_SIMPLE, ("gfx/upgrades/nuke.png"))
     ASSET(wiz::TextureAsset, TEXTURE_FLAMETHROWER_SIMPLE, ("gfx/upgrades/flame_thrower.png"))
     ASSET(wiz::TextureAsset, TEXTURE_BOOST_BASIC, ("gfx/upgrades/boost_basic.png"))

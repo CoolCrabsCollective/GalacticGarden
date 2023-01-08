@@ -15,7 +15,11 @@ void UpgradeManager::unlock(Upgrade upgrade) {
     has_upgraded[upgrade] = true;
 }
 
+#include <iostream>
 float UpgradeManager::get_cost(Upgrade upgrade) const {
+    //std::cout << upgrade << std::endl;
+    if(!upgrade_cost.contains(upgrade))
+        return 0;
     return upgrade_cost.at(upgrade);
 }
 
