@@ -21,7 +21,9 @@ protected:
     
     float timeSincePlanted = 0.f;
     float health;
-    bool dead = false;
+    bool dead = false, harvested = false;
+    
+    float harvestingSpeed = 10.0f;
     
     sf::Texture* plantGrowing;
     sf::Texture* grown;
@@ -53,4 +55,6 @@ public:
     Asteroid& getAsteroid() const;
     
     sf::Vector2f getLocationOnAsteroid() const;
+
+    bool isHarvested();
 };
