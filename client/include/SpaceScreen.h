@@ -5,7 +5,6 @@
 #ifndef LD52_CLIENT_SPACESCREEN_H
 #define LD52_CLIENT_SPACESCREEN_H
 
-
 #include "GameAssets.h"
 #include "WIZ/game/Screen.h"
 #include "SFML/Graphics/Texture.hpp"
@@ -24,6 +23,7 @@
 #include "MiniMap.h"
 
 #include "WIZ/ui/DialogBox.h"
+#include "ui/PictureDialogBox.h"
 #include "ui/WeaponSelection.h"
 #include "ui/UpgradeMenu.h"
 
@@ -50,7 +50,7 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     GameOverMenu gameOverMenu;
     float gameoverCooldown = 1.5f;
 
-    wiz::DialogBox dialogBox;
+    PictureDialogBox dialogBox;
 
     WeaponSelection weaponSelectionUi;
     UpgradeMenu upgradeMenu;
@@ -82,6 +82,5 @@ public:
 
     const Space& getSpace() const;
 };
-
 
 #endif //LD52_CLIENT_SPACESCREEN_H
