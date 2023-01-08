@@ -300,3 +300,7 @@ void Ship::setIsBoosting(bool isBoosting) {
 void Ship::setIsIdle(bool isIdle) {
     this->isIdle = isIdle;
 }
+
+const sf::Vector2f& Ship::getMoveVelocity() const {
+    return moveVelocity;
+}

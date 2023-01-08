@@ -39,7 +39,7 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     bool controllerDisconnected = true;
     bool mappingFound = false;
     
-    sf::Vector2f cameraPosition;
+    sf::Vector2f smoothPosition, cameraPosition, shipSmoothVelocity;
     float zoom = 1.0f;
     
     sf::Sprite energySprite;
