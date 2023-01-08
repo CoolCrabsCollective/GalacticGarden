@@ -221,6 +221,8 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
         case sf::Keyboard::Enter:
             if (dialogBox.isInProgress())
                 dialogBox.interact();
+            if(shopIsOpen)
+                upgradeMenu.select();
             break;
 
         case sf::Keyboard::Num1:
@@ -264,6 +266,20 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
                     space.paused = shopIsOpen;
                 }
             }
+            break;
+        case sf::Keyboard::A:
+        case sf::Keyboard::Left:
+            if(shopIsOpen)
+                upgradeMenu.moveLeft();
+            break;
+        case sf::Keyboard::D:
+        case sf::Keyboard::Right:
+            if(shopIsOpen)
+                upgradeMenu.moveRight();
+            break;
+        case sf::Keyboard::Enter:
+            if(shopIsOpen)
+                upgradeMenu.select();
             break;
         default:
             break;

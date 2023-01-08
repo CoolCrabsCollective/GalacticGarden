@@ -84,6 +84,7 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_BOOST_ULTRA, ("gfx/upgrades/boost_ultra.png"))
 
     ASSET(wiz::TextureAsset, TEXTURE_LOCKED, ("gfx/upgrades/too_costly.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_SELECTED, ("gfx/upgrades/select.png"))
 }
 
 #endif //GAMETEMPLATE_GAMEASSETS_H
