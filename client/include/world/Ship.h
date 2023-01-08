@@ -23,6 +23,7 @@ struct PlantZoneCompare {
     }
 };
 
+
 class Ship : public Entity {
 protected:
 	mutable sf::Sprite sprite;
@@ -41,6 +42,8 @@ protected:
     std::map<plantzone_t, bool, PlantZoneCompare> seed_thrown;
     bool isBoosting = false;
     bool isIdle = true;
+
+    float hatchling_damage = 1.f;
 
     Faction fraction = FRIENDLY;
 

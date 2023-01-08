@@ -40,7 +40,7 @@ protected:
 
     int enemy_count = 0;
     int max_enemy_count = 2;
-    float spawn_delay = 100.0f;
+    float spawn_delay = 5000.0f;
     float time_since_last_spawn = .0f;
 public:
 	constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };

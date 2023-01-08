@@ -102,7 +102,7 @@ void Ship::tick(float delta) {
         if(Lazer* lazer = dynamic_cast<Lazer*>(entity)) {
             if (lazer->getFraction() != fraction) {
                 redness = 1.0f;
-                energy -= lazer->getDamage()*10;
+                energy -= lazer->getDamage()*hatchling_damage;
                 lazer->consume();
             }
         }
@@ -188,7 +188,7 @@ void Ship::fire() {
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 break;
             case DOUBLE:
-                if(!space.getUpgradeManager().has_unlocked(LASER_DOUBLE) || !energy_for_shot(2)) return;
+                if(!space.getUpgradeManager().has_unlocked(LASER_DOUBLE) || !energy_for_shot(1)) return;
                 space.addEntity(new SmallLaser(space, location + (sf::Vector2f {0.25f, 0.0f}).rotatedBy(sf::degrees(rotation)), sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 space.addEntity(new SmallLaser(space, location + (sf::Vector2f {-0.25f, 0.0f}).rotatedBy(sf::degrees(rotation)), sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 break;
@@ -309,8 +309,8 @@ void Ship::setWeaponType(WeaponType weaponType) {
 }
 
 bool Ship::energy_for_shot(int shot_count) {
-    int energy_per_shot = 1;
-    int energy_used = shot_count * energy_per_shot;
+    float energy_per_shot = 0.4;
+    float energy_used = static_cast<float>(shot_count) * energy_per_shot;
     bool success = energy_used < energy;
     if(success)
         energy -= energy_used;
