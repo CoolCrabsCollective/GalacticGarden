@@ -227,6 +227,9 @@ void Ship::fire() {
                 if(!energy_for_shot(5)) return;
                 space.addEntity(new Bomb(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 break;
+                
+            default:
+                throw std::runtime_error("Invalid weapon type");
         }
         
         time_since_last_fire = 0.f;

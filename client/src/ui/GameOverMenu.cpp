@@ -21,7 +21,7 @@ GameOverMenu::GameOverMenu(SpaceScreen& screen) {
 
     text.setString("Consider getting good, loser.\n\nPress any key to restart");
     text.setScale({2.f, 2.f});
-    text.setFont(*screen.getAssets().get(GameAssets::SANS_TTF));
+    text.setFont(*screen.getAssets().get(GameAssets::VT323_TTF));
     text.setFillColor(sf::Color::White);
     sf::FloatRect textRect = text.getLocalBounds();
     text.setPosition({ SpaceScreen::UI_VIEW_SIZE.x / 2.0f - textRect.width, 600.0f});
