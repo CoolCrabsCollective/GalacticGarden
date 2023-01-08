@@ -12,7 +12,7 @@ class SpaceScreen;
 
 class MiniMap : public sf::Drawable {
     SpaceScreen& screen;
-    mutable sf::Sprite sprite;
+    mutable sf::Sprite sprite, arrowSprite;
 public:
     explicit MiniMap(SpaceScreen& screen);
 

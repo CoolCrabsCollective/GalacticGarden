@@ -11,12 +11,13 @@
 #include "world/Asteroid.h"
 #include "world/Seed.h"
 #include "util/MathUtil.h"
+#include "util/SpriteUtil.h"
 
 Ship::Ship(Space& space, const sf::Vector2f& location) 
 	: Entity(space, location) {
 	
 	this->sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_SHIP), true);
-    sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
+    SpriteUtil::setSpriteOrigin(sprite, { 0.5f, 0.5f });
     float origin_y_pos = (sprite.getTexture()->getSize().y / 2.0f);
     normalAnimeSprite.setOrigin({sprite.getTexture()->getSize().x / 2.0f, origin_y_pos});
     boostAnimeSprite.setOrigin({sprite.getTexture()->getSize().x / 2.0f, origin_y_pos});
