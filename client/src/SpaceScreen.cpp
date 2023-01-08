@@ -222,9 +222,7 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
             case sf::Keyboard::Escape:
                 if (dialogBox.isInProgress()) {
                     dialogBox.kill();
-                }
-
-                if (shopIsOpen) {
+                } else if (shopIsOpen) {
                     shopIsOpen = false;
                     space.paused = false;
                 }
