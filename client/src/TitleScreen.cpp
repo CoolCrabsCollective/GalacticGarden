@@ -3,49 +3,62 @@
 //
 
 #include "TitleScreen.h"
+
+#include <memory>
 #include "GameAssets.h"
 #include "SFML/Window/Touch.hpp"
 #include "SpaceScreen.h"
 
 TitleScreen::TitleScreen(wiz::Game& game)
-	: Screen(game) {}
+	: Screen(game) {
+    
+    pressStartText.setString("Press any key to start");
+    pressStartText.setScale({ 1.0f, 1.0f });
+    pressStartText.setFont(*getAssets().get(GameAssets::VT323_TTF));
+    pressStartText.setCharacterSize(60);
+    pressStartText.setFillColor(sf::Color::White);
+}
 
 void TitleScreen::tick(float delta) {
-	sf::Vector2f vec(getGame().getWindow().getView().getSize());
 
-	logo.setOrigin(sf::Vector2f(logo.getTextureRect().getSize() / 2));
-	logo.setPosition(vec / 2.0f);
+	logo.setPosition({ 640.0f, 720.0f / 2.0f });
 	logo.setScale(sf::Vector2f(2.0f, 2.0f));
-
-	vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
-	vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
-	background.setScale(vec);
+    
+    sf::FloatRect textRect2 = pressStartText.getLocalBounds();
+    pressStartText.setPosition({ 640.0f - textRect2.width / 2.0f, 500.0f });
 
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)
-	   || sf::Joystick::isButtonPressed(0, 3))
+	   || sf::Joystick::isButtonPressed(0, 3)
+       || sf::Mouse::isButtonPressed(sf::Mouse::Left) || sf::Touch::isDown(1))
 	{
-		getGame().setScreen(std::shared_ptr<SpaceScreen>(new SpaceScreen(getGame())));
+		getGame().setScreen(std::make_shared<SpaceScreen>(getGame()));
 		return;
 	}
-
-	if(sf::Mouse::isButtonPressed(sf::Mouse::Left) || sf::Touch::isDown(1))
-		getGame().setScreen(std::shared_ptr<SpaceScreen>(new SpaceScreen(getGame())));
 }
 
 void TitleScreen::render(sf::RenderTarget& target) {
+    target.setView(sf::View({ 640.0f, 360.0f }, { 1280.0f, 720.0f}));
+    
 	target.clear();
 	target.draw(background);
 	target.draw(logo);
+    target.draw(pressStartText);
+}
+
+void TitleScreen::keyPressed(const sf::Event::KeyEvent& keyEvent) {
+    getGame().setScreen(std::make_shared<SpaceScreen>(getGame()));
 }
 
 void TitleScreen::show() {
 	logo.setTexture(*getAssets().get(GameAssets::LOGO));
 	background.setTexture(*getAssets().get(GameAssets::BACKGROUND));
+    logo.setOrigin(sf::Vector2f(logo.getTextureRect().getSize() / 2));
 
     getAssets().get(GameAssets::BACH)->setLoop(true);
     getAssets().get(GameAssets::BACH)->play();
 
 	getGame().addWindowListener(this);
+    getGame().addInputListener(this);
 
 	int i;
 	for(i = 0; true; i++) {
@@ -91,6 +104,7 @@ void TitleScreen::show() {
 }
 
 void TitleScreen::hide() {
+    getGame().removeInputListener(this);
 	getGame().removeWindowListener(this);
 }
 
