@@ -25,5 +25,5 @@ float RadioActiveCorn::getZOrder() const {
 }
 
 float RadioActiveCorn::getEnergyGain() const {
-    return 50.0f;
+    return 25.0f;
 }
