@@ -17,9 +17,7 @@ FlameThrower::FlameThrower(Space& space)
 }
 
 void FlameThrower::update(float delta) {
-    timeSinceLastParticle += delta;
-
-    if (space.getShip().isUsingFlameThrower() && timeSinceLastParticle > timeBetweenParticles)
+    if (space.getShip().isUsingFlameThrower())
         generateParticles();
 
     int index = 0;
@@ -29,10 +27,14 @@ void FlameThrower::update(float delta) {
         flameParticle.lifetime += delta;
         if (flameParticle.lifetime > flameParticle.lifeSpan) {
             particles.erase(particles.begin()+index);
-            particles.clear();
             currentNumberOfFlames--;
             continue;
         }
+
+        flameParticle.size = flameParticle.finalSize*(flameParticle.lifetime / flameParticle.lifeSpan) +
+                                flameParticle.finalSize / 4.f;
+        flameParticle.size = flameParticle.size > flameParticle.finalSize ? flameParticle.finalSize :
+                                flameParticle.size;
 
         std::get<0>(particle) = std::get<0>(particle) + (std::get<0>(particle) -
                 space.getShip().getLocation()).normalized() *
@@ -42,7 +44,7 @@ void FlameThrower::update(float delta) {
         for(Entity* entity : space.getAllEntitiesInRect(std::get<0>(particle), { 10.0f, 10.0f })) {
             if(EnemyShip* ship = dynamic_cast<EnemyShip*>(entity)) {
                 if((ship->getLocation() - space.getShip().getLocation()).lengthSq() < MathUtil::pow2(5.0f)) {
-                    ship->damage(2.f*(delta / 1000.f));
+                    ship->damage(.3f*(delta / 1000.f));
                 }
             }
         }
@@ -52,17 +54,17 @@ void FlameThrower::update(float delta) {
 }
 
 void FlameThrower::generateParticles() {
-    for(; currentNumberOfFlames < maxNumberOfFlames; currentNumberOfFlames++) {
-        FlameParticle flameParticle;
-        flameParticle.angle = space.getShip().getRotation() + 180.f + rand() / (RAND_MAX + 1.0f) * 10.0f;;
-        flameParticle.size = rand() / (RAND_MAX + 1.0f) * 2.0f + 0.5f;
-        flameParticle.rot = rand() / (RAND_MAX + 1.0f) * 360.0f;
-        flameParticle.angVel = rand() / (RAND_MAX + 1.0f) * 100.0f;
-        flameParticle.speed = rand() / (RAND_MAX + 4.0f) * 10.0f;
+    FlameParticle flameParticle;
+    flameParticle.angle = space.getShip().getRotation() + 180.f + rand() / (RAND_MAX + 1.0f) * 10.0f;;
+    flameParticle.finalSize = rand() / (RAND_MAX + 1.0f) * 1.0f + 0.5f;
+    flameParticle.rot = rand() / (RAND_MAX + 1.0f) * 360.0f;
+    flameParticle.angVel = rand() / (RAND_MAX + 1.0f) * 100.0f;
+    flameParticle.speed = rand() / (RAND_MAX + 4.0f) * 10.0f;
 
-        particles.emplace_back(space.getShip().getLocation() +
-                                sf::Vector2f { 0.0f, 1.0f }.rotatedBy(sf::degrees(flameParticle.angle)), flameParticle);
-    }
+    particles.emplace_back(space.getShip().getLocation() +
+                            sf::Vector2f { 0.0f, .5f }.rotatedBy(sf::degrees(flameParticle.angle)), flameParticle);
+
+    currentNumberOfFlames++;
 }
 
 bool FlameThrower::hasParticles() {
@@ -76,11 +78,13 @@ void FlameThrower::clearParticles() {
 
 void FlameThrower::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
     FlameParticle* flameParticle;
+    int alpha;
     for(particleFrame_t particle : particles) {
         flameSprite.setPosition(std::get<0>(particle));
         flameParticle = &std::get<1>(particle);
 
-//        flameSprite.setColor(sf::Color(255, 255, 255, round(opacity(flameParticle->lifetime) * 128)));
+        alpha = round(128.f - 128.f*(flameParticle->lifetime / flameParticle->lifeSpan));
+        flameSprite.setColor(sf::Color(255, 255, 255, (alpha >= 0 ? alpha : 0)));
 
         SpriteUtil::setSpriteSize(flameSprite, {flameParticle->size, flameParticle->size});
         flameSprite.setRotation(sf::degrees(flameParticle->rot));
