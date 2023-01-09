@@ -10,35 +10,47 @@
 #include "SFML/Graphics/Sprite.hpp"
 #include "Lazer.h"
 
-typedef std::tuple<sf::Vector2f, float, float, float, float> particle_t;
+struct FlameParticle {
+    float lifeSpan = 500.f;
+    float lifetime = .0f;
+    float angle;
+    float size;
+    float rot;
+    float angVel;
+    float speed;
+};
 
-class FlameThrower : public Entity {
-    float explosionTime = -1.0f, lifetime = 1.0f;
+typedef std::tuple<sf::Vector2f, FlameParticle> particleFrame_t;
 
-    sf::Vector2f velocity = { 0.0f, 0.0f };
+class FlameThrower : sf::Drawable {
+    Space& space;
 
     float rotation = 0.0f;
 
-    std::vector<particle_t> particles;
+    std::vector<particleFrame_t> particles;
+    int maxNumberOfFlames = 1000;
+    int currentNumberOfFlames = 0;
 
-    mutable sf::Sprite bombSprite;
-    mutable sf::Sprite explosionSprite;
+    float timeBetweenParticles = 1000.f;
+    float timeSinceLastParticle = .0f;
+
+    mutable sf::Sprite flameSprite;
 public:
-    FlameThrower(Space& space, sf::Vector2f location, sf::Vector2f direction);
+    FlameThrower(Space& space);
 
-    void tick(float delta) override;
+    void update(float delta);
 
-    void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
+    void generateParticles();
+
+    bool hasParticles();
+
+    void clearParticles();
+
+    void draw(sf::RenderTarget& target, const sf::RenderStates& states) const;
 
     inline Faction getFaction() const {
         return Faction::FRIENDLY;
     }
-
-    bool shouldBeRemoved() const override;
-
-    sf::Vector2f getVisualSize() const override;
-
-    float getZOrder() const override;
 
 private:
     static float opacity(float value);

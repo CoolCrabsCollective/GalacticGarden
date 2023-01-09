@@ -21,6 +21,9 @@ void HatchlingShip::tick(float delta) {
 
     EnemyShip::tick(delta);
 
+    if(shouldBeRemoved())
+        return;
+
     sf::Vector2f nearestFriendly = space.getNearestFriendly(location);
 
     sf::Vector2f distanceToNearestFriendly = nearestFriendly - location;
@@ -33,9 +36,6 @@ void HatchlingShip::tick(float delta) {
         attackFriendly(distanceToNearestFriendly);
         return;
     }
-
-    if(shouldBeRemoved())
-        return;
     
     if(targetAsteroid && !targetAsteroid->isPlanted(targetPlant))
         targetAsteroid = nullptr;
@@ -77,13 +77,16 @@ void HatchlingShip::tick(float delta) {
         }
     }
     
-    if(targetAsteroid == nullptr)
+    if(targetAsteroid == nullptr) {
+        attackFriendly(distanceToNearestFriendly);
         return;
+    }
     
     Crop* crop = targetAsteroid->getCrop(targetPlant);
     
     if(crop == nullptr) {
         targetAsteroid = nullptr;
+        attackFriendly(distanceToNearestFriendly);
         return;
     }
 
