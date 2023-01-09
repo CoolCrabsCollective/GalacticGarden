@@ -19,7 +19,8 @@ public:
                  "TRIANGLE",
                  "SHOTGUN",
                  "CRAZY",
-                 "NUKE"};
+                 "NUKE",
+                 "FLAMETHROWER"};
     }
 
     ~WeaponTextGetter() = default;

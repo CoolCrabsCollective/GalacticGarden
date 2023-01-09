@@ -38,6 +38,7 @@ public:
                  assets.get(GameAssets::TEXTURE_LASER_TRIANGLE),
                  assets.get(GameAssets::TEXTURE_LASER_FOUR_WAY),
                  assets.get(GameAssets::TEXTURE_LASER_CRAZY),
+                 assets.get(GameAssets::TEXTURE_NUKE_SIMPLE),
                  assets.get(GameAssets::TEXTURE_NUKE_SIMPLE)};
     }
 
