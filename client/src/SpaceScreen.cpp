@@ -615,6 +615,7 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
                 space.getShip().setWeaponType(static_cast<WeaponType>(weaponSelectionUi.getSelection()));
                 break;
             }
+            /*
             // TODO: CHEATs - remove
             case sf::Keyboard::V:
                 space.getShip().buyShit(-1000.0f);
@@ -624,7 +625,7 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
                 break;
             case sf::Keyboard::Subtract:
                 space.get_wave_manager().spawnNextWave();
-                break;
+                break;*/
             default:
                 break;
         }
