@@ -19,7 +19,7 @@ protected:
 
     float plant_search_range = 20.0f;
 
-    float min_friendly_target_range = 20.0f;
+    float min_friendly_target_range = 15.0f;
     bool targetingFriendly = false;
 
 public:
