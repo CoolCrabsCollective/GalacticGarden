@@ -16,9 +16,9 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
         gameOverMenu(*this),
         miniMap(*this),
         dialogBox(game.getAssets().get(GameAssets::VT323_TTF),  game.getAssets().get(GameAssets::DIALOG_BOX)),
-        weaponSelectionUi(*this, WEAPON),
-        seedSelectionUi(*this, SEED),
-        boostSelectionUi(*this, BOOSTER),
+        weaponSelectionUi(*this, WEAPON, &space.getUpgradeManager()),
+        seedSelectionUi(*this, SEED, &space.getUpgradeManager()),
+        boostSelectionUi(*this, BOOSTER, &space.getUpgradeManager()),
         upgradeMenu(space, space.getUpgradeManager()) {
     weaponSelectionUi.setEnableScroll(true);
 
@@ -28,6 +28,12 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
     energySprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_ENERGY));
 
     space.paused = true;
+
+    energyText.setPosition({ 175.f, 45.f});
+    energyText.setScale({1.0f, 1.0f});
+    energyText.setFillColor(sf::Color::White);
+    energyText.setFont(*space.getAssets().get(GameAssets::VT323_TTF));
+    energyText.setCharacterSize(90);
 
     shopText.setString("Press 'F' to open the Space Station Store");
     shopText.setFont(*game.getAssets().get(GameAssets::VT323_TTF));
@@ -129,10 +135,6 @@ void SpaceScreen::render(sf::RenderTarget& target) {
     energySprite.setScale({8.0f * 16.0f / energySprite.getTexture()->getSize().x, 8.0f * 16.0f / energySprite.getTexture()->getSize().y});
 
     energyText.setString(std::to_string(space.getShip().getEnergy()));
-    energyText.setPosition({ 175.f, 75.f});
-    energyText.setScale({2.f, 2.f});
-    energyText.setFillColor(sf::Color::White);
-    energyText.setFont(*space.getAssets().get(GameAssets::VT323_TTF));
     
 	target.clear();
 	target.setView(sf::View({ 0.5f, 0.5f }, { 1.0f, 1.0f }));
@@ -186,6 +188,8 @@ void SpaceScreen::show() {
 
 	getGame().addWindowListener(this);
     getGame().addInputListener(this);
+    getAssets().get(GameAssets::SOUNDTRACK)->setLoop(true);
+    getAssets().get(GameAssets::SOUNDTRACK)->play();
 }
 
 void SpaceScreen::hide() {

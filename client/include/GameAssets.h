@@ -21,7 +21,7 @@ namespace GameAssets {
 
     ASSET(TextAsset, CONTROLLER_DB, ("gamecontrollerdb.txt"))
 
-	ASSET(wiz::MusicAsset, GREENLIFE, ("music/greenlife.ogg"))
+	ASSET(wiz::MusicAsset, SOUNDTRACK, ("music/soundtrack.ogg"))
 	ASSET(wiz::SoundAsset, JUMP, ("sfx/jump.ogg"))
 
 	ASSET(wiz::TextureAsset, WHITE_PIXEL, ("gfx/white_pixel.png"))
@@ -82,6 +82,7 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_BOOST_SELECTION_BOX, ("gfx/ui/select/boost_select_scroll_box.png"))
     ASSET(wiz::TextureAsset, TEXTURE_HIGHLIGHT_SELECTION_BOX, ("gfx/ui/select/highlight_scroll_box.png"))
 
+    ASSET(wiz::TextureAsset, TEXTURE_LASER_SIMPLE, ("gfx/upgrades/laser_simple.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LASER_DOUBLE, ("gfx/upgrades/laser_double.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LASER_TRIANGLE, ("gfx/upgrades/laser_triangle.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LASER_FOUR_WAY, ("gfx/upgrades/laser_quad.png"))

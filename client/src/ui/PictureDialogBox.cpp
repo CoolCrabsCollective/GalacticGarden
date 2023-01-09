@@ -37,9 +37,8 @@ void PictureDialogBox::draw(sf::RenderTarget &target, const sf::RenderStates &st
                      128.0f / sprite.getTexture()->getSize().y});
     target.draw(sprite);
 
-    text.setFont(*font);
     text.setString(first_string);
-    text.setScale({1.2f, 1.2f});
+    text.setScale({0.9f, 0.9f});
     text.setPosition({200.0f, 620.0f - 30.0f});
     text.setOutlineColor(sf::Color::Black);
     text.setFillColor(sf::Color::Black);
@@ -59,25 +58,31 @@ void PictureDialogBox::draw(sf::RenderTarget &target, const sf::RenderStates &st
                             128.0f / speakerSprite.getTexture()->getSize().y});
     target.draw(speakerSprite);
 
-    speakerText.setFont(*font);
     speakerText.setString(this->names.at(dialogIndex));
-    speakerText.setScale({0.8f, 0.8f});
-    speakerText.setPosition({140.0f, 1000.f});
-    speakerText.setOutlineColor(sf::Color::Black);
-    speakerText.setFillColor(sf::Color::Black);
     target.draw(speakerText);
 
-    transmissionText.setFont(*font);
-    transmissionText.setString("Incoming Transmission (SPACE to continue, ESC to skip)");
-    transmissionText.setScale({0.8f, 0.8f});
-    transmissionText.setPosition({125.0f, 1035.f});
-    transmissionText.setOutlineColor(sf::Color::Black);
-    transmissionText.setFillColor(sf::Color::White);
     target.draw(transmissionText);
 }
 
 PictureDialogBox::PictureDialogBox(sf::Font *font1, sf::Texture *background)
         : DialogBox(font1, background) {
+    text.setFont(*font);
+    text.setCharacterSize(45);
+    
+    speakerText.setFont(*font);
+    speakerText.setCharacterSize(30);
+    speakerText.setScale({0.8f, 0.8f});
+    speakerText.setPosition({140.0f, 1000.f});
+    speakerText.setOutlineColor(sf::Color::Black);
+    speakerText.setFillColor(sf::Color::Black);
+    
+    transmissionText.setFont(*font);
+    
+    transmissionText.setString("Incoming Transmission (SPACE to continue, ESC to skip)");
+    transmissionText.setScale({0.8f, 0.8f});
+    transmissionText.setPosition({125.0f, 1035.f});
+    transmissionText.setOutlineColor(sf::Color::Black);
+    transmissionText.setFillColor(sf::Color::White);
 }
 
 void PictureDialogBox::startDialog(std::vector<std::string> lines, std::vector<std::string> names,

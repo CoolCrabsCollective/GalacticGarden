@@ -11,6 +11,7 @@
 #include "WIZ/asset/TextureAsset.h"
 #include "GameAssets.h"
 #include "WIZ/asset/AssetLoader.h"
+#include "UpgradeManager.h"
 
 class SpaceScreen;
 
@@ -26,7 +27,7 @@ class WeaponTextureGetter {
 public:
     WeaponTextureGetter(wiz::AssetLoader& assets) {
         weaponTextures =
-                {assets.get(GameAssets::TEXTURE_SMALL_LAZER),
+                {assets.get(GameAssets::TEXTURE_LASER_SIMPLE),
                  assets.get(GameAssets::TEXTURE_LASER_DOUBLE),
                  assets.get(GameAssets::TEXTURE_LASER_TRIANGLE),
                  assets.get(GameAssets::TEXTURE_LASER_FOUR_WAY),
@@ -75,11 +76,14 @@ class SelectionScroll : public sf::Drawable {
     float changeSelectionInterval = 50.f;
     float timeBetweenChange = .0f;
 
+    UpgradeManager* upgradeManager = nullptr;
+
 protected:
     SelectionType type;
 
 public:
-    explicit SelectionScroll(SpaceScreen& screen, SelectionType type, int numberOfItems, sf::Vector2f selectionDisPos);
+    explicit SelectionScroll(SpaceScreen& screen, SelectionType type, int numberOfItems, sf::Vector2f selectionDisPos,
+                             UpgradeManager* upgradeManager);
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 

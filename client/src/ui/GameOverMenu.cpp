@@ -20,8 +20,9 @@ GameOverMenu::GameOverMenu(SpaceScreen& screen) {
     gameover.setScale({ vec.x, vec.y / 4.0f * 16.0f / 9.0f });
 
     text.setString("The Cosmic Crows have defeated you and are now eating your vegetables.\n\nPress any key to restart");
-    text.setScale({2.f, 2.f});
+    text.setScale({1.0f, 1.0f});
     text.setFont(*screen.getAssets().get(GameAssets::VT323_TTF));
+    text.setCharacterSize(60);
     text.setFillColor(sf::Color::White);
     sf::FloatRect textRect = text.getLocalBounds();
     text.setPosition({ SpaceScreen::UI_VIEW_SIZE.x / 2.0f - textRect.width, 600.0f});

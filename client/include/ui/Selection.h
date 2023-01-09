@@ -27,7 +27,7 @@ protected:
     SeedTextureGetter* seedTextureGetter = nullptr;
 
 public:
-    explicit Selection(SpaceScreen& screen, SelectionType type);
+    explicit Selection(SpaceScreen& screen, SelectionType type, UpgradeManager* upgradeManager);
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
