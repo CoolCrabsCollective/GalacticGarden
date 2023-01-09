@@ -99,7 +99,7 @@ void PictureDialogBox::update(float delta) {
     if (dialog_ratio >= 1.0f)
         nextAcc += delta;
 
-    if (nextAcc - 1000 >= 0) {
+    if (nextAcc - 2000 >= 0) {
         nextAcc = 0;
         interact();
     }
