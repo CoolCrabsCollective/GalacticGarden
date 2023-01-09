@@ -27,6 +27,9 @@ class FlameThrower : sf::Drawable {
     Space& space;
 
     float rotation = 0.0f;
+    
+    float time = 0.0f;
+    float lastDisplay = -3.0f;
 
     std::vector<particleFrame_t> particles;
     int currentNumberOfFlames = 0;
@@ -47,6 +50,10 @@ public:
 
     inline Faction getFaction() const {
         return Faction::FRIENDLY;
+    }
+    
+    void resetDisplay() {
+        lastDisplay = -3.0f;
     }
 
 private:

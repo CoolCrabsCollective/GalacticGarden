@@ -204,6 +204,7 @@ void Ship::fire() {
             } else {
                 flameTimeSinceCost = .0f;
                 usingFlameThrower = true;
+                flameThrower->resetDisplay();
             }
         }
         return;
