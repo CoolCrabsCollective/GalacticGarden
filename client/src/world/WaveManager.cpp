@@ -11,11 +11,20 @@ WaveManager::WaveManager(Space &space) : space(space){
 
 
 void WaveManager::spawnNextWave() {
-    std::vector<int>& wave = waves[currentWave];
-    int hatchlingsToSpawn = wave[0];
-    int crowCraftsToSpawn = wave[1];
-    int nestsToSpawn = wave[2];
-    int treesToSpawn = wave[3];
+    int hatchlingsToSpawn = 0;
+    int crowCraftsToSpawn = 0;
+    int nestsToSpawn = 0;
+    int treesToSpawn = 0;
+
+    if (currentWave < waves.size()) {
+        std::vector<int>& wave = waves[currentWave];
+        hatchlingsToSpawn = wave[0];
+        crowCraftsToSpawn = wave[1];
+        nestsToSpawn = wave[2];
+        treesToSpawn = wave[3];
+    } else {
+        hatchlingsToSpawn = currentWave * 10;
+    }
 
     for(int i = 0; i < hatchlingsToSpawn; i++)
         space.spawnEnemyHatchling();

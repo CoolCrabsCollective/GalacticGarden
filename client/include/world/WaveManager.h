@@ -9,7 +9,7 @@
 class Space;
 class WaveManager {
 protected:
-    int currentWave = 0;
+    int currentWave = 7;
     const float waveCooldown = 10.f;
     float currentWaveCooldownProgress = 0.f;
     std::function<void(int)> newWaveCallback;

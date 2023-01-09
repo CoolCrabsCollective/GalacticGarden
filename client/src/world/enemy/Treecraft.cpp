@@ -40,3 +40,10 @@ void TreeCraft::pushAwayFrom(sf::Vector2f location, float delta) {
 
 }
 
+void TreeCraft::damage(float amount) {
+    EnemyShip::damage(amount);
+
+    if (health == 0.0f)
+        space.lordCrowHasFallen = true;
+}
+

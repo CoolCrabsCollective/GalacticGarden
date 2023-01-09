@@ -80,6 +80,7 @@ public:
     void spawnEnemyTree();
 
     const WaveManager& get_wave_manager() const;
+    bool lordCrowHasFallen = false;
 
 private:
 	void initSpacialMap();

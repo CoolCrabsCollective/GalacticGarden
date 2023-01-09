@@ -15,6 +15,8 @@ public:
 
     void tick(float delta) override;
 
+    void damage(float amount) override;
+
 protected:
     void pushAwayFrom(sf::Vector2f location, float delta) override;
 };

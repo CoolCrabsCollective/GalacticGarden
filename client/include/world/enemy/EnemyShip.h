@@ -40,7 +40,7 @@ public:
 
     bool shouldBeRemoved() const override;
     
-    void damage(float amount);
+    virtual void damage(float amount);
 
     float getZOrder() const override;
 };

@@ -180,74 +180,75 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                                           }
                     );
                     break;
-                case 8:
-                    space.paused = true;
-                    dialogBox.startDialog({
-                                                "NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOoooooooo",
-                                                "oooooooo ~CAW~ ooooooooooooooo...........",
-                                                "...",
-                                                "My treecraft is destroyed. You have bested me...",
-                                                "I thought I would die with a beak full of vegtables ~CAW~ ~CAW~ CAW~",
-                                                "[End Of Communication]",
-                                                "[Lord Crow is no more]",
-                                                "[The human space station is saved from the cosmic crow threat... or is it?]",
-                                                "Commander! This can't be possible!",
-                                                "I'm reading more crows inbound!",
-                                                "~CAW~ ~CAW~ Vegtables! ~CAW~ ",
-                                                "Its hog-killin' time! Yee Haw!",
-                                          },
-                                          {
-                                                  "Lord Crow",
-                                                  "Lord Crow",
-                                                  "Lord Crow",
-                                                  "Lord Crow",
-                                                  "Lord Crow",
-                                                  "Narrator",
-                                                  "Narrator",
-                                                  "Cadet Candice",
-                                                  "Cadet Candice",
-                                                  "Cosmic Crow",
-                                                  "Celestial Chad",
-                                          },
-                                          {
-
-                                                  getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
-                                                  getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
-                                                  getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
-                                                  getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
-                                                  getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
-                                                  getGame().getAssets().get(GameAssets::TEXTURE_NARRATOR_ICON),
-                                                  getGame().getAssets().get(GameAssets::TEXTURE_NARRATOR_ICON),
-                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
-                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
-                                                  getGame().getAssets().get(GameAssets::TEXTURE_COSMIC_CROW_ICON),
-                                                  getGame().getAssets().get(GameAssets::TEXTURE_CELESTIAL_CHAD_ICON),
-
-                                          },
-                                          [&]() {
-                                              space.paused = false;
-                                          }
-                    );
-                    break;
-
                 default:
-                    space.paused = true;
-                    dialogBox.startDialog({
-                                                  "Another wave of crows inbound commander!",
-                                          },
-                                          {
-                                                  "Cadet Candice",
-                                          },
-                                          {
-                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
-                                          },
-                                          [&]() {
-                                              space.paused = false;
-                                          }
-                    );
-                    break;
-            }
+                    if (space.lordCrowHasFallen) {
+                        space.paused = true;
+                        dialogBox.startDialog({
+                                                      "NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOoooooooo",
+                                                      "oooooooo ~CAW~ ooooooooooooooo...........",
+                                                      "...",
+                                                      "My treecraft is destroyed. You have bested me...",
+                                                      "I thought I would die with a beak full of vegtables ~CAW~ ~CAW~ CAW~",
+                                                      "[End Of Communication]",
+                                                      "[Lord Crow is no more]",
+                                                      "[The human space station is saved from the cosmic crow threat... or is it?]",
+                                                      "Commander! This can't be possible!",
+                                                      "I'm reading more crows inbound!",
+                                                      "~CAW~ ~CAW~ Vegtables! ~CAW~ ",
+                                                      "Its hog-killin' time! Yee Haw!",
+                                              },
+                                              {
+                                                      "Lord Crow",
+                                                      "Lord Crow",
+                                                      "Lord Crow",
+                                                      "Lord Crow",
+                                                      "Lord Crow",
+                                                      "Narrator",
+                                                      "Narrator",
+                                                      "Cadet Candice",
+                                                      "Cadet Candice",
+                                                      "Cosmic Crow",
+                                                      "Celestial Chad",
+                                              },
+                                              {
 
+                                                      getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
+                                                      getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
+                                                      getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
+                                                      getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
+                                                      getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
+                                                      getGame().getAssets().get(GameAssets::TEXTURE_NARRATOR_ICON),
+                                                      getGame().getAssets().get(GameAssets::TEXTURE_NARRATOR_ICON),
+                                                      getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+                                                      getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+                                                      getGame().getAssets().get(GameAssets::TEXTURE_COSMIC_CROW_ICON),
+                                                      getGame().getAssets().get(GameAssets::TEXTURE_CELESTIAL_CHAD_ICON),
+
+                                              },
+                                              [&]() {
+                                                  space.paused = false;
+                                              }
+                        );
+                        break;
+                        space.lordCrowHasFallen = false;
+                    } else {
+                        space.paused = true;
+                        dialogBox.startDialog({
+                                                      "Another wave of crows inbound commander!",
+                                              },
+                                              {
+                                                      "Cadet Candice",
+                                              },
+                                              {
+                                                      getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+                                              },
+                                              [&]() {
+                                                  space.paused = false;
+                                              }
+                        );
+                        break;
+                    }
+            }
         }),
         mappingDatabase(),
         gameOverMenu(*this),
