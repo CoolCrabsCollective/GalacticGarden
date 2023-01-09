@@ -48,6 +48,7 @@ void LoadingScreen::show() {
 	sprite.setTexture(*getGame().getAssets().get(GameAssets::WHITE_PIXEL));
 
     message.setString("Loading game...");
+    message.setCharacterSize(60);
     
 
 	message.setFont(*getGame().getAssets().get(GameAssets::VT323_TTF));

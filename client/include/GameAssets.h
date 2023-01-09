@@ -21,7 +21,7 @@ namespace GameAssets {
 
     ASSET(TextAsset, CONTROLLER_DB, ("gamecontrollerdb.txt"))
 
-	ASSET(wiz::MusicAsset, GREENLIFE, ("music/greenlife.ogg"))
+	ASSET(wiz::MusicAsset, SOUNDTRACK, ("music/soundtrack.ogg"))
 	ASSET(wiz::SoundAsset, JUMP, ("sfx/jump.ogg"))
 
 	ASSET(wiz::TextureAsset, WHITE_PIXEL, ("gfx/white_pixel.png"))
@@ -35,6 +35,7 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_LARGE_ASTEROID, ("gfx/large_ass.png"))
     ASSET(wiz::TextureAsset, TEXTURE_FALLOUT_FLOWER, ("gfx/fallout_flower.png"))
     ASSET(wiz::TextureAsset, TEXTURE_HATCHLING, ("gfx/the_hatchling.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_CROWCRAFT, ("gfx/the_crowcraft.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SMALL_LAZER, ("gfx/lazer.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SMALL_ENEMY_LAZER, ("gfx/enemy_lazer.png"))
     ASSET(wiz::TextureAsset, TEXTURE_TRACTOR_BEAM, ("gfx/tractor_beam.png"))
@@ -81,6 +82,7 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_BOOST_SELECTION_BOX, ("gfx/ui/select/boost_select_scroll_box.png"))
     ASSET(wiz::TextureAsset, TEXTURE_HIGHLIGHT_SELECTION_BOX, ("gfx/ui/select/highlight_scroll_box.png"))
 
+    ASSET(wiz::TextureAsset, TEXTURE_LASER_SIMPLE, ("gfx/upgrades/laser_simple.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LASER_DOUBLE, ("gfx/upgrades/laser_double.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LASER_TRIANGLE, ("gfx/upgrades/laser_triangle.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LASER_FOUR_WAY, ("gfx/upgrades/laser_quad.png"))

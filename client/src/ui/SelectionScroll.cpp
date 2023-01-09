@@ -9,8 +9,10 @@
 #include "world/weapon/WeaponType.h"
 
 SelectionScroll::SelectionScroll(SpaceScreen& screen, SelectionType type, int numberOfItems,
-                                 sf::Vector2f selectionDisPos) : type(type), selectionDisPos(selectionDisPos) {
+                                 sf::Vector2f selectionDisPos, UpgradeManager* upgradeManager) : type(type),
+                                 selectionDisPos(selectionDisPos), upgradeManager(upgradeManager) {
     WeaponTextureGetter* weaponTextureGetter = new WeaponTextureGetter(screen.getAssets());
+    SeedTextureGetter* seedTextureGetter = new SeedTextureGetter(screen.getAssets());
 
     float currentXOffset;
 
@@ -28,7 +30,7 @@ SelectionScroll::SelectionScroll(SpaceScreen& screen, SelectionType type, int nu
                 break;
             case SEED:
                 backdrops.at(i).setTexture(*screen.getAssets().get(GameAssets::TEXTURE_SEED_SELECTION_BOX));
-                items.at(i).setTexture(*screen.getAssets().get(GameAssets::TEXTURE_GAY_STATION));
+                items.at(i).setTexture(*seedTextureGetter->get().at(i));
                 break;
             case BOOSTER:
                 backdrops.at(i).setTexture(*screen.getAssets().get(GameAssets::TEXTURE_BOOST_SELECTION_BOX));
@@ -48,9 +50,9 @@ SelectionScroll::SelectionScroll(SpaceScreen& screen, SelectionType type, int nu
         selectHighLight.setPosition(highLightPos);
         selectHighLight.setScale(highLightSize);
 
-        sf::Vector2f itemOffset = {backdrops.at(i).getLocalBounds().width / 5.f - 17.f,
-                                   backdrops.at(i).getLocalBounds().height - 115.f};
-        sf::Vector2f itemSize = {.7f, .7f};
+        sf::Vector2f itemOffset = {backdrops.at(i).getLocalBounds().width / 5.f - 19.f,
+                                   backdrops.at(i).getLocalBounds().height - 120.7f};
+        sf::Vector2f itemSize = {1.2f, 1.2f};
 
         items.at(i).setPosition(pos + itemOffset);
         items.at(i).setScale(itemSize);
@@ -62,10 +64,21 @@ void SelectionScroll::draw(sf::RenderTarget& target, const sf::RenderStates& sta
         sf::Vector2f highLightPos = {xOffsetSpacingBetweenBoxes*selection + selectionDisPos.x, selectionDisPos.y +
                                      yOffset};
         selectHighLight.setPosition(highLightPos);
+
         for (int i = 0; i < backdrops.size(); i++) {
+            if (!upgradeManager->has_unlocked(static_cast<Upgrade>(i)) &&
+                type != SelectionType::SEED) {
+                backdrops.at(i).setColor({255, 255, 255, 128});
+                items.at(i).setColor({255, 255, 255, 128});
+            } else {
+                backdrops.at(i).setColor({255, 255, 255, 255});
+                items.at(i).setColor({255, 255, 255, 255});
+            }
+
             target.draw(backdrops.at(i));
             target.draw(items.at(i));
         }
+
         target.draw(selectHighLight);
     }
 }
@@ -83,12 +96,18 @@ int SelectionScroll::getSelection() const {
 }
 
 void SelectionScroll::setSelection(int selection) {
-    SelectionScroll::selection = selection;
+    if (upgradeManager->has_unlocked(static_cast<Upgrade>(selection)) || type == SelectionType::SEED) {
+        SelectionScroll::selection = selection;
+        enableScroll = true;
+        openDuration = .0f;
+    }
 }
 
 void SelectionScroll::changeSelection(bool changeToNext) {
     if (timeBetweenChange>=changeSelectionInterval) {
         timeBetweenChange = .0f;
+
+        int checkUpGradeStartIndex = 0;
 
         int numberOfItems = 0;
         switch (type) {
@@ -96,23 +115,24 @@ void SelectionScroll::changeSelection(bool changeToNext) {
                 numberOfItems = (int) WeaponType::LENGTH;
                 break;
             case SEED:
-                //            numberOfItems = (int) WeaponType.LENGTH;
-                break;
-            case BOOSTER:
-                //            numberOfItems = (int) WeaponType.LENGTH;
+                numberOfItems = (int) CropType::CROP_LENGTH;
+//                checkUpGradeStartIndex = WEAPON_UPGRADE_LENGTH + 1;
                 break;
         }
 
-        if (changeToNext)
-            selection++;
-        else
-            selection--;
+        do {
+            if (changeToNext)
+                selection++;
+            else
+                selection--;
 
-        if (selection >= numberOfItems) {
-            selection = 0;
-        } else if (selection < 0) {
-            selection = numberOfItems - 1;
-        }
+            if (selection >= numberOfItems) {
+                selection = 0;
+            } else if (selection < 0) {
+                selection = numberOfItems - 1;
+            }
+        } while (!upgradeManager->has_unlocked(static_cast<Upgrade>(selection + checkUpGradeStartIndex)) &&
+                    type != SelectionType::SEED);
 
         enableScroll = true;
         openDuration = .0f;
@@ -129,4 +149,8 @@ void SelectionScroll::update(float delta) {
         }
     }
     timeBetweenChange+=delta;
+}
+
+SelectionType SelectionScroll::getType() const {
+    return type;
 }

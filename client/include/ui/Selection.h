@@ -10,6 +10,8 @@
 #include "SFML/Graphics/Text.hpp"
 #include "WIZ/asset/TextureAsset.h"
 #include "SelectionScroll.h"
+#include "world/crop/CropType.h"
+#include "world/weapon/WeaponType.h"
 
 class SpaceScreen;
 
@@ -22,9 +24,10 @@ protected:
     std::string itemName;
     SelectionScroll* selectionScroll = nullptr;
     WeaponTextureGetter* weaponTextureGetter = nullptr;
+    SeedTextureGetter* seedTextureGetter = nullptr;
 
 public:
-    explicit Selection(SpaceScreen& screen, SelectionType type);
+    explicit Selection(SpaceScreen& screen, SelectionType type, UpgradeManager* upgradeManager);
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
@@ -37,6 +40,8 @@ public:
     void update(float delta);
 
     int getSelection() const;
+
+    void setSelection(int i);
 };
 
 #endif //LD52_CLIENT_SELECTION_H

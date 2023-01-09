@@ -102,7 +102,7 @@ void Ship::tick(float delta) {
         if(Lazer* lazer = dynamic_cast<Lazer*>(entity)) {
             if (lazer->getFraction() != fraction) {
                 redness = 1.0f;
-                energy -= lazer->getDamage()*10;
+                energy -= lazer->getDamage()*hatchling_damage;
                 lazer->consume();
             }
         }
@@ -188,40 +188,31 @@ void Ship::fire() {
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 break;
             case DOUBLE:
-                if(!space.getUpgradeManager().has_unlocked(LASER_DOUBLE) || !energy_for_shot(2)) return;
+                if(!space.getUpgradeManager().has_unlocked(LASER_DOUBLE) || !energy_for_shot(1)) return;
                 space.addEntity(new SmallLaser(space, location + (sf::Vector2f {0.25f, 0.0f}).rotatedBy(sf::degrees(rotation)), sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 space.addEntity(new SmallLaser(space, location + (sf::Vector2f {-0.25f, 0.0f}).rotatedBy(sf::degrees(rotation)), sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 break;
             case TRIANGLE:
-                if(!space.getUpgradeManager().has_unlocked(LASER_TRIANGLE) ||!energy_for_shot(1)) return;
+                if(!space.getUpgradeManager().has_unlocked(LASER_TRIANGLE) ||!energy_for_shot(2)) return;
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation - 15.0f))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 15.0f))));
                 break;
             case FOUR_WAY:
-                if(!space.getUpgradeManager().has_unlocked(LASER_FOUR_WAY) ||!energy_for_shot(1)) return;
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 90.0f))));
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 180.0f))));
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 270.0f))));
+                if(!space.getUpgradeManager().has_unlocked(LASER_SHOTGUN) || !energy_for_shot(3)) return;
+                for(int i = 0; i < 36; i++)
+                {
+                    space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + -18.f + 1.0f * static_cast<float>(i)))));
+                }
                 break;
             case CRAZY:
 
-                if(!space.getUpgradeManager().has_unlocked(LASER_CRAZY) || !energy_for_shot(5)) return;
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 90.0f))));
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 180.0f))));
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 270.0f))));
-                space.addEntity(new SmallLaser(space, location + (sf::Vector2f {0.25f, 0.0f}).rotatedBy(sf::degrees(rotation)), sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
-                space.addEntity(new SmallLaser(space, location + (sf::Vector2f {-0.25f, 0.0f}).rotatedBy(sf::degrees(rotation)), sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation - 15.0f))));
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 15.0f))));
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation - 30.0f))));
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 30.0f))));
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation - 45.0f))));
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 45.0f))));
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation - 60.0f))));
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 60.0f))));
+                if(!space.getUpgradeManager().has_unlocked(LASER_CRAZY) || !energy_for_shot(3)) return;
+                for(int i = 0; i < 36; i++)
+                {
+                    space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + static_cast<float>(i) * 10.0f))));
+
+                }
                 break;
             case BOMB:
                 if(!energy_for_shot(5)) return;
@@ -309,8 +300,8 @@ void Ship::setWeaponType(WeaponType weaponType) {
 }
 
 bool Ship::energy_for_shot(int shot_count) {
-    int energy_per_shot = 1;
-    int energy_used = shot_count * energy_per_shot;
+    float energy_per_shot = 0.4;
+    float energy_used = static_cast<float>(shot_count) * energy_per_shot;
     bool success = energy_used < energy;
     if(success)
         energy -= energy_used;

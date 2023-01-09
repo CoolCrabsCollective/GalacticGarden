@@ -11,7 +11,7 @@ UpgradeMenu::UpgradeMenu(Space& space, UpgradeManager &upgradeManager) : space(s
     wiz::AssetLoader& ass = space.getAssets();
     upgrade_sprites[Upgrade::LASER_DOUBLE] = new sf::Sprite{*ass.get(GameAssets::TEXTURE_LASER_DOUBLE)};
     upgrade_sprites[Upgrade::LASER_TRIANGLE] = new sf::Sprite{*ass.get(GameAssets::TEXTURE_LASER_TRIANGLE)};
-    upgrade_sprites[Upgrade::LASER_FOUR_WAY] = new sf::Sprite{*ass.get(GameAssets::TEXTURE_LASER_FOUR_WAY)};
+    upgrade_sprites[Upgrade::LASER_SHOTGUN] = new sf::Sprite{*ass.get(GameAssets::TEXTURE_LASER_FOUR_WAY)};
     upgrade_sprites[Upgrade::LASER_CRAZY] = new sf::Sprite{*ass.get(GameAssets::TEXTURE_LASER_CRAZY)};
     upgrade_sprites[Upgrade::NUKE_SIMPLE] = new sf::Sprite{*ass.get(GameAssets::TEXTURE_NUKE_SIMPLE)};
     upgrade_sprites[Upgrade::FLAMETHROWER_SIMPLE] = new sf::Sprite{*ass.get(GameAssets::TEXTURE_FLAMETHROWER_SIMPLE)};
@@ -48,7 +48,8 @@ void UpgradeMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states)
             const std::vector<Upgrade>& upgradeBlock = upgradeLine.at(index);
             for(int i = 0; i < upgradeBlock.size(); i++)
             {
-                displayedItems.push_back(upgradeBlock[i]);
+                if(!upgradeManager.has_unlocked(upgradeBlock[i]))
+                    displayedItems.push_back(upgradeBlock[i]);
             }
         }
     }

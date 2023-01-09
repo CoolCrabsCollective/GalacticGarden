@@ -10,6 +10,7 @@
 #include <iostream>
 #include "util/MathUtil.h"
 #include "world/AsteroidBelt.h"
+#include "world/enemy/CrowCraft.h"
 
 using namespace MathUtil;
 
@@ -250,7 +251,7 @@ void Space::manageEnemies() {
 }
 
 void Space::spawnEnemy(sf::Vector2f pos) {
-    addEntity(new HatchlingShip(*this, pos));
+    addEntity(rand() % 2 ? new HatchlingShip(*this, pos) : new CrowCraft(*this, pos));
     enemy_count++;
     time_since_last_spawn = 0.0f;
 }

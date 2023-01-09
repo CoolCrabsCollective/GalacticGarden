@@ -8,8 +8,9 @@
 
 #include "util/MathUtil.h"
 
-Selection::Selection(SpaceScreen& screen, SelectionType type) {
+Selection::Selection(SpaceScreen& screen, SelectionType type, UpgradeManager* upgradeManager) {
     weaponTextureGetter = new WeaponTextureGetter(screen.getAssets());
+    seedTextureGetter = new SeedTextureGetter(screen.getAssets());
 
     float xOffset = .0f;
     float xOffsetSpacing = 50.f;
@@ -35,14 +36,15 @@ Selection::Selection(SpaceScreen& screen, SelectionType type) {
 
     switch (type) {
         case WEAPON:
-            selectionScroll = new SelectionScroll(screen, type, WeaponType::LENGTH, pos);
+            selectionScroll = new SelectionScroll(screen, type, WeaponType::LENGTH, pos, upgradeManager);
             item.setTexture(*weaponTextureGetter->get().at(selectionScroll->getSelection()));
             break;
         case SEED:
-            selectionScroll = new SelectionScroll(screen, type, 5, pos);
+            selectionScroll = new SelectionScroll(screen, type, CropType::CROP_LENGTH, pos, upgradeManager);
+            item.setTexture(*seedTextureGetter->get().at(selectionScroll->getSelection()));
             break;
         case BOOSTER:
-            selectionScroll = new SelectionScroll(screen, type, 5, pos);
+            selectionScroll = new SelectionScroll(screen, type, 5, pos, upgradeManager);
             break;
     }
 
@@ -50,7 +52,7 @@ Selection::Selection(SpaceScreen& screen, SelectionType type) {
     backdrop.setScale(size);
 
     sf::Vector2f itemOffset = { backdrop.getLocalBounds().width / 5.f + 2.4f, backdrop.getLocalBounds().height - 115.f };
-    sf::Vector2f itemSize = { 1.f, 1.f };
+    sf::Vector2f itemSize = { 1.5f, 1.5f };
 
     item.setPosition(pos + itemOffset);
     item.setScale(itemSize);
@@ -68,7 +70,14 @@ Selection::Selection(SpaceScreen& screen, SelectionType type) {
 void Selection::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
     if (selectionScroll->isEnableScroll()) {
         // TODO: check that this was already down for selection change
-        item.setTexture(*weaponTextureGetter->get().at(selectionScroll->getSelection()));
+        switch (selectionScroll->getType()) {
+            case WEAPON:
+                item.setTexture(*weaponTextureGetter->get().at(selectionScroll->getSelection()));
+                break;
+            case SEED:
+                item.setTexture(*seedTextureGetter->get().at(selectionScroll->getSelection()));
+                break;
+        }
     }
 
     target.draw(backdrop);
@@ -95,4 +104,8 @@ void Selection::update(float delta) {
 
 int Selection::getSelection() const {
     return selectionScroll->getSelection();
+}
+
+void Selection::setSelection(int i) {
+    selectionScroll->setSelection(i);
 }

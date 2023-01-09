@@ -64,6 +64,10 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
 
     mutable sf::Sprite dim;
 
+    float intervalBetweenKeyPresses = 150.f;
+    float timeBetweenKeyPresses = .0f;
+    bool canProcessKeyPress = true;
+
 public:
     constexpr const static sf::Vector2f UI_VIEW_SIZE = { 1920.0f, 1080.0f };
     

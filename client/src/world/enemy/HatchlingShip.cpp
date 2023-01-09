@@ -12,8 +12,9 @@ HatchlingShip::HatchlingShip(Space &space, sf::Vector2f location)
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_HATCHLING));
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
     targetAsteroid = nullptr;
-    speed = 0.05f;
+    speed = 0.01f;
     damageAmount = 1;
+    fire_delay = 0.8f;
 }
 
 void HatchlingShip::tick(float delta) {
