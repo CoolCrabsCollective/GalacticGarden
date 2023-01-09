@@ -46,6 +46,11 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
     megaBoostAnime.setTimeSinceLastFrame(0.04f);
 
     damageShader = space.getAssets().get(GameAssets::DAMAGE_SHADER);
+
+    laserSound.setBuffer(*space.getAssets().get(GameAssets::SFX_LASER));
+    hurtSound.setBuffer(*space.getAssets().get(GameAssets::SFX_HURT));
+    pickupSound.setBuffer(*space.getAssets().get(GameAssets::SFX_PICKUP));
+    nukeSound.setBuffer(*space.getAssets().get(GameAssets::SFX_NUKE));
 }
 
 void Ship::tick(float delta) {
@@ -104,10 +109,11 @@ void Ship::tick(float delta) {
         if(Lazer* lazer = dynamic_cast<Lazer*>(entity)) {
             if (lazer->getFraction() != fraction) {
                 redness = 1.0f;
-                float damage = lazer->getDamage()*hatchling_damage;
+                float damage = lazer->getDamage() * hatchling_damage;
                 energy -= damage;
                 lazer->consume();
                 space.addEntity(new FloatingText(space, location, "-" + std::to_string((int)round(damage)), sf::Color::Red, 0.5f));
+                hurtSound.play();
             }
         }
     }
@@ -190,33 +196,33 @@ void Ship::fire() {
 
             case SIMPLE:
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
+                laserSound.play();
                 break;
             case DOUBLE:
                 if(!space.getUpgradeManager().has_unlocked(LASER_DOUBLE) || !energy_for_shot(1)) return;
                 space.addEntity(new SmallLaser(space, location + (sf::Vector2f {0.25f, 0.0f}).rotatedBy(sf::degrees(rotation)), sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 space.addEntity(new SmallLaser(space, location + (sf::Vector2f {-0.25f, 0.0f}).rotatedBy(sf::degrees(rotation)), sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
+                laserSound.play();
                 break;
             case TRIANGLE:
                 if(!space.getUpgradeManager().has_unlocked(LASER_TRIANGLE) ||!energy_for_shot(2)) return;
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation - 15.0f))));
                 space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 15.0f))));
+                laserSound.play();
                 break;
             case FOUR_WAY:
                 if(!space.getUpgradeManager().has_unlocked(LASER_SHOTGUN) || !energy_for_shot(3)) return;
                 for(int i = 0; i < 36; i++)
-                {
                     space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + -18.f + 1.0f * static_cast<float>(i)))));
-                }
+                laserSound.play();
                 break;
             case CRAZY:
 
                 if(!space.getUpgradeManager().has_unlocked(LASER_CRAZY) || !energy_for_shot(3)) return;
                 for(int i = 0; i < 36; i++)
-                {
                     space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + static_cast<float>(i) * 10.0f))));
-
-                }
+                laserSound.play();
                 break;
             case BOMB:
                 if(!space.getUpgradeManager().has_unlocked(NUKE_SIMPLE) || !energy_for_shot(5)) return;

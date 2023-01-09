@@ -12,6 +12,7 @@
 #include "Asteroid.h"
 #include "world/anime/Anime.h"
 #include "world/weapon/Lazer.h"
+#include "SFML/Audio/Sound.hpp"
 
 typedef std::pair<sf::Vector2f, Asteroid*> plantzone_t;
 
@@ -61,8 +62,10 @@ protected:
     Anime boostAnime;
     mutable sf::Sprite megaBoostAnimeSprite;
     Anime megaBoostAnime;
-    
 public:
+
+    sf::Sound laserSound, hurtSound, pickupSound, nukeSound;
+    
     void setIsIdle(bool isIdle);
 
     void setIsBoosting(bool isBoosting);

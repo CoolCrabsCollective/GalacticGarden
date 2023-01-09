@@ -14,8 +14,6 @@ class TitleScreen : public wiz::Screen, public wiz::WindowListener {
 
 	sf::Sprite logo;
 	sf::Sprite background;
-
-	sw::NinePatch ninepatch;
 public:
 	TitleScreen(wiz::Game& game);
 

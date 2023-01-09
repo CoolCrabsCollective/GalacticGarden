@@ -23,7 +23,11 @@ namespace GameAssets {
 
 	ASSET(wiz::MusicAsset, SOUNDTRACK, ("music/soundtrack.ogg"))
     ASSET(wiz::MusicAsset, BACH, ("music/literally_bach.ogg"))
-	ASSET(wiz::SoundAsset, JUMP, ("sfx/jump.ogg"))
+
+    ASSET(wiz::SoundAsset, SFX_HURT, ("sfx/hurt.ogg"))
+    ASSET(wiz::SoundAsset, SFX_LASER, ("sfx/laser.ogg"))
+    ASSET(wiz::SoundAsset, SFX_NUKE, ("sfx/nuke.ogg"))
+    ASSET(wiz::SoundAsset, SFX_PICKUP, ("sfx/pickup.ogg"))
 
 	ASSET(wiz::TextureAsset, WHITE_PIXEL, ("gfx/white_pixel.png"))
     ASSET(wiz::TextureAsset, ARROW, ("gfx/arrow.png"))

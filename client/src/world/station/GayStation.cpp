@@ -37,6 +37,7 @@ void GayStation::tick(float delta) {
                 space.getShip().buyShit(lazer->getDamage());
                 space.addEntity(new FloatingText(space, location, "-" + std::to_string((int)round(lazer->getDamage())), sf::Color::Red, 0.5f));
                 lazer->consume();
+                space.getShip().hurtSound.play();
             }
         }
     }

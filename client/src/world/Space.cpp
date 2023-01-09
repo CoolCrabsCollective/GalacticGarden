@@ -57,7 +57,7 @@ void Space::spawnAsteroids() {
         
         asteroids.push_back(new Asteroid(*this, { x, y }, 0.0f, radius * 2.0f, { velX, velY }, angVel, countPlant));
         
-    } while(asteroids.size() < 500);
+    } while(asteroids.size() < 200);
     
     for(Asteroid* ass : asteroids)
         entities.push_back(ass);

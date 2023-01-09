@@ -39,6 +39,7 @@ void Crop::tick(float delta) {
         if((space.getShip().getLocation() - location).lengthSq() < 0.1f) {
             dead = true;
             space.addEntity(new FloatingText(space, location, "+" + std::to_string((int)getEnergyGain()), sf::Color::Green, 1.5f));
+            space.getShip().pickupSound.play();
         }
         return;
     }

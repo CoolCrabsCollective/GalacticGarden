@@ -49,6 +49,7 @@ void Bomb::tick(float delta) {
     if(lifetime <= 0.0f) {
         lifetime = 0.0f;
         explosionTime = 0.0f;
+        space.getShip().nukeSound.play();
         
         int count = 20 + rand() % 20;
         

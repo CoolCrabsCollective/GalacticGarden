@@ -21,7 +21,6 @@ void TitleScreen::tick(float delta) {
 	vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
 	background.setScale(vec);
 
-
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)
 	   || sf::Joystick::isButtonPressed(0, 3))
 	{
