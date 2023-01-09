@@ -8,6 +8,7 @@
 #include <X11/Xlibint.h>
 #include "GameAssets.h"
 #include "MiniMap.h"
+#include "world/FloatingText.h"
 
 SpaceScreen::SpaceScreen(wiz::Game& game)
 	: Screen(game),
@@ -29,7 +30,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
 
     space.paused = true;
 
-    energyText.setPosition({ 175.f, 45.f});
+    energyText.setPosition({ 175.0f, 45.0f});
     energyText.setScale({1.0f, 1.0f});
     energyText.setFillColor(sf::Color::White);
     energyText.setFont(*space.getAssets().get(GameAssets::VT323_TTF));
@@ -131,7 +132,7 @@ void SpaceScreen::render(sf::RenderTarget& target) {
     vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
     vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
     background.setScale(vec);
-    energySprite.setPosition({50.f, 50.f});
+    energySprite.setPosition({50.0f, 50.0f});
     energySprite.setScale({8.0f * 16.0f / energySprite.getTexture()->getSize().x, 8.0f * 16.0f / energySprite.getTexture()->getSize().y});
 
     energyText.setString(std::to_string(space.getShip().getEnergy()));
@@ -173,7 +174,7 @@ void SpaceScreen::render(sf::RenderTarget& target) {
         float ssDis = diff.x * diff.x + diff.y * diff.y;
         if(ssDis < SPACE_STATION_STORE_DIS_SQ)
         {
-            shopText.setPosition({ 700.f, 500.f});
+            shopText.setPosition({ 700.0f, 500.0f});
             target.draw(shopText);
         }
 
@@ -240,7 +241,10 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
                     Upgrade upgrade = upgradeMenu.select();
                     if (space.getUpgradeManager().get_cost(upgrade) < space.getShip().getEnergy()) {
                         space.getUpgradeManager().unlock(upgrade);
-                        space.getShip().buyShit(space.getUpgradeManager().get_cost(upgrade));
+                        float cost = space.getUpgradeManager().get_cost(upgrade);
+                        space.getShip().buyShit(cost);
+
+                        space.addEntity(new FloatingText(space, space.getShip().getLocation(), "-" + std::to_string((int)round(cost)), sf::Color::Blue, 2.0f));
                     }
                 }
                 break;
@@ -322,7 +326,7 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
             }
             // TODO: CHEAT - remove
             case sf::Keyboard::V:
-                space.getShip().buyShit(-1000.f);
+                space.getShip().buyShit(-1000.0f);
                 break;
             default:
                 break;
@@ -378,9 +382,9 @@ void SpaceScreen::processInput(float delta) {
     space.getShip().setIsIdle(std::abs(xAxisInput) <= 0.1 && std::abs(yAxisInput) <= 0.1f);
     sf::Vector2f moveVec = {xAxisInput, yAxisInput};
 
-    space.getShip().moveInDirOfVec(moveVec, delta / 1000.f);
+    space.getShip().moveInDirOfVec(moveVec, delta / 1000.0f);
 
-    sf::Vector2f pos = getWindow().mapPixelToCoords(sf::Mouse::getPosition(getWindow()), sf::View({ 0.f, 0.f }, Space::VIEW_SIZE));
+    sf::Vector2f pos = getWindow().mapPixelToCoords(sf::Mouse::getPosition(getWindow()), sf::View({ 0.0f, 0.0f }, Space::VIEW_SIZE));
 
     float rotation = 0.0f;
     if(pos.length() >= 0.0001)

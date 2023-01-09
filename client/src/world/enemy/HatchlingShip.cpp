@@ -81,6 +81,11 @@ void HatchlingShip::tick(float delta) {
         return;
     
     Crop* crop = targetAsteroid->getCrop(targetPlant);
+    
+    if(crop == nullptr) {
+        targetAsteroid = nullptr;
+        return;
+    }
 
     sf::Vector2 distanceToCrop = crop->getLocation() - location;
     if(distanceToCrop.lengthSq() < 1.0f)  { // todo magic num
@@ -122,7 +127,7 @@ void HatchlingShip::draw(sf::RenderTarget &target, const sf::RenderStates &state
 }
 
 float HatchlingShip::getZOrder() const {
-    return 2.f;
+    return 2.0f;
 }
 
 void HatchlingShip::attackFriendly(sf::Vector2f distanceToFriendly) {
@@ -130,7 +135,7 @@ void HatchlingShip::attackFriendly(sf::Vector2f distanceToFriendly) {
 
     velocityNormalized = distanceToFriendly.normalized();
 
-    if(distanceToFriendly.lengthSq() >= 7.f)
+    if(distanceToFriendly.lengthSq() >= 7.0f)
         this->location += velocityNormalized * speed;
     this->rotation = velocityNormalized.angle().asDegrees() + 90.0f;
 }

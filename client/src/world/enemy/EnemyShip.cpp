@@ -7,6 +7,7 @@
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "GameAssets.h"
 #include "world/weapon/SmallEnemyLaser.h"
+#include "world/FloatingText.h"
 
 EnemyShip::EnemyShip(Space &space, sf::Vector2f location) 
     : Entity(space, location) {
@@ -41,6 +42,7 @@ void EnemyShip::tick(float delta) {
         if(Lazer* lazer = dynamic_cast<Lazer*>(entity)) {
             if (lazer->getFraction() != fraction) {
                 damage(lazer->getDamage());
+                space.addEntity(new FloatingText(space, location, "-" + std::to_string((int)round(lazer->getDamage())), sf::Color::Yellow, 0.5f));
                 lazer->consume();
                 if(health <= 0.0f)
                     return;
@@ -57,9 +59,9 @@ void EnemyShip::tick(float delta) {
 void EnemyShip::fire() {
     if (time_since_last_fire >= fire_delay) {
         space.addEntity(
-                new SmallEnemyLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
+                new SmallEnemyLaser(space, location, sf::Vector2f(0.0f, -1.0f).rotatedBy(sf::degrees(rotation))));
 
-        time_since_last_fire = 0.f;
+        time_since_last_fire = 0.0f;
     }
 }
 

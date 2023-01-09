@@ -13,7 +13,7 @@ Selection::Selection(SpaceScreen& screen, SelectionType type, UpgradeManager* up
     seedTextureGetter = new SeedTextureGetter(screen.getAssets());
 
     float xOffset = .0f;
-    float xOffsetSpacing = 50.f;
+    float xOffsetSpacing = 50.0f;
 
     switch (type) {
         case WEAPON:
@@ -25,13 +25,13 @@ Selection::Selection(SpaceScreen& screen, SelectionType type, UpgradeManager* up
             item.setTexture(*screen.getAssets().get(GameAssets::TEXTURE_GAY_STATION));
             break;
         case BOOSTER:
-            xOffset = xOffsetSpacing*5.f;
+            xOffset = xOffsetSpacing*5.0f;
             backdrop.setTexture(*screen.getAssets().get(GameAssets::TEXTURE_BOOST_SELECT_BACKDROP));
             item.setTexture(*screen.getAssets().get(GameAssets::TEXTURE_GAY_STATION));
             break;
     }
 
-    sf::Vector2f pos = { xOffset + 30.f, 940.0f };
+    sf::Vector2f pos = { xOffset + 30.0f, 940.0f };
     sf::Vector2f size = { .8f, .8f };
 
     switch (type) {
@@ -51,13 +51,13 @@ Selection::Selection(SpaceScreen& screen, SelectionType type, UpgradeManager* up
     backdrop.setPosition(pos);
     backdrop.setScale(size);
 
-    sf::Vector2f itemOffset = { backdrop.getLocalBounds().width / 5.f + 2.4f, backdrop.getLocalBounds().height - 115.f };
+    sf::Vector2f itemOffset = { backdrop.getLocalBounds().width / 5.0f + 2.4f, backdrop.getLocalBounds().height - 115.0f };
     sf::Vector2f itemSize = { 1.5f, 1.5f };
 
     item.setPosition(pos + itemOffset);
     item.setScale(itemSize);
 
-    sf::Vector2f textOffset = {backdrop.getLocalBounds().width / 4.f - 1.f, -62.5f + backdrop.getLocalBounds().height};
+    sf::Vector2f textOffset = {backdrop.getLocalBounds().width / 4.0f - 1.0f, -62.5f + backdrop.getLocalBounds().height};
     sf::Vector2f textSize = { .5f, .5f };
 
     text.setString("Single");

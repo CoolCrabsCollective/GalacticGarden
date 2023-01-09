@@ -53,7 +53,7 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     GameOverMenu gameOverMenu;
     float gameoverCooldown = 1.5f;
 
-    const float SPACE_STATION_STORE_DIS_SQ = 50.f;
+    const float SPACE_STATION_STORE_DIS_SQ = 50.0f;
 
     PictureDialogBox dialogBox;
 
@@ -64,7 +64,7 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
 
     mutable sf::Sprite dim;
 
-    float intervalBetweenKeyPresses = 150.f;
+    float intervalBetweenKeyPresses = 150.0f;
     float timeBetweenKeyPresses = .0f;
     bool canProcessKeyPress = true;
 

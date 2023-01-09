@@ -66,14 +66,14 @@ class SelectionScroll : public sf::Drawable {
     int selection = 0;
     bool enableScroll = false;
 
-    float openTime = 2000.f;
+    float openTime = 2000.0f;
     float openDuration = .0f;
 
-    float xOffsetSpacingBetweenBoxes = 50.f;
-    float yOffset = -60.f;
+    float xOffsetSpacingBetweenBoxes = 50.0f;
+    float yOffset = -60.0f;
     sf::Vector2f selectionDisPos;
 
-    float changeSelectionInterval = 50.f;
+    float changeSelectionInterval = 50.0f;
     float timeBetweenChange = .0f;
 
     UpgradeManager* upgradeManager = nullptr;

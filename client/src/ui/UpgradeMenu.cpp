@@ -24,9 +24,9 @@ UpgradeMenu::UpgradeMenu(Space& space, UpgradeManager &upgradeManager) : space(s
 
 #include <iostream>
 void UpgradeMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
-    float offsetX = 0.f;
-    float xPos = 200.f;
-    float yPos = 400.f;
+    float offsetX = 0.0f;
+    float xPos = 200.0f;
+    float yPos = 400.0f;
 
     displayedItems.clear();
 
@@ -69,13 +69,13 @@ void UpgradeMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states)
 
         if(indexSelected == i)
         {
-            selected.setPosition({xPos + offsetX - 8.f, yPos - 8.f});
-            selected.setScale({8.f, 8.f});
+            selected.setPosition({xPos + offsetX - 8.0f, yPos - 8.0f});
+            selected.setScale({8.0f, 8.0f});
             target.draw(selected);
         }
         sf::Sprite* sprite = upgrade_sprites.at(upgrade);
         sprite->setPosition({xPos + offsetX, yPos});
-        sprite->setScale({8.f, 8.f}); // will make alex cringe
+        sprite->setScale({8.0f, 8.0f}); // will make alex cringe
         target.draw(*sprite);
         locked.setPosition(sprite->getPosition());
         locked.setScale(sprite->getScale());
@@ -87,7 +87,7 @@ void UpgradeMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states)
         sf::Text price;
         int price_value = upgradeManager.get_cost(upgrade);
         price.setString(std::to_string(price_value));
-        price.setPosition({xPos + offsetX + 20, yPos + 140.f});
+        price.setPosition({xPos + offsetX + 20, yPos + 140.0f});
         price.setCharacterSize(96);
         price.setFont(*space.getAssets().get(GameAssets::VT323_TTF));
         target.draw(price);

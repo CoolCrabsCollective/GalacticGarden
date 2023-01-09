@@ -11,8 +11,8 @@
 
 class SmallEnemyLaser : public Lazer {
 protected:
-    const float speed = 8.f;
-    float lifetime = 2.f;
+    const float speed = 8.0f;
+    float lifetime = 2.0f;
 
     const sf::Vector2f direction;
     mutable sf::Sprite sprite;

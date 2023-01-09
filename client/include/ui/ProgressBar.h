@@ -17,7 +17,7 @@ protected:
     sf::Color backgroundColor;
     sf::Color foregroundColor;
 
-    float health_percent = 0.f;
+    float health_percent = 0.0f;
     sf::Vector2f position{};
     float barWidth = 0.25f;
     float barHeight = 0.06f;

@@ -32,7 +32,10 @@ void MiniMap::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     SpriteUtil::setSpriteSize(arrowSprite, { 16.0f, 16.0f });
     SpriteUtil::setSpriteOrigin(sprite, { 0.5f, 0.5f });
     
-    for(Entity* entity : screen.getSpace().getEntities()) {
+    auto& vec = screen.getSpace().getEntities();
+    
+    for(auto it = vec.rbegin(); it != vec.rend(); it++) {
+        Entity* entity = *it;
         if(dynamic_cast<Ship*>(entity)) 
             sprite.setColor(shipColor);
         else if(dynamic_cast<GayStation*>(entity))

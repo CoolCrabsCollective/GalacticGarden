@@ -13,6 +13,7 @@
 #include "util/MathUtil.h"
 #include "util/SpriteUtil.h"
 #include "world/weapon/Bomb.h"
+#include "world/FloatingText.h"
 
 Ship::Ship(Space& space, const sf::Vector2f& location) 
 	: Entity(space, location) {
@@ -47,13 +48,13 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 }
 
 void Ship::tick(float delta) {
-    float bad_delta = delta / 1000.f;
+    float bad_delta = delta / 1000.0f;
 
     megaBoostAnime.runAnimation(bad_delta);
     boostAnime.runAnimation(bad_delta);
     normalAnime.runAnimation(bad_delta);
 
-    constexpr float energy_per_boost = 2.f;
+    constexpr float energy_per_boost = 2.0f;
     if(isBoosting && space.getUpgradeManager().has_unlocked(BOOST_BASIC) && !isIdle)
     {
         isBoosting = energy > energy_per_boost * bad_delta;
@@ -102,8 +103,10 @@ void Ship::tick(float delta) {
         if(Lazer* lazer = dynamic_cast<Lazer*>(entity)) {
             if (lazer->getFraction() != fraction) {
                 redness = 1.0f;
-                energy -= lazer->getDamage()*hatchling_damage;
+                float damage = lazer->getDamage()*hatchling_damage;
+                energy -= damage;
                 lazer->consume();
+                space.addEntity(new FloatingText(space, location, "-" + std::to_string((int)round(damage)), sf::Color::Red, 0.5f));
             }
         }
     }
@@ -161,11 +164,11 @@ void Ship::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
 }
 
 float Ship::getZOrder() const {
-    return 8.f;
+    return 8.0f;
 }
 
 void Ship::moveInDirOfVec(const sf::Vector2f& moveVec, float good_delta) {
-    sf::Vector2f moveVecNorm { 0.f, 0.f };
+    sf::Vector2f moveVecNorm { 0.0f, 0.0f };
     
     if(moveVec.length() > 0.001f) // is not zero
         moveVecNorm = moveVec.normalized();
@@ -185,24 +188,24 @@ void Ship::fire() {
         switch(weaponType) {
 
             case SIMPLE:
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
+                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.0f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 break;
             case DOUBLE:
                 if(!space.getUpgradeManager().has_unlocked(LASER_DOUBLE) || !energy_for_shot(1)) return;
-                space.addEntity(new SmallLaser(space, location + (sf::Vector2f {0.25f, 0.0f}).rotatedBy(sf::degrees(rotation)), sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
-                space.addEntity(new SmallLaser(space, location + (sf::Vector2f {-0.25f, 0.0f}).rotatedBy(sf::degrees(rotation)), sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
+                space.addEntity(new SmallLaser(space, location + (sf::Vector2f {0.25f, 0.0f}).rotatedBy(sf::degrees(rotation)), sf::Vector2f(0.0f, -1.0f).rotatedBy(sf::degrees(rotation))));
+                space.addEntity(new SmallLaser(space, location + (sf::Vector2f {-0.25f, 0.0f}).rotatedBy(sf::degrees(rotation)), sf::Vector2f(0.0f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 break;
             case TRIANGLE:
                 if(!space.getUpgradeManager().has_unlocked(LASER_TRIANGLE) ||!energy_for_shot(2)) return;
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation - 15.0f))));
-                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + 15.0f))));
+                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.0f, -1.0f).rotatedBy(sf::degrees(rotation))));
+                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.0f, -1.0f).rotatedBy(sf::degrees(rotation - 15.0f))));
+                space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.0f, -1.0f).rotatedBy(sf::degrees(rotation + 15.0f))));
                 break;
             case FOUR_WAY:
                 if(!space.getUpgradeManager().has_unlocked(LASER_SHOTGUN) || !energy_for_shot(3)) return;
                 for(int i = 0; i < 36; i++)
                 {
-                    space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + -18.f + 1.0f * static_cast<float>(i)))));
+                    space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.0f, -1.0f).rotatedBy(sf::degrees(rotation + -18.0f + 1.0f * static_cast<float>(i)))));
                 }
                 break;
             case CRAZY:
@@ -210,20 +213,20 @@ void Ship::fire() {
                 if(!space.getUpgradeManager().has_unlocked(LASER_CRAZY) || !energy_for_shot(3)) return;
                 for(int i = 0; i < 36; i++)
                 {
-                    space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation + static_cast<float>(i) * 10.0f))));
+                    space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.0f, -1.0f).rotatedBy(sf::degrees(rotation + static_cast<float>(i) * 10.0f))));
 
                 }
                 break;
             case BOMB:
                 if(!energy_for_shot(5)) return;
-                space.addEntity(new Bomb(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
+                space.addEntity(new Bomb(space, location, sf::Vector2f(0.0f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 break;
                 
             default:
                 throw std::runtime_error("Invalid weapon type");
         }
         
-        time_since_last_fire = 0.f;
+        time_since_last_fire = 0.0f;
     }
 }
 

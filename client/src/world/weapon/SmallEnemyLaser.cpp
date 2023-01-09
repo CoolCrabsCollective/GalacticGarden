@@ -17,7 +17,7 @@ void SmallEnemyLaser::tick(float delta) {
     if(shouldBeRemoved())
         return;
 
-    float good_delta = delta / 1000.f;
+    float good_delta = delta / 1000.0f;
     lifetime -= good_delta;
     location += good_delta * direction * speed;
 }
@@ -33,7 +33,7 @@ void SmallEnemyLaser::draw(sf::RenderTarget &target, const sf::RenderStates &sta
 }
 
 float SmallEnemyLaser::getZOrder() const {
-    return 1.f;
+    return 1.0f;
 }
 
 float SmallEnemyLaser::getDamage() {

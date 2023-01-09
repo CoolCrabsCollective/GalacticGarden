@@ -7,6 +7,7 @@
 #include "GameAssets.h"
 #include "world/Space.h"
 #include "util/SpriteUtil.h"
+#include "world/FloatingText.h"
 
 Crop::Crop(Asteroid& asteroid, 
            sf::Vector2f relLocation,
@@ -16,7 +17,7 @@ Crop::Crop(Asteroid& asteroid,
              asteroid.getLocation() + relLocation.rotatedBy(sf::degrees(asteroid.getRotation()))), 
              asteroid(asteroid),
              relLocation(relLocation), 
-             timeSincePlanted(0.f), 
+             timeSincePlanted(0.0f), 
              health(0),
              plantGrowing(plantGrowing),
              grown(grown),
@@ -37,6 +38,7 @@ void Crop::tick(float delta) {
         
         if((space.getShip().getLocation() - location).lengthSq() < 0.1f) {
             dead = true;
+            space.addEntity(new FloatingText(space, location, "+" + std::to_string((int)getEnergyGain()), sf::Color::Green, 1.5f));
         }
         return;
     }
@@ -46,7 +48,7 @@ void Crop::tick(float delta) {
     timeSincePlanted += delta / 1000.0f;
     location = asteroid.getLocation() + relLocation.rotatedBy(sf::degrees(asteroid.getRotation()));
     progress.setPosition(location + sf::Vector2f { 0.0f, 0.1f });
-    progress.setHealth(std::min(timeSincePlanted / getTimeToMaturity(), 1.f));
+    progress.setHealth(std::min(timeSincePlanted / getTimeToMaturity(), 1.0f));
 
     if(isReady() && !wasReady)
         sprite.setTexture(*grown, true);

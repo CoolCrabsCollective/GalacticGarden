@@ -19,7 +19,7 @@ protected:
     Asteroid& asteroid;
     const sf::Vector2f relLocation;
     
-    float timeSincePlanted = 0.f;
+    float timeSincePlanted = 0.0f;
     float health;
     bool dead = false, harvested = false;
     
