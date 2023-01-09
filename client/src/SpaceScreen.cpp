@@ -13,17 +13,103 @@
 SpaceScreen::SpaceScreen(wiz::Game& game)
 	: Screen(game),
         space(game.getAssets(), [&](int waveNumber){
-
             switch(waveNumber)
             {
                 case 2:
                     space.paused = true;
                     dialogBox.startDialog({
-                                                  "Prepare your ass for wave 2 br0!",
+                                                  "Another wave of crow hatchlings is inbound commander! Get Ready!",
+                                                  "Don't sweat it."
                                           },
                                           {
                                                   "Cadet Candice",
+                                                  "Celestial Chad",
+                                          },
+                                          {
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CELESTIAL_CHAD_ICON),
 
+                                          },
+                                          [&]() {
+                                              space.paused = false;
+                                          }
+                    );
+                    break;
+                case 3:
+                    space.paused = true;
+                    dialogBox.startDialog({
+                                                  "What in god's name is that? A crowcraft is inbound!",
+                                          },
+                                          {
+                                                  "Cadet Candice",
+                                          },
+                                          {
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+
+                                          },
+                                          [&]() {
+                                              space.paused = false;
+                                          }
+                    );
+                    break;
+                case 4:
+                    space.paused = true;
+                    dialogBox.startDialog({
+                                                  "What in god's name is that? A crowcraft is inbound!",
+                                          },
+                                          {
+                                                  "Cadet Candice",
+                                          },
+                                          {
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+
+                                          },
+                                          [&]() {
+                                              space.paused = false;
+                                          }
+                    );
+                    break;
+                case 5:
+                    space.paused = true;
+                    dialogBox.startDialog({
+                                                  "What in god's name is that? A crowcraft is inbound!",
+                                          },
+                                          {
+                                                  "Cadet Candice",
+                                          },
+                                          {
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+
+                                          },
+                                          [&]() {
+                                              space.paused = false;
+                                          }
+                    );
+                    break;
+                case 6:
+                    space.paused = true;
+                    dialogBox.startDialog({
+                                                  "What in god's name is that? A crowcraft is inbound!",
+                                          },
+                                          {
+                                                  "Cadet Candice",
+                                          },
+                                          {
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+
+                                          },
+                                          [&]() {
+                                              space.paused = false;
+                                          }
+                    );
+                    break;
+                case 7:
+                    space.paused = true;
+                    dialogBox.startDialog({
+                                                  "Mother of god.. It's a tree.",
+                                          },
+                                          {
+                                                  "Cadet Candice",
                                           },
                                           {
                                                   getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
