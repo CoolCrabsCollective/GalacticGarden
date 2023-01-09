@@ -412,7 +412,7 @@ void SpaceScreen::render(sf::RenderTarget& target) {
             target.draw(infographicSprite);
 
             infographicText.setString("Paused (Esc to unpause)");
-            infographicText.setPosition({ 800.0f, 940.0f});
+            infographicText.setPosition({ 800.0f, 950.0f});
             infographicText.setScale({1.0f, 1.0f});
             infographicText.setFillColor(sf::Color::White);
             infographicText.setFont(*space.getAssets().get(GameAssets::VT323_TTF));
