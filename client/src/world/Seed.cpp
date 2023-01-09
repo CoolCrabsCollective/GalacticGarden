@@ -31,7 +31,7 @@ void Seed::tick(float delta) {
     if(shouldBeRemoved())
         return;
 
-    float good_delta = delta / 1000.f;
+    float good_delta = delta / 1000.0f;
 
     sf::Vector2f direction = targetAsteroid->getLocation() + targetPlantingZone.rotatedBy(sf::degrees(targetAsteroid->getRotation()))  - this->location;
 

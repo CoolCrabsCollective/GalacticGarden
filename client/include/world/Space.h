@@ -29,15 +29,15 @@ protected:
     std::map<uint64_t, std::list<Entity*>> spacialMap;
 
     UpgradeManager upgradeManager {
-            { Upgrade::LASER_SIMPLE,        0.f },
-            { Upgrade::LASER_DOUBLE,        15.f },
-            { Upgrade::LASER_TRIANGLE,      50.f },
-            { Upgrade::LASER_SHOTGUN,       100.f },
-            { Upgrade::LASER_CRAZY,         300.f },
-            { Upgrade::NUKE_SIMPLE,         500.f },
-            { Upgrade::FLAMETHROWER_SIMPLE, 300.f },
-            { Upgrade::BOOST_BASIC,         75.f },
-            { Upgrade::BOOST_ULTRA,         300.f },
+            { Upgrade::LASER_SIMPLE,        0.0f },
+            { Upgrade::LASER_DOUBLE,        15.0f },
+            { Upgrade::LASER_TRIANGLE,      50.0f },
+            { Upgrade::LASER_SHOTGUN,       100.0f },
+            { Upgrade::LASER_CRAZY,         300.0f },
+            { Upgrade::NUKE_SIMPLE,         500.0f },
+            { Upgrade::FLAMETHROWER_SIMPLE, 300.0f },
+            { Upgrade::BOOST_BASIC,         75.0f },
+            { Upgrade::BOOST_ULTRA,         300.0f },
     };
 
     WaveManager waveManager;

@@ -8,6 +8,7 @@
 #include "util/SpriteUtil.h"
 #include "world/enemy/EnemyShip.h"
 #include "util/MathUtil.h"
+#include "world/FloatingText.h"
 
 Bomb::Bomb(Space& space, sf::Vector2f location, sf::Vector2f direction) 
     : Entity(space, location), velocity(direction * 5.0f) {
@@ -65,6 +66,8 @@ void Bomb::tick(float delta) {
             if(EnemyShip* ship = dynamic_cast<EnemyShip*>(entity)) {
                 if((ship->getLocation() - location).lengthSq() < MathUtil::pow2(5.0f)) {
                     ship->damage(10.0f);
+
+                    space.addEntity(new FloatingText(space, location, "-10", sf::Color::Yellow, 0.5f));
                 }
             }
         }

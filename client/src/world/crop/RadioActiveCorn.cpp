@@ -21,7 +21,7 @@ float RadioActiveCorn::getTimeToMaturity() const {
 }
 
 float RadioActiveCorn::getZOrder() const {
-    return 1.f;
+    return 1.0f;
 }
 
 float RadioActiveCorn::getEnergyGain() const {

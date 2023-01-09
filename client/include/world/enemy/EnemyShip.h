@@ -25,7 +25,7 @@ protected:
     Faction fraction = ENEMY;
 
     float fire_delay = 0.8f;
-    float time_since_last_fire = 0.f;
+    float time_since_last_fire = 0.0f;
 
 public:
     explicit EnemyShip(Space& space, sf::Vector2f location);

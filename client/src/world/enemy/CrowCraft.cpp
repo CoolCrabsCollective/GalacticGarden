@@ -14,18 +14,18 @@ CrowCraft::CrowCraft(Space &space, const sf::Vector2f &location) : HatchlingShip
     speed = 0.05f;
     damageAmount = 1;
     fire_delay = 0.35f;
-    health = 15.f;
+    health = 15.0f;
 }
 
 void CrowCraft::fire() {
     if (time_since_last_fire >= fire_delay) {
         space.addEntity(
-                new SmallEnemyLaser(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
+                new SmallEnemyLaser(space, location, sf::Vector2f(0.0f, -1.0f).rotatedBy(sf::degrees(rotation))));
         space.addEntity(
                 new SmallEnemyLaser(space, location, sf::Vector2f(0.5f, -1.0f).rotatedBy(sf::degrees(rotation))));
         space.addEntity(
                 new SmallEnemyLaser(space, location, sf::Vector2f(-0.5f, -1.0f).rotatedBy(sf::degrees(rotation))));
 
-        time_since_last_fire = 0.f;
+        time_since_last_fire = 0.0f;
     }
 }

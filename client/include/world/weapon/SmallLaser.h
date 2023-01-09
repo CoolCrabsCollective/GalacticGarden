@@ -10,8 +10,8 @@
 
 class SmallLaser : public Lazer {
 protected:
-    const float speed = 40.f;
-    float lifetime = 2.f;
+    const float speed = 40.0f;
+    float lifetime = 2.0f;
     
     const sf::Vector2f direction;
     mutable sf::Sprite sprite;

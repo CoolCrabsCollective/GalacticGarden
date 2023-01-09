@@ -10,16 +10,16 @@
 
 class HatchlingShip : public EnemyShip {
 protected:
-    sf::Vector2f velocityNormalized = {0.f, 1.f};
+    sf::Vector2f velocityNormalized = {0.0f, 1.0f};
     
     Asteroid* targetAsteroid = nullptr;
     sf::Vector2f targetPlant;
 
     TractorBeam* tractorBeam = nullptr;
 
-    float plant_search_range = 20.f;
+    float plant_search_range = 20.0f;
 
-    float min_friendly_target_range = 20.f;
+    float min_friendly_target_range = 20.0f;
     bool targetingFriendly = false;
 
 public:

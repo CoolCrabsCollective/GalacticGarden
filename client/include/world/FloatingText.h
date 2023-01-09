@@ -10,14 +10,14 @@
 #include "SFML/Graphics/Text.hpp"
 
 class FloatingText : public Entity {
-    float life;
+    float maxLife, life;
     
     mutable sf::Text text;
     
 public:
     FloatingText(Space& space, 
                  sf::Vector2f location,
-                 std::string text,
+                 const std::string& text,
                  sf::Color color,
                  float duration);
 

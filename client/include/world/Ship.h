@@ -28,29 +28,29 @@ class Ship : public Entity {
 protected:
 	mutable sf::Sprite sprite;
     float fire_delay = 0.4f;
-    float time_since_last_fire = 0.f;
+    float time_since_last_fire = 0.0f;
     float plant_delay = 0.2f;
-    float time_since_last_plant = 0.f;
+    float time_since_last_plant = 0.0f;
     float rotation = 0.0f;
-    float maxSpeed = 4.f; // 4 units per second
-    float maxSpeedBasicBoost = 15.f;
-    float maxSpeedUltraBoost = 40.f;
-    float acc = 10.f; // 10 units per second ^ 2
-    float boostBasicAcc = 15.f;
-    float boostUltraAcc = 20.f;
-    sf::Vector2f moveVelocity = { 0.f, 0.f };
+    float maxSpeed = 4.0f; // 4 units per second
+    float maxSpeedBasicBoost = 15.0f;
+    float maxSpeedUltraBoost = 40.0f;
+    float acc = 10.0f; // 10 units per second ^ 2
+    float boostBasicAcc = 15.0f;
+    float boostUltraAcc = 20.0f;
+    sf::Vector2f moveVelocity = { 0.0f, 0.0f };
     std::map<plantzone_t, bool, PlantZoneCompare> seed_thrown;
     bool isBoosting = false;
     bool isIdle = true;
 
-    float hatchling_damage = 1.f;
+    float hatchling_damage = 1.0f;
 
     Faction fraction = FRIENDLY;
 
     sf::Shader* damageShader = nullptr;
     float redness = 0.0f;
 
-    float energy = 10.f;
+    float energy = 10.0f;
     
     WeaponType weaponType = WeaponType::SIMPLE;
     CropType cropType = CropType::FLOWER;

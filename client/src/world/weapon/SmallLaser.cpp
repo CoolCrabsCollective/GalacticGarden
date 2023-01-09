@@ -17,7 +17,7 @@ void SmallLaser::tick(float delta) {
     if(shouldBeRemoved())
         return;
     
-    float good_delta = delta / 1000.f;
+    float good_delta = delta / 1000.0f;
     lifetime -= good_delta;
     location += good_delta * direction * speed;
 }
@@ -33,7 +33,7 @@ void SmallLaser::draw(sf::RenderTarget &target, const sf::RenderStates &states) 
 }
 
 float SmallLaser::getZOrder() const {
-    return 5.f;
+    return 5.0f;
 }
 
 float SmallLaser::getDamage() {

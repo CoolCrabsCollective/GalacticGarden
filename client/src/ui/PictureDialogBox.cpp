@@ -72,7 +72,7 @@ PictureDialogBox::PictureDialogBox(sf::Font *font1, sf::Texture *background)
     speakerText.setFont(*font);
     speakerText.setCharacterSize(30);
     speakerText.setScale({0.8f, 0.8f});
-    speakerText.setPosition({140.0f, 1000.f});
+    speakerText.setPosition({140.0f, 1000.0f});
     speakerText.setOutlineColor(sf::Color::Black);
     speakerText.setFillColor(sf::Color::Black);
     
@@ -80,7 +80,7 @@ PictureDialogBox::PictureDialogBox(sf::Font *font1, sf::Texture *background)
     
     transmissionText.setString("Incoming Transmission (SPACE to continue, ESC to skip)");
     transmissionText.setScale({0.8f, 0.8f});
-    transmissionText.setPosition({125.0f, 1035.f});
+    transmissionText.setPosition({125.0f, 1035.0f});
     transmissionText.setOutlineColor(sf::Color::Black);
     transmissionText.setFillColor(sf::Color::White);
 }

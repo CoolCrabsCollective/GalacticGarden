@@ -13,13 +13,13 @@ class GayStation : public Entity {
 protected:
     mutable sf::Sprite sprite;
 
-    float size = 10.f;
+    float size = 10.0f;
 
     float bobbingDisplacement = 0.0f;
     bool bobbingDirection = true; // true: upwards, false: downwards
     float bob_starting_pos = 0.0f;
-    float bob_speed = .3f;
-    float bob_max_displacement = .1f;
+    float bob_speed = 0.3f;
+    float bob_max_displacement = 0.1f;
 
     Faction fraction = FRIENDLY;
     float health = 10.0f;
