@@ -21,6 +21,12 @@ enum SelectionType {
     BOOSTER
 };
 
+enum SelectedBoost {
+    NONE = 7,
+    BASIC_BOOST,
+    SUPER_BOOST
+};
+
 class WeaponTextureGetter {
     std::vector<sf::Texture*> weaponTextures;
 
@@ -48,14 +54,32 @@ class SeedTextureGetter {
 public:
     SeedTextureGetter(wiz::AssetLoader& assets) {
         seedTextures =
-                {assets.get(GameAssets::TEXTURE_FALLOUT_FLOWER),
-                 assets.get(GameAssets::TEXTURE_CORN)};
+                {assets.get(GameAssets::TEXTURE_FLOWER_ICON),
+                 assets.get(GameAssets::TEXTURE_CORN_ICON)};
     }
 
     ~SeedTextureGetter() = default;
 
     std::vector<sf::Texture *> get() {
         return seedTextures;
+    }
+};
+
+class BoostTextureGetter {
+    std::vector<sf::Texture*> boostTextures;
+
+public:
+    BoostTextureGetter(wiz::AssetLoader& assets) {
+        boostTextures =
+                {assets.get(GameAssets::TEXTURE_BOOST_NONE),
+                 assets.get(GameAssets::TEXTURE_BOOST_BASIC),
+                 assets.get(GameAssets::TEXTURE_BOOST_ULTRA)};
+    }
+
+    ~BoostTextureGetter() = default;
+
+    std::vector<sf::Texture *> get() {
+        return boostTextures;
     }
 };
 
