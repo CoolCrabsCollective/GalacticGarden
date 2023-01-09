@@ -22,6 +22,7 @@ namespace GameAssets {
     ASSET(TextAsset, CONTROLLER_DB, ("gamecontrollerdb.txt"))
 
 	ASSET(wiz::MusicAsset, SOUNDTRACK, ("music/soundtrack.ogg"))
+    ASSET(wiz::MusicAsset, BACH, ("music/literally_bach.ogg"))
 	ASSET(wiz::SoundAsset, JUMP, ("sfx/jump.ogg"))
 
 	ASSET(wiz::TextureAsset, WHITE_PIXEL, ("gfx/white_pixel.png"))
