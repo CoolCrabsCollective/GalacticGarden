@@ -12,7 +12,7 @@ TreeCraft::TreeCraft(Space &space, const sf::Vector2f &location) : EnemyShip(spa
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_TREE));
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
 
-    SpriteUtil::setSpriteSize(sprite, { 4.0f, 4.0f });
+    SpriteUtil::setSpriteSize(sprite, { 8.0f, 8.0f });
     speed = 0.2f;
 }
 

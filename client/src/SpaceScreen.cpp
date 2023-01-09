@@ -18,15 +18,15 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                 case 0:
                     space.paused = true;
                     dialogBox.startDialog({
-                                                  "The crows have reached the space station. Ready the guns!",
+                                                  "~Caw~ ~Caw~ ~Caw~ I see the space station! Vegetables!",
                                                   "Giddy up birdy."
                                           },
                                           {
-                                                  "Cadet Candice",
+                                                  "Celestial Crow",
                                                   "Celestial Chad",
                                           },
                                           {
-                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_COSMIC_CROW_ICON),
                                                   getGame().getAssets().get(GameAssets::TEXTURE_CELESTIAL_CHAD_ICON),
 
                                           },
@@ -59,15 +59,18 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                     space.paused = true;
                     dialogBox.startDialog({
                                                   "Even more hatchlings coming!",
-                                                  "Yee-haw!."
+                                                  "Yee-haw!. We're wrangling crows tonight!"
+                                                  "~CAW~ ~CAW~ ~CAW~"
                                           },
                                           {
                                                   "Cadet Candice",
                                                   "Celestial Chad",
+                                                  "Cosmic Crow"
                                           },
                                           {
                                                   getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
                                                   getGame().getAssets().get(GameAssets::TEXTURE_CELESTIAL_CHAD_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_COSMIC_CROW_ICON),
 
                                           },
                                           [&]() {
