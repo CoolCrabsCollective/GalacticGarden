@@ -36,8 +36,9 @@ void WaveManager::update(float good_delta) {
     if(currentWaveCooldownProgress >= waveCooldown)
     {
         currentWaveCooldownProgress = 0;
-        newWaveCallback(++currentWave);
+        newWaveCallback(currentWave);
         spawnNextWave();
+        currentWave++;
     }
 }
 

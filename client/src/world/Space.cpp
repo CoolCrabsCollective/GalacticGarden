@@ -106,9 +106,14 @@ uint64_t Space::spacialKey(sf::Vector2f location) const {
 }
 
 void Space::tick(float delta) {
+    int enemyCount = 0; // could be cached
 
+    for(Entity* entity : entities)
+        if(dynamic_cast<EnemyShip*>(entity))
+            enemyCount++;
 
-    waveManager.update(delta / 1000.f);
+    if(enemyCount == 0)
+        waveManager.update(delta / 1000.f);
     for(Entity* entity : entities) {
 
         // protip : don't fuck with this unless you know what you are doing
