@@ -35,7 +35,7 @@ public:
 
     [[nodiscard]]
     sf::Vector2f getVisualSize() const override {
-        return sf::Vector2f { size, size };
+        return sf::Vector2f { 15.0f, 15.0f };
     }
 
     bool shouldBeRemoved() const override;

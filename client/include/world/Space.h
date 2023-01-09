@@ -43,7 +43,7 @@ protected:
     WaveManager waveManager;
 public:
 	constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
-	constexpr const static float CHUNK_SIZE = 2.0f;
+	constexpr const static float CHUNK_SIZE = 4.0f;
     constexpr const static float MAP_RADIUS = 80.0f;
 
 	Space(wiz::AssetLoader& assets, std::function<void (int)> waveCallback);
@@ -70,7 +70,7 @@ public:
     sf::Vector2f getNearestFriendly(sf::Vector2f pos);
 
     bool gameover = false; // why is this public
-    bool paused = false;
+    bool paused = false; // why not scrub
 
     UpgradeManager &getUpgradeManager();
 
