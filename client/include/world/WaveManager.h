@@ -10,8 +10,8 @@ class Space;
 class WaveManager {
 protected:
     int currentWave = 0;
-    const float waveCooldown = 60.f;
-    float currentWaveCooldownProgress = 0.f;
+    const float waveCooldown = 30.0f;
+    float currentWaveCooldownProgress = -30.0f;
     std::function<void(int)> newWaveCallback;
     std::vector<std::vector<int>> waves {{
         // HATCHLINGS, CROWCRAFTS, NESTS, TREES
