@@ -9,6 +9,7 @@
 #include "GameAssets.h"
 #include "MiniMap.h"
 #include "world/FloatingText.h"
+#include "GalacticGarden.h"
 
 SpaceScreen::SpaceScreen(wiz::Game& game)
 	: Screen(game),
@@ -19,7 +20,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                     space.paused = true;
                     dialogBox.startDialog({
                                                   "~Caw~ ~Caw~ ~Caw~ I see the space station! Vegetables!",
-                                                  "Giddy up birdy."
+                                                  "Giddy up birdy.",
                                           },
                                           {
                                                   "Celestial Crow",
@@ -39,7 +40,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                     space.paused = true;
                     dialogBox.startDialog({
                                                   "Another wave of crow hatchlings is inbound commander! Get Ready!",
-                                                  "Don't sweat it."
+                                                  "Don't sweat it.",
                                           },
                                           {
                                                   "Cadet Candice",
@@ -59,13 +60,13 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                     space.paused = true;
                     dialogBox.startDialog({
                                                   "Even more hatchlings coming!",
-                                                  "Yee-haw!. We're wrangling crows tonight!"
-                                                  "~CAW~ ~CAW~ ~CAW~"
+                                                  "Yee-haw!. We're wrangling crows tonight!",
+                                                  "~CAW~ ~CAW~ ~CAW~",
                                           },
                                           {
                                                   "Cadet Candice",
                                                   "Celestial Chad",
-                                                  "Cosmic Crow"
+                                                  "Cosmic Crow",
                                           },
                                           {
                                                   getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
@@ -81,12 +82,15 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                 case 3:
                     space.paused = true;
                     dialogBox.startDialog({
-                                                  "~CAW~ It appears the hatchlings were insufficient... Send in a crowcraft...!",
+                                                  "~CAW~ It appears my hatchlings have failed me...",
+                                                  "Send in the crowcraft! ~CAW~ ~CAW~",
                                           },
                                           {
                                                   "Lord Crow",
+                                                  "Lord Crow",
                                           },
                                           {
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
                                                   getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
 
                                           },
@@ -98,7 +102,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                 case 4:
                     space.paused = true;
                     dialogBox.startDialog({
-                                                  "It appears the Lord Crow is sending additional reinforcement, be careful Celestial Chad.",
+                                                  "I'm detecting additional reinforcements, be careful Celestial Chad.",
                                           },
                                           {
                                                   "Cadet Candice",
@@ -116,13 +120,15 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                     space.paused = true;
                     dialogBox.startDialog({
                                                   "The enemy is sending in a Nest! I repeat, the enemy is sending in a Nest!",
+                                                  "Oh the humanity!",
                                           },
                                           {
+                                                  "Cadet Candice",
                                                   "Cadet Candice",
                                           },
                                           {
                                                   getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
-
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
                                           },
                                           [&]() {
                                               space.paused = false;
@@ -132,7 +138,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                 case 6:
                     space.paused = true;
                     dialogBox.startDialog({
-                                                  "Is this all you birds got?",
+                                                  "Is this all you yellow belly birds got?",
                                           },
                                           {
                                                   "Celestial Chad",
@@ -149,17 +155,92 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                 case 7:
                     space.paused = true;
                     dialogBox.startDialog({
-                                                  "Holy Pegasus... The Lord Crow himself is coming...",
-                                                  "~CAW~ My minions have failed me... You must now face the Treecraft, the marvel of corvid engineering.",
+                                                  "Holy Pegasus... Lord Crow himself has entered the asteroid belt...",
+                                                  "~CAW~ All your vegetables will soon be mine Chad!.",
+                                                  "Not if I can help it buster!",
+                                                  "I've just about had it with you and your varmint canary friends.",
+                                                  "FACE MY TREECRAFT! ~CAW~ A marvel of avian engineering. ~CAW~",
                                           },
                                           {
                                                   "Cadet Candice",
+                                                  "Lord Crow",
+                                                  "Celestial Chad",
+                                                  "Celestial Chad",
                                                   "Lord Crow",
                                           },
                                           {
                                                   getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
                                                   getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CELESTIAL_CHAD_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CELESTIAL_CHAD_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
 
+                                          },
+                                          [&]() {
+                                              space.paused = false;
+                                          }
+                    );
+                    break;
+                case 8:
+                    space.paused = true;
+                    dialogBox.startDialog({
+                                                "NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOoooooooo",
+                                                "oooooooo ~CAW~ ooooooooooooooo...........",
+                                                "...",
+                                                "My treecraft is destroyed. You have bested me...",
+                                                "I thought I would die with a beak full of vegtables ~CAW~ ~CAW~ CAW~",
+                                                "[End Of Communication]",
+                                                "[Lord Crow is no more]",
+                                                "[The human space station is saved from the cosmic crow threat... or is it?]",
+                                                "Commander! This can't be possible!",
+                                                "I'm reading more crows inbound!",
+                                                "~CAW~ ~CAW~ Vegtables! ~CAW~ ",
+                                                "Its hog-killin' time! Yee Haw!",
+                                          },
+                                          {
+                                                  "Lord Crow",
+                                                  "Lord Crow",
+                                                  "Lord Crow",
+                                                  "Lord Crow",
+                                                  "Lord Crow",
+                                                  "Narrator",
+                                                  "Narrator",
+                                                  "Cadet Candice",
+                                                  "Cadet Candice",
+                                                  "Cosmic Crow",
+                                                  "Celestial Chad",
+                                          },
+                                          {
+
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_NARRATOR_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_NARRATOR_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_COSMIC_CROW_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CELESTIAL_CHAD_ICON),
+
+                                          },
+                                          [&]() {
+                                              space.paused = false;
+                                          }
+                    );
+                    break;
+
+                default:
+                    space.paused = true;
+                    dialogBox.startDialog({
+                                                  "Another wave of crows inbound commander!",
+                                          },
+                                          {
+                                                  "Cadet Candice",
+                                          },
+                                          {
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
                                           },
                                           [&]() {
                                               space.paused = false;
@@ -356,6 +437,17 @@ void SpaceScreen::render(sf::RenderTarget& target) {
 }
 
 void SpaceScreen::show() {
+    bool connected = sf::Joystick::isConnected(0);
+    // TODO: figure out why SFML fetching the joystick name doesn't work
+    mappingFound = false;
+    if (connected) {
+        std::string joyStickName = dynamic_cast<GalacticGarden*>(&getGame())->getJoyStickName();
+        if (mappingDatabase.hasMapping(joyStickName)) {
+            mapping = mappingDatabase.getMapping(joyStickName);
+            mappingFound = true;
+        }
+    }
+
 	background.setTexture(*getGame().getAssets().get(GameAssets::BACKGROUND));
 
 	getGame().addWindowListener(this);
@@ -528,19 +620,6 @@ void SpaceScreen::windowClosed() {
 
 void SpaceScreen::processInput(float delta) {
     bool connected = sf::Joystick::isConnected(0);
-    // TODO: figure out why SFML fetching the joystick name doesn't work
-    mappingFound = connected;
-//    if (connected) {
-//        sf::Joystick::Identification id = sf::Joystick::getIdentification(0);
-//        if (controllerDisconnected && mappingDatabase.hasMapping(id.name)) {
-//            mapping = mappingDatabase.getMapping(id.name);
-//            controllerDisconnected = false;
-//            mappingFound = true;
-//        }
-//    } else {
-//        controllerDisconnected = true;
-//        mappingFound = false;
-//    }
 
     bool isFiring = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) || sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
     bool isBoosting = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift);
@@ -552,11 +631,11 @@ void SpaceScreen::processInput(float delta) {
 
     space.getShip().setIsBoosting(isBoosting);
 
-//    bool isPlanting = mappingFound && connected ? sf::Joystick::isButtonPressed(0, mapping.getButton(wiz::MapButton::Left_Shoulder)) :
-//            (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) ||
-//            sf::Mouse::isButtonPressed(sf::Mouse::Button::Right));
+    bool isPlanting = mappingFound && connected ? sf::Joystick::isButtonPressed(0, mapping.getButton(wiz::MapButton::Left_Shoulder)) :
+            (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) ||
+            sf::Mouse::isButtonPressed(sf::Mouse::Button::Right));
 
-    bool isPlanting = sf::Mouse::isButtonPressed(sf::Mouse::Button::Right);
+//    bool isPlanting = sf::Mouse::isButtonPressed(sf::Mouse::Button::Right);
 
     if (isPlanting)
         space.getShip().plantOnAsteroid(space);
