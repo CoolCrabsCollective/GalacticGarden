@@ -34,6 +34,9 @@ public:
     void interact() override;
 
     void kill();
+
+protected:
+    int getMaxCharsPerLine() const override;
 };
 
 

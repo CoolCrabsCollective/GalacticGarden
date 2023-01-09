@@ -105,6 +105,10 @@ void PictureDialogBox::update(float delta) {
     }
 }
 
+int PictureDialogBox::getMaxCharsPerLine() const {
+    return 62;
+}
+
 void PictureDialogBox::startDialog(const std::vector<std::string> &lines, std::function<void()> callback) {
     DialogBox::startDialog(lines, callback);
 }
