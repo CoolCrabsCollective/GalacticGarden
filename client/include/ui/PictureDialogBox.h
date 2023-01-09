@@ -20,7 +20,6 @@ class PictureDialogBox : public wiz::DialogBox {
 public:
     PictureDialogBox(sf::Font *font1, sf::Texture *background);
 
-
     void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
 
     void startDialog(std::vector<std::string> lines, std::vector<std::string> names, std::vector<sf::Texture*> textures, std::function<void()> callback);
