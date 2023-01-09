@@ -588,6 +588,13 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
                 space.getShip().setWeaponType(static_cast<WeaponType>(weaponSelectionUi.getSelection()));
                 break;
             }
+            case sf::Keyboard::Num7:
+            case sf::Keyboard::Numpad7:
+            {
+                weaponSelectionUi.setSelection(6);
+                space.getShip().setWeaponType(static_cast<WeaponType>(weaponSelectionUi.getSelection()));
+                break;
+            }
             case sf::Keyboard::A:
             case sf::Keyboard::Left:
                 if (shopIsOpen)
@@ -608,9 +615,15 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
                 space.getShip().setWeaponType(static_cast<WeaponType>(weaponSelectionUi.getSelection()));
                 break;
             }
-            // TODO: CHEAT - remove
+            // TODO: CHEATs - remove
             case sf::Keyboard::V:
                 space.getShip().buyShit(-1000.0f);
+                break;
+            case sf::Keyboard::Add:
+                space.get_wave_manager().spawnNextWave();
+                break;
+            case sf::Keyboard::Subtract:
+                space.get_wave_manager().spawnNextWave();
                 break;
             default:
                 break;

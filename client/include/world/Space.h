@@ -79,7 +79,7 @@ public:
     void spawnEnemyNest();
     void spawnEnemyTree();
 
-    const WaveManager& get_wave_manager() const;
+    WaveManager& get_wave_manager();
     bool lordCrowHasFallen = false;
     bool startInfiniteWaves = false;
 

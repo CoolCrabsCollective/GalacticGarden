@@ -326,6 +326,6 @@ void Space::spawnEnemyTree() {
     addEntity(new TreeCraft(*this, pos));
 }
 
-const WaveManager& Space::get_wave_manager() const {
+WaveManager& Space::get_wave_manager() {
     return waveManager;
 }
