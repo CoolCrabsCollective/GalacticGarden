@@ -38,13 +38,13 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                 case 3:
                     space.paused = true;
                     dialogBox.startDialog({
-                                                  "What in god's name is that? A crowcraft is inbound!",
+                                                  "~CAW~ It appears the hatchlings were insufficient... Send in a crowcraft...!",
                                           },
                                           {
-                                                  "Cadet Candice",
+                                                  "Lord Crow",
                                           },
                                           {
-                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
 
                                           },
                                           [&]() {
@@ -55,7 +55,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                 case 4:
                     space.paused = true;
                     dialogBox.startDialog({
-                                                  "What in god's name is that? A crowcraft is inbound!",
+                                                  "It appears the Lord Crow is sending additional reinforcement, be careful Celestial Chad.",
                                           },
                                           {
                                                   "Cadet Candice",
@@ -72,7 +72,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                 case 5:
                     space.paused = true;
                     dialogBox.startDialog({
-                                                  "What in god's name is that? A crowcraft is inbound!",
+                                                  "The enemy is sending in a Nest! I repeat, the enemy is sending in a Nest!",
                                           },
                                           {
                                                   "Cadet Candice",
@@ -89,13 +89,13 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                 case 6:
                     space.paused = true;
                     dialogBox.startDialog({
-                                                  "What in god's name is that? A crowcraft is inbound!",
+                                                  "Is this all you birds got?",
                                           },
                                           {
-                                                  "Cadet Candice",
+                                                  "Celestial Chad",
                                           },
                                           {
-                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CELESTIAL_CHAD_ICON),
 
                                           },
                                           [&]() {
@@ -106,13 +106,16 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                 case 7:
                     space.paused = true;
                     dialogBox.startDialog({
-                                                  "Mother of god.. It's a tree.",
+                                                  "Holy Pegasus... The Lord Crow himself is coming...",
+                                                  "~CAW~ My minions have failed me... You must now face the Treecraft, the marvel of corvid engineering.",
                                           },
                                           {
                                                   "Cadet Candice",
+                                                  "Lord Crow",
                                           },
                                           {
                                                   getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
 
                                           },
                                           [&]() {
