@@ -16,11 +16,11 @@ protected:
     std::vector<std::vector<int>> waves {{
         // HATCHLINGS, CROWCRAFTS, NESTS, TREES
          {3, 0, 0, 0},
-         {8, 0, 0, 0},
-         {14, 1, 0, 0},
-         {17, 4, 0, 0},
-         {20, 5, 1, 0},
-         {20, 5, 3, 0},
+         {6, 0, 0, 0},
+         {3, 1, 0, 0},
+         {6, 3, 0, 0},
+         {8, 3, 1, 0},
+         {16, 5, 3, 0},
          {0, 0, 0, 1},
     }};
     Space& space;
