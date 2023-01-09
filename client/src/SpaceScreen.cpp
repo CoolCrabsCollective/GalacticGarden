@@ -240,6 +240,23 @@ void SpaceScreen::mouseButtonPressed(const sf::Event::MouseButtonEvent &mouseBut
         getGame().setScreen(new SpaceScreen(getGame()));
         return;
     }
+
+    if(shopIsOpen)
+    {
+        Upgrade upgrade = upgradeMenu.select();
+        if (space.getUpgradeManager().get_cost(upgrade) < space.getShip().getEnergy()) {
+            space.getUpgradeManager().unlock(upgrade);
+            float cost = space.getUpgradeManager().get_cost(upgrade);
+            space.getShip().buyShit(cost);
+
+            space.addEntity(new FloatingText(space, space.getShip().getLocation(), "-" + std::to_string((int)round(cost)), sf::Color::Blue, 2.0f));
+        }
+    }
+}
+
+void SpaceScreen::mouseMoved(const sf::Event::MouseMoveEvent &mouseMoveEvent) {
+    sf::Vector2f pos = getWindow().mapPixelToCoords(sf::Mouse::getPosition(getWindow()), sf::View({ UI_VIEW_SIZE.x/ 2.f, UI_VIEW_SIZE.y/2.0f }, UI_VIEW_SIZE));
+    upgradeMenu.handleMouse({static_cast<int>(pos.x), static_cast<int>(pos.y)});
 }
 
 void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {

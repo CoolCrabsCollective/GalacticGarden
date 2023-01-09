@@ -43,16 +43,16 @@ SelectionScroll::SelectionScroll(SpaceScreen& screen, SelectionType type, int nu
         sf::Vector2f size = {.4f, .4f};
 
         backdrops.at(i).setPosition(pos);
-        backdrops.at(i).setScale(size);
+        backdrops.at(i).setScale(size / 8.0f * 128.0f);
 
         sf::Vector2f highLightPos = {xOffsetSpacingBetweenBoxes*selection + selectionDisPos.x, selectionDisPos.y + yOffset};
         sf::Vector2f highLightSize = {.4f, .4f};
 
         selectHighLight.setPosition(highLightPos);
-        selectHighLight.setScale(highLightSize);
+        selectHighLight.setScale(highLightSize / 8.0f * 128.0f);
 
-        sf::Vector2f itemOffset = {backdrops.at(i).getLocalBounds().width / 5.0f - 19.0f,
-                                   backdrops.at(i).getLocalBounds().height - 120.7f};
+        sf::Vector2f itemOffset = {backdrops.at(i).getLocalBounds().width / 8.0f * 128.0f / 5.0f - 19.0f,
+                                   backdrops.at(i).getLocalBounds().height / 8.0f * 128.0f - 120.7f};
         sf::Vector2f itemSize = {1.2f, 1.2f};
 
         items.at(i).setPosition(pos + itemOffset);

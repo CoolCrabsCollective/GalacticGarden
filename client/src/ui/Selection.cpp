@@ -7,6 +7,7 @@
 #include "SpaceScreen.h"
 
 #include "util/MathUtil.h"
+#include "util/SpriteUtil.h"
 
 Selection::Selection(SpaceScreen& screen, SelectionType type, UpgradeManager* upgradeManager) {
     this->upgradeManager = upgradeManager;
@@ -38,8 +39,8 @@ Selection::Selection(SpaceScreen& screen, SelectionType type, UpgradeManager* up
             break;
     }
 
-    sf::Vector2f pos = { xOffset + 30.0f, 940.0f };
-    sf::Vector2f size = { .8f, .8f };
+    sf::Vector2f pos = { xOffset + 30.0f, 955.0f };
+    sf::Vector2f size = sf::Vector2f { 0.8f, 0.8f } * 128.0f;
 
     switch (type) {
         case WEAPON:
@@ -55,25 +56,39 @@ Selection::Selection(SpaceScreen& screen, SelectionType type, UpgradeManager* up
             item.setTexture(*boostTextureGetter->get().at(selectionScroll->getSelection()), true);
             break;
     }
+    pos += size / 2.0f;
 
     backdrop.setPosition(pos);
-    backdrop.setScale(size);
+    SpriteUtil::setSpriteOrigin(backdrop, { 0.5f, 0.5f });
+    SpriteUtil::setSpriteSize(backdrop, size * 1.1f);
 
-    sf::Vector2f itemOffset = { backdrop.getLocalBounds().width / 5.0f + 2.4f, backdrop.getLocalBounds().height - 115.0f };
     sf::Vector2f itemSize = { 1.5f, 1.5f };
 
-    item.setPosition(pos + itemOffset);
-    item.setScale(itemSize);
+    item.setPosition(pos - sf::Vector2f { 0.0f, 7.0f });
+    item.setScale(itemSize * 1.4f);
+    SpriteUtil::setSpriteOrigin(item, { 0.5f, 0.5f });
 
-    sf::Vector2f textOffset = {backdrop.getLocalBounds().width / 4.0f -7.0f, -70.f + backdrop.getLocalBounds().height};
-    sf::Vector2f textSize = { .8f, .8f };
+     sf::Vector2f textSize = { 0.8f, 0.8f };
 
-    text.setString("Single");
-    text.setScale(textSize);
-    text.setOrigin({text.getLocalBounds().width / 2.f, text.getLocalBounds().height / 2.f});
-    text.setFont(*screen.getAssets().get(GameAssets::VT323_TTF));
-    text.setFillColor(sf::Color::White);
-    text.setPosition(pos + textOffset);
+    switch(type) {
+        case WEAPON:
+            titleText.setString("WEAPON");
+            break;
+        case SEED:
+            titleText.setString("SEED");
+            break;
+        case BOOSTER:
+            titleText.setString("BOOSTER");
+            break;
+    }
+    
+    titleText.setCharacterSize(30);
+    titleText.setScale(textSize);
+    titleText.setStyle(sf::Text::Bold);
+    titleText.setFont(*screen.getAssets().get(GameAssets::VT323_TTF));
+    titleText.setOrigin({titleText.getLocalBounds().width / 2.0f, titleText.getLocalBounds().height / 2.0f});
+    titleText.setFillColor(sf::Color::White);
+    titleText.setPosition(pos + sf::Vector2f { 0.0f, size.y / 2.0f - 17.0f });
 }
 
 void Selection::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
@@ -88,22 +103,10 @@ void Selection::draw(sf::RenderTarget& target, const sf::RenderStates& states) c
                 break;
         }
     }
-
-    switch (selectionScroll->getType()) {
-        case WEAPON:
-            text.setString(weaponTextGetter->get().at(selectionScroll->getSelection()));
-            break;
-        case SEED:
-            text.setString(seedTextGetter->get().at(selectionScroll->getSelection()));
-            break;
-        case BOOSTER:
-            text.setString(boostTextGetter->get().at(selectionScroll->getSelection()));
-            break;
-    }
-
+    
     target.draw(backdrop);
     target.draw(item);
-    target.draw(text);
+    target.draw(titleText);
 
     target.draw(*selectionScroll);
 }

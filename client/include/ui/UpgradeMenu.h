@@ -34,5 +34,6 @@ public:
     void moveLeft();
     void moveRight();
     Upgrade select();
+    void handleMouse(sf::Vector2i pos);
     void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
 };

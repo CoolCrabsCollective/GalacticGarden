@@ -17,13 +17,14 @@
 class SpaceScreen;
 
 class Selection : public sf::Drawable {
-    mutable sf::Text text;
+protected:
     mutable sf::Sprite backdrop;
     mutable sf::Sprite item;
+    
+    mutable sf::Text titleText, seedText, boosterText;
 
     SelectedBoost selectedBoost = NONE;
 
-protected:
     std::string itemName;
     SelectionScroll* selectionScroll = nullptr;
     WeaponTextureGetter* weaponTextureGetter = nullptr;
