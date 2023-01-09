@@ -11,17 +11,17 @@ class WaveManager {
 protected:
     int currentWave = 0;
     const float waveCooldown = 45.0f;
-    float currentWaveCooldownProgress = -30.0f;
+    float currentWaveCooldownProgress = 0.0f;
     std::function<void(int)> newWaveCallback;
     std::vector<std::vector<int>> waves {{
         // HATCHLINGS, CROWCRAFTS, NESTS, TREES
          {3, 0, 0, 0},
-         {12, 0, 0, 0},
-         {40, 0, 0, 0},
-         {50, 1, 0, 0},
-         {50, 2, 0, 0},
-         {50, 20, 1, 0},
-         {50, 20, 5, 0},
+         {10, 0, 0, 0},
+         {30, 0, 0, 0},
+         {15, 5, 0, 0},
+         {15, 10, 0, 0},
+         {15, 20, 1, 0},
+         {25, 20, 3, 0},
          {0, 0, 0, 1},
     }};
     Space& space;
