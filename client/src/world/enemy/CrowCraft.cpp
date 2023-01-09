@@ -14,7 +14,7 @@ CrowCraft::CrowCraft(Space &space, const sf::Vector2f &location) : HatchlingShip
     SpriteUtil::setSpriteSize(sprite, { 1.0f, 1.0f });
     targetAsteroid = nullptr;
     speed = 0.02f;
-    damageAmount = 5.0f;
+    damageAmount = 3.0f;
     fire_delay = 0.35f;
     health = 5.0f;
 }
