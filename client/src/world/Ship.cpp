@@ -287,12 +287,12 @@ void Ship::plantOnAsteroid(Space& space) {
                 seedrics.push_back(cedric);
             }
         }
-        std::sort(seedrics.begin(), seedrics.end(), [&](plantzone_t a, plantzone_t b){
-            float distanceA = ((a.second->getLocation() + a.first.rotatedBy(sf::degrees(a.second->getRotation()))) - this->location).lengthSq();
-            float distanceB = ((a.second->getLocation() + b.first.rotatedBy(sf::degrees(a.second->getRotation()))) - this->location).lengthSq();
-
-            return distanceA < distanceB;
-        });
+//        std::sort(seedrics.begin(), seedrics.end(), [&](const plantzone_t& a, const plantzone_t& b){
+//            float distanceA = ((a.second->getLocation() + a.first.rotatedBy(sf::degrees(a.second->getRotation()))) - this->location).lengthSq();
+//            float distanceB = ((a.second->getLocation() + b.first.rotatedBy(sf::degrees(a.second->getRotation()))) - this->location).lengthSq();
+//
+//            return distanceA < distanceB;
+//        });
 
         if(!seedrics.empty()) {
             for(auto& zone : seedrics) {
