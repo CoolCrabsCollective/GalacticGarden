@@ -29,6 +29,7 @@ void FlameThrower::update(float delta) {
     
     int index = 0;
     for(particleFrame_t& particle : particles) {
+        sf::Vector2f pos = std::get<0>(particle);
         FlameParticle& flameParticle = std::get<1>(particle);
 
         flameParticle.lifetime += delta;
@@ -48,9 +49,9 @@ void FlameThrower::update(float delta) {
                 delta / 1000.0f * flameParticle.speed;
         flameParticle.rot = flameParticle.rot + flameParticle.angVel * delta / 1000.0f;
 
-        for(Entity* entity : space.getAllEntitiesInRect(std::get<0>(particle), { 10.0f, 10.0f })) {
+        for(Entity* entity : space.getAllEntitiesInRect(pos, { 10.0f, 10.0f })) {
             if(EnemyShip* ship = dynamic_cast<EnemyShip*>(entity)) {
-                if((ship->getLocation() - space.getShip().getLocation()).lengthSq() < MathUtil::pow2(5.0f)) {
+                if((ship->getLocation() - pos).lengthSq() < MathUtil::pow2(1.0f)) {
                     
                     float damage = 0.3f*(delta / 1000.f);
                     ship->damage(damage);
