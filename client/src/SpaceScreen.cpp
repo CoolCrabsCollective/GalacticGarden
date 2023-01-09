@@ -5,7 +5,6 @@
 #include "SpaceScreen.h"
 #include "SFML/Window/Touch.hpp"
 #include <string>
-#include <X11/Xlibint.h>
 #include "GameAssets.h"
 #include "MiniMap.h"
 #include "world/FloatingText.h"
