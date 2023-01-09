@@ -35,6 +35,7 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_LARGE_ASTEROID, ("gfx/large_ass.png"))
     ASSET(wiz::TextureAsset, TEXTURE_FALLOUT_FLOWER, ("gfx/fallout_flower.png"))
     ASSET(wiz::TextureAsset, TEXTURE_HATCHLING, ("gfx/the_hatchling.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_CROWCRAFT, ("gfx/the_crowcraft.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SMALL_LAZER, ("gfx/lazer.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SMALL_ENEMY_LAZER, ("gfx/enemy_lazer.png"))
     ASSET(wiz::TextureAsset, TEXTURE_TRACTOR_BEAM, ("gfx/tractor_beam.png"))

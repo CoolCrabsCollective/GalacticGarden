@@ -19,7 +19,7 @@ protected:
 
     std::vector<std::vector<std::vector<Upgrade>>> upgradeTree{
             {{BOOST_BASIC}, {BOOST_ULTRA}},
-            {{LASER_DOUBLE}, {LASER_TRIANGLE}, {LASER_FOUR_WAY, LASER_CRAZY}},
+            {{LASER_DOUBLE}, {LASER_TRIANGLE}, {LASER_SHOTGUN, LASER_CRAZY}},
             {{NUKE_SIMPLE}},
             {{FLAMETHROWER_SIMPLE}},
     };

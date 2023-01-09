@@ -11,7 +11,7 @@ enum Upgrade {
     LASER_SIMPLE,
     LASER_DOUBLE,
     LASER_TRIANGLE,
-    LASER_FOUR_WAY,
+    LASER_SHOTGUN,
     LASER_CRAZY,
 
     // NUKES

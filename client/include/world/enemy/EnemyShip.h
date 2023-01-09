@@ -24,7 +24,7 @@ protected:
 
     Faction fraction = ENEMY;
 
-    float fire_delay = 0.4f;
+    float fire_delay = 0.8f;
     float time_since_last_fire = 0.f;
 
 public:
@@ -34,7 +34,7 @@ public:
     
     void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
 
-    void fire();
+    virtual void fire();
 
     bool shouldBeRemoved() const override;
     

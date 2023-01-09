@@ -27,19 +27,19 @@ protected:
     std::map<uint64_t, std::list<Entity*>> spacialMap;
 
     UpgradeManager upgradeManager {
-            { Upgrade::LASER_SIMPLE, 0.f },
-            { Upgrade::LASER_DOUBLE, 15.f },
-            { Upgrade::LASER_TRIANGLE, 50.f },
-            { Upgrade::LASER_FOUR_WAY, 100.f },
-            { Upgrade::LASER_CRAZY, 300.f },
-            { Upgrade::NUKE_SIMPLE, 500.f },
+            { Upgrade::LASER_SIMPLE,        0.f },
+            { Upgrade::LASER_DOUBLE,        15.f },
+            { Upgrade::LASER_TRIANGLE,      50.f },
+            { Upgrade::LASER_SHOTGUN,       100.f },
+            { Upgrade::LASER_CRAZY,         300.f },
+            { Upgrade::NUKE_SIMPLE,         500.f },
             { Upgrade::FLAMETHROWER_SIMPLE, 300.f },
-            { Upgrade::BOOST_BASIC, 75.f },
-            { Upgrade::BOOST_ULTRA, 300.f },
+            { Upgrade::BOOST_BASIC,         75.f },
+            { Upgrade::BOOST_ULTRA,         300.f },
     };
 
     int enemy_count = 0;
-    int max_enemy_count = 2;
+    int max_enemy_count = 50;
     float spawn_delay = 5000.0f;
     float time_since_last_spawn = .0f;
 public:
