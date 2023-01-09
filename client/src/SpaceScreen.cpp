@@ -85,6 +85,9 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                },
                [&]() {
                     space.paused = false;
+                   getAssets().get(GameAssets::BACH)->stop();
+                    getAssets().get(GameAssets::SOUNDTRACK)->setLoop(true);
+                    getAssets().get(GameAssets::SOUNDTRACK)->play();
                }
            );
 }
@@ -188,8 +191,6 @@ void SpaceScreen::show() {
 
 	getGame().addWindowListener(this);
     getGame().addInputListener(this);
-    getAssets().get(GameAssets::SOUNDTRACK)->setLoop(true);
-    getAssets().get(GameAssets::SOUNDTRACK)->play();
 }
 
 void SpaceScreen::hide() {
