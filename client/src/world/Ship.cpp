@@ -261,8 +261,9 @@ void Ship::setRotation(float rotationRad) {
 }
 
 void Ship::plantOnAsteroid(Space& space) {
+
     if(time_since_last_plant >= plant_delay) {
-        std::vector<plantzone_t> seedrics;
+        std::vector<plantzone_t> seedrics{};
         std::vector<Entity *> entities = space.getAllEntitiesInRect(this->location, {6, 6});
 
         for (Entity *entity: entities) {
@@ -278,7 +279,7 @@ void Ship::plantOnAsteroid(Space& space) {
                 seedrics.push_back(cedric);
             }
         }
-        std::sort(seedrics.begin(), seedrics.end(), [&](const plantzone_t& a, const plantzone_t & b){
+        std::sort(seedrics.begin(), seedrics.end(), [&](plantzone_t a, plantzone_t b){
             float distanceA = ((a.second->getLocation() + a.first.rotatedBy(sf::degrees(a.second->getRotation()))) - this->location).lengthSq();
             float distanceB = ((a.second->getLocation() + b.first.rotatedBy(sf::degrees(a.second->getRotation()))) - this->location).lengthSq();
 
