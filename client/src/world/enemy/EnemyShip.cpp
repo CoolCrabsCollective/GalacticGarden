@@ -75,3 +75,7 @@ void EnemyShip::damage(float amount) {
     if(health <= 0.0f)
         health = 0.0f;
 }
+
+float EnemyShip::getZOrder() const {
+    return 2.0f;
+}

@@ -21,7 +21,7 @@ protected:
     mutable sf::Sprite backdrop;
     mutable sf::Sprite item;
     
-    mutable sf::Text titleText, seedText, boosterText;
+    mutable sf::Text titleText, keyText;
 
     SelectedBoost selectedBoost = NONE;
 

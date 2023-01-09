@@ -132,10 +132,6 @@ void HatchlingShip::draw(sf::RenderTarget &target, const sf::RenderStates &state
         tractorBeam->draw(target, states);
 }
 
-float HatchlingShip::getZOrder() const {
-    return 2.0f;
-}
-
 void HatchlingShip::attackFriendly(sf::Vector2f distanceToFriendly) {
     fire();
 
