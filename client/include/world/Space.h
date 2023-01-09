@@ -75,7 +75,6 @@ public:
 
     UpgradeManager &getUpgradeManager();
 
-
 private:
 	void initSpacialMap();
     void removeEntities();
