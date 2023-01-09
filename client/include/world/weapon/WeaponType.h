@@ -12,6 +12,7 @@ enum WeaponType {
     FOUR_WAY,
     CRAZY,
     BOMB,
+    FLAMETHROWER,
     LENGTH
 };
 
