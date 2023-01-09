@@ -12,7 +12,31 @@
 
 SpaceScreen::SpaceScreen(wiz::Game& game)
 	: Screen(game),
-        space(game.getAssets()),
+        space(game.getAssets(), [&](int waveNumber){
+
+            switch(waveNumber)
+            {
+                case 2:
+                    space.paused = true;
+                    dialogBox.startDialog({
+                                                  "Prepare your ass for wave 2 br0!",
+                                          },
+                                          {
+                                                  "Cadet Candice",
+
+                                          },
+                                          {
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+
+                                          },
+                                          [&]() {
+                                              space.paused = false;
+                                          }
+                    );
+                    break;
+            }
+
+        }),
         mappingDatabase(),
         gameOverMenu(*this),
         miniMap(*this),

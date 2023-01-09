@@ -14,7 +14,7 @@ CrowCraft::CrowCraft(Space &space, const sf::Vector2f &location) : HatchlingShip
     speed = 0.05f;
     damageAmount = 1;
     fire_delay = 0.35f;
-    health = 50.0f;
+    health = 15.0f;
 }
 
 void CrowCraft::fire() {

@@ -11,15 +11,18 @@
 #include "util/MathUtil.h"
 #include "world/AsteroidBelt.h"
 #include "world/enemy/CrowCraft.h"
+#include "world/enemy/TheNest.h"
 
 using namespace MathUtil;
 
-Space::Space(wiz::AssetLoader& assets) 
-    : assets(assets), entities(), ship(*this, { 0.0f, 0.0f }), gayStation(*this, {10.0f, .0f}), spacialMap() {
+Space::Space(wiz::AssetLoader& assets, std::function<void (int)> waveCallback)
+    : assets(assets), entities(), ship(*this, { 0.0f, 0.0f }), gayStation(*this, {10.0f, .0f}), spacialMap(),
+      waveManager(*this){
+
     entities.push_back(&ship);
     entities.push_back(&gayStation);
     entities.push_back(new AsteroidBelt(*this));
-
+    waveManager.setCallback(waveCallback);
     spawnAsteroids();
 
 	initSpacialMap();
@@ -104,6 +107,8 @@ uint64_t Space::spacialKey(sf::Vector2f location) const {
 
 void Space::tick(float delta) {
 
+
+    waveManager.update(delta / 1000.f);
     for(Entity* entity : entities) {
 
         // protip : don't fuck with this unless you know what you are doing
@@ -140,11 +145,7 @@ void Space::tick(float delta) {
 			spacialMap[newKey].insert(spacialMap[newKey].begin(), entity);
 	}
 
-    manageEnemies();
-
     removeEntities();
-
-    time_since_last_spawn += delta;
 }
 
 std::vector<Entity*> Space::getAllEntitiesInRect(sf::Vector2f center,
@@ -216,10 +217,6 @@ void Space::removeEntities() {
             entities.erase(entities.begin() + i);
             removeFromMap(entity);
 
-            EnemyShip* enemy = dynamic_cast<EnemyShip*>(entity);
-            if (enemy != nullptr)
-                enemy_count--;
-
             delete entity;
         } else {
             i++;
@@ -236,24 +233,6 @@ void Space::addEntity(Entity *entity) {
         spacialMap[key] = { entity };
     else
         spacialMap[key].insert(spacialMap[key].begin(), entity);
-}
-
-void Space::manageEnemies() {
-    if (enemy_count < max_enemy_count && time_since_last_spawn > spawn_delay) {
-        float minDst = 9.0f;
-        float maxDst = 20.0f;
-
-        float randDir = static_cast<float>(rand() / (RAND_MAX + 1.0)) * 360.0;
-        float randDes = static_cast<float>(rand() / (RAND_MAX + 1.0)) * (maxDst - minDst) + minDst;
-
-        spawnEnemy({randDes * cosf(randDir) + ship.getLocation().x, randDes * sinf(randDir) + ship.getLocation().y});
-    }
-}
-
-void Space::spawnEnemy(sf::Vector2f pos) {
-    addEntity(rand() % 2 ? new HatchlingShip(*this, pos) : new CrowCraft(*this, pos));
-    enemy_count++;
-    time_since_last_spawn = 0.0f;
 }
 
 Ship& Space::getShip() {
@@ -285,4 +264,49 @@ sf::Vector2f Space::getNearestFriendly(sf::Vector2f pos) {
 
 UpgradeManager &Space::getUpgradeManager() {
     return upgradeManager;
+}
+
+void Space::spawnEnemyHatchling() {
+    float minDst = 9.0f;
+    float maxDst = 20.0f;
+
+    float randDir = static_cast<float>(rand() / (RAND_MAX + 1.0)) * 360.0;
+    float randDes = static_cast<float>(rand() / (RAND_MAX + 1.0)) * (maxDst - minDst) + minDst;
+
+    sf::Vector2f pos = {randDes * cosf(randDir) + ship.getLocation().x, randDes * sinf(randDir) + ship.getLocation().y};
+    addEntity(new HatchlingShip(*this, pos));
+}
+
+void Space::spawnEnemyCrowCraft() {
+    float minDst = 9.0f;
+    float maxDst = 20.0f;
+
+    float randDir = static_cast<float>(rand() / (RAND_MAX + 1.0)) * 360.0;
+    float randDes = static_cast<float>(rand() / (RAND_MAX + 1.0)) * (maxDst - minDst) + minDst;
+
+    sf::Vector2f pos = {randDes * cosf(randDir) + ship.getLocation().x, randDes * sinf(randDir) + ship.getLocation().y};
+    addEntity(new CrowCraft(*this, pos));
+}
+
+void Space::spawnEnemyNest() {
+    float minDst = 9.0f;
+    float maxDst = 20.0f;
+
+    float randDir = static_cast<float>(rand() / (RAND_MAX + 1.0)) * 360.0;
+    float randDes = static_cast<float>(rand() / (RAND_MAX + 1.0)) * (maxDst - minDst) + minDst;
+
+    sf::Vector2f pos = {randDes * cosf(randDir) + ship.getLocation().x, randDes * sinf(randDir) + ship.getLocation().y};
+    addEntity(new TheNest(*this, pos));
+}
+
+void Space::spawnEnemyTree() {
+    float minDst = 9.0f;
+    float maxDst = 20.0f;
+
+    float randDir = static_cast<float>(rand() / (RAND_MAX + 1.0)) * 360.0;
+    float randDes = static_cast<float>(rand() / (RAND_MAX + 1.0)) * (maxDst - minDst) + minDst;
+
+    sf::Vector2f pos = {randDes * cosf(randDir) + ship.getLocation().x, randDes * sinf(randDir) + ship.getLocation().y};
+    throw std::runtime_error("some dumbass (not cedric) forgot to uncomment this lol");
+    //addEntity(new TreeCraft(*this, pos));
 }
