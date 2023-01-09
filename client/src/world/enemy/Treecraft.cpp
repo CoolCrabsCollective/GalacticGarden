@@ -7,7 +7,7 @@
 #include "util/SpriteUtil.h"
 
 TreeCraft::TreeCraft(Space &space, const sf::Vector2f &location) : EnemyShip(space, location) {
-    health = 100.f;
+    health = 200.f;
     fire_delay = 10.f;
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_TREE));
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
