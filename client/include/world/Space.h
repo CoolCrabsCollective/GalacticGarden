@@ -39,8 +39,8 @@ protected:
     };
 
     int enemy_count = 0;
-    int max_enemy_count = 50;
-    float spawn_delay = 5000.0f;
+    int max_enemy_count = 5.f;
+    float spawn_delay = 1000.0f;
     float time_since_last_spawn = .0f;
 public:
 	constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
