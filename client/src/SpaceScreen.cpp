@@ -9,6 +9,7 @@
 #include "GameAssets.h"
 #include "MiniMap.h"
 #include "world/FloatingText.h"
+#include "GalacticGarden.h"
 
 SpaceScreen::SpaceScreen(wiz::Game& game)
 	: Screen(game),
@@ -436,6 +437,17 @@ void SpaceScreen::render(sf::RenderTarget& target) {
 }
 
 void SpaceScreen::show() {
+    bool connected = sf::Joystick::isConnected(0);
+    // TODO: figure out why SFML fetching the joystick name doesn't work
+    mappingFound = false;
+    if (connected) {
+        std::string joyStickName = dynamic_cast<GalacticGarden*>(&getGame())->getJoyStickName();
+        if (mappingDatabase.hasMapping(joyStickName)) {
+            mapping = mappingDatabase.getMapping(joyStickName);
+            mappingFound = true;
+        }
+    }
+
 	background.setTexture(*getGame().getAssets().get(GameAssets::BACKGROUND));
 
 	getGame().addWindowListener(this);
@@ -608,19 +620,6 @@ void SpaceScreen::windowClosed() {
 
 void SpaceScreen::processInput(float delta) {
     bool connected = sf::Joystick::isConnected(0);
-    // TODO: figure out why SFML fetching the joystick name doesn't work
-    mappingFound = connected;
-//    if (connected) {
-//        sf::Joystick::Identification id = sf::Joystick::getIdentification(0);
-//        if (controllerDisconnected && mappingDatabase.hasMapping(id.name)) {
-//            mapping = mappingDatabase.getMapping(id.name);
-//            controllerDisconnected = false;
-//            mappingFound = true;
-//        }
-//    } else {
-//        controllerDisconnected = true;
-//        mappingFound = false;
-//    }
 
     bool isFiring = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) || sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
     bool isBoosting = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift);
@@ -632,11 +631,11 @@ void SpaceScreen::processInput(float delta) {
 
     space.getShip().setIsBoosting(isBoosting);
 
-//    bool isPlanting = mappingFound && connected ? sf::Joystick::isButtonPressed(0, mapping.getButton(wiz::MapButton::Left_Shoulder)) :
-//            (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) ||
-//            sf::Mouse::isButtonPressed(sf::Mouse::Button::Right));
+    bool isPlanting = mappingFound && connected ? sf::Joystick::isButtonPressed(0, mapping.getButton(wiz::MapButton::Left_Shoulder)) :
+            (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) ||
+            sf::Mouse::isButtonPressed(sf::Mouse::Button::Right));
 
-    bool isPlanting = sf::Mouse::isButtonPressed(sf::Mouse::Button::Right);
+//    bool isPlanting = sf::Mouse::isButtonPressed(sf::Mouse::Button::Right);
 
     if (isPlanting)
         space.getShip().plantOnAsteroid(space);
