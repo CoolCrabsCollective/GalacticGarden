@@ -28,8 +28,7 @@ void TitleScreen::tick(float delta) {
     sf::FloatRect textRect2 = pressStartText.getLocalBounds();
     pressStartText.setPosition({ 640.0f - textRect2.width / 2.0f, 500.0f });
 
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)
-	   || sf::Joystick::isButtonPressed(0, 3)
+	if(sf::Joystick::isButtonPressed(0, 3)
        || sf::Mouse::isButtonPressed(sf::Mouse::Left) || sf::Touch::isDown(1))
 	{
 		getGame().setScreen(std::make_shared<SpaceScreen>(getGame()));
@@ -47,7 +46,8 @@ void TitleScreen::render(sf::RenderTarget& target) {
 }
 
 void TitleScreen::keyPressed(const sf::Event::KeyEvent& keyEvent) {
-    getGame().setScreen(std::make_shared<SpaceScreen>(getGame()));
+    if (keyEvent.code != sf::Keyboard::Escape)
+        getGame().setScreen(std::make_shared<SpaceScreen>(getGame()));
 }
 
 void TitleScreen::show() {
