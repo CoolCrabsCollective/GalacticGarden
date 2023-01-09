@@ -65,7 +65,7 @@ void Bomb::tick(float delta) {
         
         for(Entity* entity : space.getAllEntitiesInRect(location, { 10.0f, 10.0f })) {
             if(EnemyShip* ship = dynamic_cast<EnemyShip*>(entity)) {
-                if((ship->getLocation() - location).lengthSq() < MathUtil::pow2(5.0f)) {
+                if((ship->getLocation() - location).lengthSq() < MathUtil::pow2(4.0f)) {
                     ship->damage(10.0f);
 
                     space.addEntity(new FloatingText(space, ship->getLocation(), "-10", sf::Color::Yellow, 0.5f));
