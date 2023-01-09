@@ -47,6 +47,7 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_PLANT_GROWING, ("gfx/plant_growing.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SEED, ("gfx/seed_rick.png"))
     ASSET(wiz::TextureAsset, TEXTURE_GAY_STATION, ("gfx/gay_station.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_SHIELD_STATION, ("gfx/station_shield.png"))
     ASSET(wiz::TextureAsset, TEXTURE_COSMIC_CROW_ICON, ("gfx/cosmic_crow_icon.png"))
     ASSET(wiz::TextureAsset, TEXTURE_CELESTIAL_CHAD_ICON, ("gfx/celestial_chad_icon.png"))
     ASSET(wiz::TextureAsset, TEXTURE_LORD_CROW_ICON, ("gfx/lord_crow_icon.png"))

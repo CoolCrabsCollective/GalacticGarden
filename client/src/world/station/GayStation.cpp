@@ -5,10 +5,15 @@
 #include "world/Space.h"
 #include "world/station/GayStation.h"
 #include "GameAssets.h"
+#include "util/SpriteUtil.h"
+#include "world/FloatingText.h"
 
 GayStation::GayStation(Space &space, sf::Vector2f location) : Entity(space, location) {
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_GAY_STATION));
-    sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
+    SpriteUtil::setSpriteOrigin(sprite, sf::Vector2f { 0.5f, 0.5f });
+
+    shieldSprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_SHIELD_STATION));
+    SpriteUtil::setSpriteOrigin(shieldSprite, sf::Vector2f { 0.5f, 0.5f });
 
     bob_starting_pos = location.y;
 
@@ -29,12 +34,9 @@ void GayStation::tick(float delta) {
         if(Lazer* lazer = dynamic_cast<Lazer*>(entity)) {
             if (lazer->getFraction() != fraction) {
                 redness = 1.0f;
-                health -= lazer->getDamage();
+                space.getShip().buyShit(lazer->getDamage());
+                space.addEntity(new FloatingText(space, location, "-" + std::to_string((int)round(lazer->getDamage())), sf::Color::Red, 0.5f));
                 lazer->consume();
-                if (health <= 0.0f) {
-                    health = 0.0f;
-                    return;
-                }
             }
         }
     }
@@ -48,15 +50,16 @@ void GayStation::draw(sf::RenderTarget &target, const sf::RenderStates &states) 
     if(shouldBeRemoved())
         return;
 
-    sprite.setOrigin({0.5f * sprite.getTexture()->getSize().x, 0.5f * sprite.getTexture()->getSize().y});
     sprite.setPosition({location.x, bob_starting_pos + bobbingDisplacement});
-    sprite.setScale({ 10.0f / sprite.getTexture()->getSize().x, 10.0f / sprite.getTexture()->getSize().y });
+    SpriteUtil::setSpriteSize(sprite, { 10.0f, 10.0f });
 
-    damageShader->setUniform("hit_multiplier", redness);
-    if (redness > 0.0f)
-        target.draw(sprite, damageShader);
-    else
-        target.draw(sprite);
+    SpriteUtil::setSpriteOpacity(shieldSprite, redness + 0.2f);
+    shieldSprite.setPosition({ location.x, bob_starting_pos + bobbingDisplacement });
+    SpriteUtil::setSpriteSize(shieldSprite, { 15.0f, 15.0f });
+    
+    target.draw(sprite);
+    
+    target.draw(shieldSprite);
 }
 
 bool GayStation::shouldBeRemoved() const {

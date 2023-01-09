@@ -22,6 +22,15 @@ namespace SpriteUtil
            localOrigin.y * static_cast<float>(sprite.getTexture()->getSize().y)
         });
     }
+    
+    inline void setSpriteOpacity(sf::Sprite& sprite, float opacity) {
+        sprite.setColor(sf::Color {
+           sprite.getColor().r,
+           sprite.getColor().g,
+           sprite.getColor().b,
+           (sf::Uint8)round(std::clamp(opacity, 0.0f, 1.0f) * 255)
+        });
+    }
 }
 
 #endif //LD52_CLIENT_SPRITEUTIL_H

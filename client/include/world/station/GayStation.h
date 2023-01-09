@@ -11,7 +11,7 @@
 
 class GayStation : public Entity {
 protected:
-    mutable sf::Sprite sprite;
+    mutable sf::Sprite sprite, shieldSprite;
 
     float size = 10.0f;
 
@@ -22,7 +22,6 @@ protected:
     float bob_max_displacement = 0.1f;
 
     Faction fraction = FRIENDLY;
-    float health = 10.0f;
 
     sf::Shader* damageShader = nullptr;
     float redness = 0.0f;
