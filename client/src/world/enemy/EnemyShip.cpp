@@ -8,6 +8,7 @@
 #include "GameAssets.h"
 #include "world/weapon/SmallEnemyLaser.h"
 #include "world/FloatingText.h"
+#include "util/SpriteUtil.h"
 
 EnemyShip::EnemyShip(Space &space, sf::Vector2f location) 
     : Entity(space, location) {
@@ -18,10 +19,9 @@ void EnemyShip::draw(sf::RenderTarget &target, const sf::RenderStates &states) c
     if(shouldBeRemoved())
         return;
     
-    sprite.setOrigin({0.5f * sprite.getTexture()->getSize().x, 0.5f * sprite.getTexture()->getSize().y});
+    SpriteUtil::setSpriteOrigin(sprite, { 0.5f, 0.5f });
+    SpriteUtil::setSpriteSize(sprite, { 1.0f, 1.0f });
     sprite.setPosition(location);
-    sprite.setScale({ 1.0f / sprite.getTexture()->getSize().x, 1.0f / sprite.getTexture()->getSize().y });
-
     sprite.setRotation(sf::degrees(rotation));
 
     damageShader->setUniform("hit_multiplier", redness);
@@ -42,7 +42,7 @@ void EnemyShip::tick(float delta) {
         if(Lazer* lazer = dynamic_cast<Lazer*>(entity)) {
             if (lazer->getFraction() != fraction) {
                 damage(lazer->getDamage());
-                space.addEntity(new FloatingText(space, location, "-" + std::to_string((int)round(lazer->getDamage())), sf::Color::Yellow, 0.5f));
+                space.addEntity(new FloatingText(space, location, "-" + std::to_string((int)round(lazer->getDamage())), sf::Color::Magenta, 0.5f));
                 lazer->consume();
                 if(health <= 0.0f)
                     return;
