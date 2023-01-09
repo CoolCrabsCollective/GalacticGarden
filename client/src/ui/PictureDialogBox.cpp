@@ -99,10 +99,14 @@ void PictureDialogBox::update(float delta) {
     if (dialog_ratio >= 1.0f)
         nextAcc += delta;
 
-    if (nextAcc - 1000 >= 0) {
+    if (nextAcc - 2000 >= 0) {
         nextAcc = 0;
         interact();
     }
+}
+
+int PictureDialogBox::getMaxCharsPerLine() const {
+    return 62;
 }
 
 void PictureDialogBox::startDialog(const std::vector<std::string> &lines, std::function<void()> callback) {

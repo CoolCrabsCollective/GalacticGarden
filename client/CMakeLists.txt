@@ -5,7 +5,7 @@ get_filename_component(PARENT_PROJECT_NAME ${PARENT_PROJECT_PATH} NAME)
 
 project(${PARENT_PROJECT_NAME}_client)
 
-set(WizEngine_COMMIT master)
+set(WizEngine_COMMIT 594fb7415a60e8df1e8bf05f7876ac78a0b3f3e2)
 set(SFML_COMMIT 8f6903d00853fd3db395a557733ae65a14f37c01)
 set(BOX2D_CMAKE_COMMIT master)
 

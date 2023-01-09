@@ -64,17 +64,17 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
     dialogBox.startDialog({
         "Commander! Lord Crow is on the line!",
         "Put him on.",
-        "~CAW~ Master we have detected the human space station." ,
-        "~CAW~ Excellent... send in our best crows...",
-        "~CAW~ Space flowers! ~CAW~ ~CAW~",
+        "~CAW~ Master we have detected the human space station and their vegetables." ,
+        "~CAW~ Excellent... dispatch the hatchlings...",
+        "~CAW~ Space Vegetables! ~CAW~ ~CAW~",
         "~CAW~ Oh... It's you...",
-        "~CAW~ Hi Chad...",
+        "~CAW~ Greetings Celestial Chad...",
         "You called me, Lord Crow.",
         "~CAW~ Only to tell you to prepare to die earthling.",
-        "Why don't you get away from my asteroids you mangy birds?",
+        "Why don't you get away from my asteroid belt you mangy birds?",
         "[End Of Communication]",
         "Oh no!",
-        "Prepare my fighter jet. Time to show these pests who's boss!",
+        "Prepare my fighter jet. Time to show these Cosmic Crows who's boss!",
     },
       {
         "Cadet Candice",
@@ -153,7 +153,6 @@ void SpaceScreen::tick(float delta) {
 }
 
 void SpaceScreen::render(sf::RenderTarget& target) {
-
     sf::Vector2f vec = { 1.0f, 1.0f };
     vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
     vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
@@ -183,6 +182,12 @@ void SpaceScreen::render(sf::RenderTarget& target) {
         dim.setScale(SpaceScreen::UI_VIEW_SIZE);
         dim.setColor(sf::Color(0, 0, 0, 128));
         target.draw(dim);
+
+        infographicSprite.setTexture(*getAssets().get(GameAssets::TEXTURE_INFOGRAPHIC));
+        infographicSprite.setPosition({ 0.0f, 10.0f });
+        infographicSprite.setScale(sf::Vector2f(1.95f, 2.0f));
+        target.draw(infographicSprite);
+
         if(shopIsOpen)
         {
             target.draw(upgradeMenu);
