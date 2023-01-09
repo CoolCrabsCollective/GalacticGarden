@@ -205,6 +205,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                                                       "Lord Crow",
                                                       "Narrator",
                                                       "Narrator",
+                                                      "Narrator",
                                                       "Cadet Candice",
                                                       "Cadet Candice",
                                                       "Cosmic Crow",
@@ -219,6 +220,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                                                       getGame().getAssets().get(GameAssets::TEXTURE_LORD_CROW_ICON),
                                                       getGame().getAssets().get(GameAssets::TEXTURE_NARRATOR_ICON),
                                                       getGame().getAssets().get(GameAssets::TEXTURE_NARRATOR_ICON),
+                                                      getGame().getAssets().get(GameAssets::TEXTURE_NARRATOR_ICON),
                                                       getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
                                                       getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
                                                       getGame().getAssets().get(GameAssets::TEXTURE_COSMIC_CROW_ICON),
@@ -229,9 +231,9 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                                                   space.paused = false;
                                               }
                         );
-                        break;
                         space.lordCrowHasFallen = false;
-                    } else {
+                        space.startInfiniteWaves = true;
+                    } else if (space.startInfiniteWaves){
                         space.paused = true;
                         dialogBox.startDialog({
                                                       "Another wave of crows inbound commander!",
@@ -246,8 +248,10 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                                                   space.paused = false;
                                               }
                         );
-                        break;
+                    } else {
+                        // nothing happens as the player is fighting the treecraft
                     }
+                    break;
             }
         }),
         mappingDatabase(),
