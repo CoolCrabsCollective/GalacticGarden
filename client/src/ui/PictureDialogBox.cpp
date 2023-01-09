@@ -94,6 +94,15 @@ void PictureDialogBox::startDialog(std::vector<std::string> lines, std::vector<s
 
 void PictureDialogBox::update(float delta) {
     DialogBox::update(delta);
+
+    float dialog_ratio = currentTextProgressTime / currentMaximumProgressTime;
+    if (dialog_ratio >= 1.0f)
+        nextAcc += delta;
+
+    if (nextAcc - 1000 >= 0) {
+        nextAcc = 0;
+        interact();
+    }
 }
 
 void PictureDialogBox::startDialog(const std::vector<std::string> &lines, std::function<void()> callback) {
@@ -106,6 +115,7 @@ bool PictureDialogBox::isInProgress() const {
 
 void PictureDialogBox::interact() {
     DialogBox::interact();
+    nextAcc = 0;
 }
 
 void PictureDialogBox::kill() {

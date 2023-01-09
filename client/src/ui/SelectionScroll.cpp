@@ -13,6 +13,7 @@ SelectionScroll::SelectionScroll(SpaceScreen& screen, SelectionType type, int nu
                                  selectionDisPos(selectionDisPos), upgradeManager(upgradeManager) {
     WeaponTextureGetter* weaponTextureGetter = new WeaponTextureGetter(screen.getAssets());
     SeedTextureGetter* seedTextureGetter = new SeedTextureGetter(screen.getAssets());
+    BoostTextureGetter* boostTextureGetter = new BoostTextureGetter(screen.getAssets());
 
     float currentXOffset;
 
@@ -34,7 +35,7 @@ SelectionScroll::SelectionScroll(SpaceScreen& screen, SelectionType type, int nu
                 break;
             case BOOSTER:
                 backdrops.at(i).setTexture(*screen.getAssets().get(GameAssets::TEXTURE_BOOST_SELECTION_BOX));
-                items.at(i).setTexture(*screen.getAssets().get(GameAssets::TEXTURE_GAY_STATION));
+                items.at(i).setTexture(*boostTextureGetter->get().at(i));
                 break;
         }
 
@@ -96,10 +97,18 @@ int SelectionScroll::getSelection() const {
 }
 
 void SelectionScroll::setSelection(int selection) {
+    if (type == BOOSTER) {
+        this->selection = selection;
+        return;
+    }
+
     if (upgradeManager->has_unlocked(static_cast<Upgrade>(selection)) || type == SelectionType::SEED) {
-        SelectionScroll::selection = selection;
-        enableScroll = true;
-        openDuration = .0f;
+
+        this->selection = selection;
+        if (type != BOOSTER) {
+            enableScroll = true;
+            openDuration = .0f;
+        }
     }
 }
 

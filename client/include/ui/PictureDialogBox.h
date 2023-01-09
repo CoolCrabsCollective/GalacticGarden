@@ -15,6 +15,8 @@ class PictureDialogBox : public wiz::DialogBox {
     mutable sf::Text speakerText;
     mutable sf::Text transmissionText;
 
+    float nextAcc = 0;
+
 public:
     PictureDialogBox(sf::Font *font1, sf::Texture *background);
 

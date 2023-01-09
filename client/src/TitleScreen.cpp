@@ -43,6 +43,9 @@ void TitleScreen::show() {
 	logo.setTexture(*getAssets().get(GameAssets::LOGO));
 	background.setTexture(*getAssets().get(GameAssets::BACKGROUND));
 
+    getAssets().get(GameAssets::BACH)->setLoop(true);
+    getAssets().get(GameAssets::BACH)->play();
+
 	getGame().addWindowListener(this);
 
 	int i;
