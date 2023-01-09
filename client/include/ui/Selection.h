@@ -12,6 +12,7 @@
 #include "SelectionScroll.h"
 #include "world/crop/CropType.h"
 #include "world/weapon/WeaponType.h"
+#include "SelectionText.h"
 
 class SpaceScreen;
 
@@ -20,11 +21,20 @@ class Selection : public sf::Drawable {
     mutable sf::Sprite backdrop;
     mutable sf::Sprite item;
 
+    SelectedBoost selectedBoost = NONE;
+
 protected:
     std::string itemName;
     SelectionScroll* selectionScroll = nullptr;
     WeaponTextureGetter* weaponTextureGetter = nullptr;
     SeedTextureGetter* seedTextureGetter = nullptr;
+    BoostTextureGetter* boostTextureGetter = nullptr;
+
+    WeaponTextGetter* weaponTextGetter = nullptr;
+    SeedTextGetter* seedTextGetter = nullptr;
+    BoostTextGetter* boostTextGetter = nullptr;
+
+    UpgradeManager* upgradeManager = nullptr;
 
 public:
     explicit Selection(SpaceScreen& screen, SelectionType type, UpgradeManager* upgradeManager);

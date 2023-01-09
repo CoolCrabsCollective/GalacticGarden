@@ -92,8 +92,11 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_LASER_CRAZY, ("gfx/upgrades/laser_crazy.png"))
     ASSET(wiz::TextureAsset, TEXTURE_NUKE_SIMPLE, ("gfx/upgrades/nuke.png"))
     ASSET(wiz::TextureAsset, TEXTURE_FLAMETHROWER_SIMPLE, ("gfx/upgrades/flame_thrower.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_BOOST_NONE, ("gfx/upgrades/boost_none.png"))
     ASSET(wiz::TextureAsset, TEXTURE_BOOST_BASIC, ("gfx/upgrades/boost_basic.png"))
     ASSET(wiz::TextureAsset, TEXTURE_BOOST_ULTRA, ("gfx/upgrades/boost_ultra.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_FLOWER_ICON, ("gfx/upgrades/flower.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_CORN_ICON, ("gfx/upgrades/corn.png"))
 
     ASSET(wiz::TextureAsset, TEXTURE_LOCKED, ("gfx/upgrades/too_costly.png"))
     ASSET(wiz::TextureAsset, TEXTURE_SELECTED, ("gfx/upgrades/select.png"))

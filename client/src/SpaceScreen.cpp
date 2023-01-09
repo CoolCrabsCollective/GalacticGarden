@@ -44,8 +44,6 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
         seedSelectionUi(*this, SEED, &space.getUpgradeManager()),
         boostSelectionUi(*this, BOOSTER, &space.getUpgradeManager()),
         upgradeMenu(space, space.getUpgradeManager()) {
-    weaponSelectionUi.setEnableScroll(true);
-
     mappingDatabase.loadFromCSV(*getGame().getAssets().get(GameAssets::CONTROLLER_DB));
     smoothPosition = cameraPosition = space.getShip().getLocation();
     shipSmoothVelocity = { 0.0f, 0.0f };
@@ -109,7 +107,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                },
                [&]() {
                     space.paused = false;
-                   getAssets().get(GameAssets::BACH)->stop();
+                    getAssets().get(GameAssets::BACH)->stop();
                     getAssets().get(GameAssets::SOUNDTRACK)->setLoop(true);
                     getAssets().get(GameAssets::SOUNDTRACK)->play();
                }
@@ -147,6 +145,7 @@ void SpaceScreen::tick(float delta) {
 
         weaponSelectionUi.update(delta);
         seedSelectionUi.update(delta);
+        boostSelectionUi.update(delta);
     } else {
         gameoverCooldown -= delta / 1000.0f;
     }
