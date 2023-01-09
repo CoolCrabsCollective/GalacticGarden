@@ -43,7 +43,12 @@ void Asteroid::tick(float delta) {
 	
 	std::vector<Entity*> close = space.getAllEntitiesInRect(location, extent);
 	
-    if(location.lengthSq() > MathUtil::pow2(Space::MAP_RADIUS)) {
+    
+    if((space.getGayStation().getLocation() - location).lengthSq() < MathUtil::pow2(8.0f)) {
+        sf::Vector2f normal = space.getGayStation().getLocation() - location;
+        velocity = velocity - 2.0f * velocity.dot(normal) * normal / normal.lengthSq();
+        angularVelocity = -angularVelocity;
+    } else if(location.lengthSq() > MathUtil::pow2(Space::MAP_RADIUS)) {
         sf::Vector2f normal = -location;
         velocity = velocity - 2.0f * velocity.dot(normal) * normal / normal.lengthSq();
         angularVelocity = -angularVelocity;
