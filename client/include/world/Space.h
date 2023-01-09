@@ -20,7 +20,7 @@
 class Space : public Tickable, public sf::Drawable {
 protected:
 	wiz::AssetLoader& assets;
-	std::vector<Entity*> entities;
+	std::vector<Entity*> entities, toAdd;
 
     Ship ship;
     GayStation gayStation;

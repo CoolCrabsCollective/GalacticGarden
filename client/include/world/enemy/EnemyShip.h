@@ -22,10 +22,12 @@ protected:
     sf::Shader* damageShader = nullptr;
     float redness = 0.0f;
 
-    Faction fraction = ENEMY;
+    Faction faction = ENEMY;
 
     float fire_delay = 0.8f;
     float time_since_last_fire = 0.0f;
+    
+    virtual void pushAwayFrom(sf::Vector2f location, float delta) = 0;
 
 public:
     explicit EnemyShip(Space& space, sf::Vector2f location);

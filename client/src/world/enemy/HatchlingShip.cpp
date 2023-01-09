@@ -141,3 +141,18 @@ void HatchlingShip::attackFriendly(sf::Vector2f distanceToFriendly) {
         this->location += velocityNormalized * speed;
     this->rotation = velocityNormalized.angle().asDegrees() + 90.0f;
 }
+
+void HatchlingShip::pushAwayFrom(sf::Vector2f location, float delta) {
+    sf::Vector2f dir = this->location - location;
+    
+    if(dir.lengthSq() == 0.0f)
+        dir = sf::Vector2f {0.0f, 0.1f};
+    
+    dir /= dir.lengthSq();
+    dir.x = fmin(10.0f, dir.x);
+    dir.y = fmin(10.0f, dir.y);
+    dir.x = fmax(-10.0f, dir.x);
+    dir.y = fmax(-10.0f, dir.y);
+    
+    this->location += dir * delta / 1000.0f;
+}

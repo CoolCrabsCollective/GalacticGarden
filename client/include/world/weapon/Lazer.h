@@ -22,7 +22,7 @@ public:
     
     virtual void consume() = 0;
 
-    virtual Faction getFraction() = 0;
+    virtual Faction getFaction() = 0;
 
     bool shouldBeRemoved() const override {
         return Entity::shouldBeRemoved();

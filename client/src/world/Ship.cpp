@@ -113,7 +113,7 @@ void Ship::tick(float delta) {
             continue;
 
         if(Lazer* lazer = dynamic_cast<Lazer*>(entity)) {
-            if (lazer->getFraction() != fraction) {
+            if (lazer->getFaction() != fraction) {
                 redness = 1.0f;
                 float damage = lazer->getDamage() * hatchling_damage;
                 energy -= damage;

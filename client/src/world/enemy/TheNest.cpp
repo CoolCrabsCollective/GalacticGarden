@@ -34,3 +34,7 @@ void TheNest::fire() {
 
 }
 
+void TheNest::pushAwayFrom(sf::Vector2f location, float delta) {
+
+}
+

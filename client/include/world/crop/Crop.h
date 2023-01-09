@@ -28,7 +28,7 @@ protected:
     sf::Texture* plantGrowing;
     sf::Texture* grown;
     mutable sf::Sprite sprite;
-    ProgressBar progress;
+    mutable ProgressBar progress;
     
 public:
     explicit Crop(Asteroid& asteroid, 

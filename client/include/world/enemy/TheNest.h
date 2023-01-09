@@ -14,6 +14,9 @@ public:
     void fire() override;
 
     void tick(float delta) override;
+
+protected:
+    void pushAwayFrom(sf::Vector2f location, float delta) override;
 };
 
 #endif //LD52_CLIENT_THENEST_H

@@ -9,6 +9,7 @@
 #include "world/weapon/SmallEnemyLaser.h"
 #include "world/FloatingText.h"
 #include "util/SpriteUtil.h"
+#include "util/MathUtil.h"
 
 EnemyShip::EnemyShip(Space &space, sf::Vector2f location) 
     : Entity(space, location) {
@@ -34,17 +35,26 @@ void EnemyShip::tick(float delta) {
     if(shouldBeRemoved())
         return;
     
-    for(Entity* entity : space.getAllEntitiesInRect(location, { 1.0f, 1.0f })) {
+    for(Entity* entity : space.getAllEntitiesInRect(location, sf::Vector2f { 1.0f, 1.0f })) {
         if(entity->shouldBeRemoved())
             continue;
         
         if(Lazer* lazer = dynamic_cast<Lazer*>(entity)) {
-            if (lazer->getFraction() != fraction) {
+            if (lazer->getFaction() != faction && (lazer->getLocation() - location).lengthSq() < MathUtil::pow2(1.0f)) {
                 damage(lazer->getDamage());
                 space.addEntity(new FloatingText(space, location, "-" + std::to_string((int)round(lazer->getDamage())), sf::Color::Magenta, 0.5f));
                 lazer->consume();
                 if(health <= 0.0f)
                     return;
+            }
+        }
+        
+        if(EnemyShip* other = dynamic_cast<EnemyShip*>(entity)) {
+            if(other == this)
+                continue;
+            
+            if((other->getLocation() - location).lengthSq() < MathUtil::pow2(1.0f)) {
+                pushAwayFrom(other->getLocation(), delta);
             }
         }
     }

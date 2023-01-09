@@ -31,7 +31,7 @@ public:
     void consume() override;
 
     [[nodiscard]]
-    Faction getFraction() {
+    Faction getFaction() {
         return FRIENDLY;
     };
 

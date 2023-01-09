@@ -32,7 +32,7 @@ void GayStation::tick(float delta) {
             continue;
 
         if(Lazer* lazer = dynamic_cast<Lazer*>(entity)) {
-            if (lazer->getFraction() != fraction) {
+            if (lazer->getFaction() != fraction) {
                 redness = 1.0f;
                 space.getShip().buyShit(lazer->getDamage());
                 space.addEntity(new FloatingText(space, location, "-" + std::to_string((int)round(lazer->getDamage())), sf::Color::Red, 0.5f));
