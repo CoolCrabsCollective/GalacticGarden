@@ -13,17 +13,103 @@
 SpaceScreen::SpaceScreen(wiz::Game& game)
 	: Screen(game),
         space(game.getAssets(), [&](int waveNumber){
-
             switch(waveNumber)
             {
                 case 2:
                     space.paused = true;
                     dialogBox.startDialog({
-                                                  "Prepare your ass for wave 2 br0!",
+                                                  "Another wave of crow hatchlings is inbound commander! Get Ready!",
+                                                  "Don't sweat it."
                                           },
                                           {
                                                   "Cadet Candice",
+                                                  "Celestial Chad",
+                                          },
+                                          {
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CELESTIAL_CHAD_ICON),
 
+                                          },
+                                          [&]() {
+                                              space.paused = false;
+                                          }
+                    );
+                    break;
+                case 3:
+                    space.paused = true;
+                    dialogBox.startDialog({
+                                                  "What in god's name is that? A crowcraft is inbound!",
+                                          },
+                                          {
+                                                  "Cadet Candice",
+                                          },
+                                          {
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+
+                                          },
+                                          [&]() {
+                                              space.paused = false;
+                                          }
+                    );
+                    break;
+                case 4:
+                    space.paused = true;
+                    dialogBox.startDialog({
+                                                  "What in god's name is that? A crowcraft is inbound!",
+                                          },
+                                          {
+                                                  "Cadet Candice",
+                                          },
+                                          {
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+
+                                          },
+                                          [&]() {
+                                              space.paused = false;
+                                          }
+                    );
+                    break;
+                case 5:
+                    space.paused = true;
+                    dialogBox.startDialog({
+                                                  "What in god's name is that? A crowcraft is inbound!",
+                                          },
+                                          {
+                                                  "Cadet Candice",
+                                          },
+                                          {
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+
+                                          },
+                                          [&]() {
+                                              space.paused = false;
+                                          }
+                    );
+                    break;
+                case 6:
+                    space.paused = true;
+                    dialogBox.startDialog({
+                                                  "What in god's name is that? A crowcraft is inbound!",
+                                          },
+                                          {
+                                                  "Cadet Candice",
+                                          },
+                                          {
+                                                  getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
+
+                                          },
+                                          [&]() {
+                                              space.paused = false;
+                                          }
+                    );
+                    break;
+                case 7:
+                    space.paused = true;
+                    dialogBox.startDialog({
+                                                  "Mother of god.. It's a tree.",
+                                          },
+                                          {
+                                                  "Cadet Candice",
                                           },
                                           {
                                                   getGame().getAssets().get(GameAssets::TEXTURE_CADET_CANDICE_ICON),
@@ -107,7 +193,6 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
               getGame().getAssets().get(GameAssets::TEXTURE_CELESTIAL_CHAD_ICON),
                },
                [&]() {
-                    space.paused = false;
                     getAssets().get(GameAssets::BACH)->stop();
                     getAssets().get(GameAssets::SOUNDTRACK)->setLoop(true);
                     getAssets().get(GameAssets::SOUNDTRACK)->play();
@@ -183,16 +268,23 @@ void SpaceScreen::render(sf::RenderTarget& target) {
         dim.setColor(sf::Color(0, 0, 0, 128));
         target.draw(dim);
 
-        infographicSprite.setTexture(*getAssets().get(GameAssets::TEXTURE_INFOGRAPHIC));
-        infographicSprite.setPosition({ 0.0f, 10.0f });
-        infographicSprite.setScale(sf::Vector2f(1.95f, 2.0f));
-        target.draw(infographicSprite);
-
-        if(shopIsOpen)
-        {
+        if(shopIsOpen) {
             target.draw(upgradeMenu);
             target.draw(energySprite);
             target.draw(energyText);
+        } else if (!dialogBox.isInProgress()) {
+            infographicSprite.setTexture(*getAssets().get(GameAssets::TEXTURE_INFOGRAPHIC));
+            infographicSprite.setPosition({ 0.0f, 100.0f });
+            infographicSprite.setScale(sf::Vector2f(1.95f, 2.2f));
+            target.draw(infographicSprite);
+
+            infographicText.setString("Paused (Esc to unpause)");
+            infographicText.setPosition({ 800.0f, 940.0f});
+            infographicText.setScale({1.0f, 1.0f});
+            infographicText.setFillColor(sf::Color::White);
+            infographicText.setFont(*space.getAssets().get(GameAssets::VT323_TTF));
+            infographicText.setCharacterSize(40);
+            target.draw(infographicText);
         }
     } else {
         target.draw(energySprite);
@@ -276,6 +368,8 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
                 } else if (shopIsOpen) {
                     shopIsOpen = false;
                     space.paused = false;
+                } else {
+                    space.paused = !space.paused;
                 }
                 break;
 
