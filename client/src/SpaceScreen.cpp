@@ -502,6 +502,8 @@ void SpaceScreen::processInput(float delta) {
 
     if(isFiring)
         space.getShip().fire();
+    else
+        space.getShip().noFire();
 
     space.getShip().setIsBoosting(isBoosting);
 

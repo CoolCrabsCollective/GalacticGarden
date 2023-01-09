@@ -12,6 +12,7 @@
 #include "world/AsteroidBelt.h"
 #include "world/enemy/CrowCraft.h"
 #include "world/enemy/TheNest.h"
+#include "world/weapon/FlameThrower.h"
 
 using namespace MathUtil;
 

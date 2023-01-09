@@ -47,6 +47,8 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 
     damageShader = space.getAssets().get(GameAssets::DAMAGE_SHADER);
 
+    flameThrower = new FlameThrower(space);
+
     laserSound.setBuffer(*space.getAssets().get(GameAssets::SFX_LASER));
     hurtSound.setBuffer(*space.getAssets().get(GameAssets::SFX_HURT));
     pickupSound.setBuffer(*space.getAssets().get(GameAssets::SFX_PICKUP));
@@ -54,6 +56,8 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 }
 
 void Ship::tick(float delta) {
+    flameThrower->update(delta);
+
     float bad_delta = delta / 1000.f;
 
     megaBoostAnime.runAnimation(bad_delta);
@@ -168,6 +172,8 @@ void Ship::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
         else
             target.draw(normalAnimeSprite);
     }
+
+    flameThrower->draw(target, states);
 }
 
 float Ship::getZOrder() const {
@@ -189,6 +195,10 @@ void Ship::moveInDirOfVec(const sf::Vector2f& moveVec, float good_delta) {
 
 
 void Ship::fire() {
+    if (weaponType == FLAMETHROWER) {
+        usingFlameThrower = true;
+        return;
+    }
 
     if(time_since_last_fire >= fire_delay)
     {
@@ -228,10 +238,6 @@ void Ship::fire() {
                 if(!space.getUpgradeManager().has_unlocked(NUKE_SIMPLE) || !energy_for_shot(5)) return;
                 space.addEntity(new Bomb(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 break;
-            case FLAMETHROWER:
-                if(!space.getUpgradeManager().has_unlocked(FLAMETHROWER_SIMPLE) || !energy_for_shot(2)) return;
-                space.addEntity(new FlameThrower(space, location, sf::Vector2f(0.f, -1.0f).rotatedBy(sf::degrees(rotation))));
-                break;
 
             default:
                 throw std::runtime_error("Invalid weapon type");
@@ -239,6 +245,10 @@ void Ship::fire() {
         
         time_since_last_fire = 0.f;
     }
+}
+
+void Ship::noFire() {
+    usingFlameThrower = false;
 }
 
 void Ship::setCropType(CropType crop_type) {
@@ -351,4 +361,8 @@ WeaponType Ship::getWeaponType() const {
 
 CropType Ship::getCropType() const {
     return cropType;
+}
+
+bool Ship::isUsingFlameThrower() const {
+    return usingFlameThrower;
 }
