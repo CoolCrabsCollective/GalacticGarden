@@ -5,7 +5,7 @@
 #include "world/enemy/CrowCraft.h"
 
 TheNest::TheNest(Space &space, const sf::Vector2f &location) : EnemyShip(space, location) {
-    health = 200.f;
+    health = 100.f;
     fire_delay = 10.f;
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_NEST));
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });

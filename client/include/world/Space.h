@@ -13,6 +13,8 @@
 #include "Ship.h"
 #include "world/station/GayStation.h"
 #include "UpgradeManager.h"
+#include "world/enemy/EnemyShip.h"
+#include "WaveManager.h"
 #include <list>
 
 class Space : public Tickable, public sf::Drawable {
@@ -38,16 +40,13 @@ protected:
             { Upgrade::BOOST_ULTRA,         300.f },
     };
 
-    int enemy_count = 0;
-    int max_enemy_count = 5.f;
-    float spawn_delay = 1000.0f;
-    float time_since_last_spawn = .0f;
+    WaveManager waveManager;
 public:
 	constexpr const static sf::Vector2f VIEW_SIZE = { 16.0f, 9.0f };
 	constexpr const static float CHUNK_SIZE = 2.0f;
     constexpr const static float MAP_RADIUS = 200.0f;
 
-	Space(wiz::AssetLoader& assets);
+	Space(wiz::AssetLoader& assets, std::function<void (int)> waveCallback);
 
 	void tick(float delta) override;
 
@@ -75,6 +74,10 @@ public:
 
     UpgradeManager &getUpgradeManager();
 
+    void spawnEnemyHatchling();
+    void spawnEnemyCrowCraft();
+    void spawnEnemyNest();
+    void spawnEnemyTree();
 
 private:
 	void initSpacialMap();
@@ -82,10 +85,6 @@ private:
 	void removeFromMap(Entity* entity);
 
 	uint64_t spacialKey(sf::Vector2f location) const;
-
-    void manageEnemies();
-    void spawnEnemy(sf::Vector2f pos);
-    
     void spawnAsteroids();
 
 };

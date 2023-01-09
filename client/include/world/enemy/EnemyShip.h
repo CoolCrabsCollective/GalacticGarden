@@ -15,7 +15,7 @@ protected:
     
     float speed;
     float damageAmount;
-    float health = 10.0f;
+    float health = 4.0f;
     
     float rotation = 0.0f;
 
