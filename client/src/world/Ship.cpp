@@ -57,6 +57,7 @@ Ship::Ship(Space& space, const sf::Vector2f& location)
 
 void Ship::tick(float delta) {
     flameThrower->update(delta);
+    flameTimeSinceCost += delta;
 
     float bad_delta = delta / 1000.f;
 
@@ -197,7 +198,14 @@ void Ship::moveInDirOfVec(const sf::Vector2f& moveVec, float good_delta) {
 
 void Ship::fire() {
     if (weaponType == FLAMETHROWER) {
-        usingFlameThrower = true;
+        if (flameTimeSinceCost > flameCostInterval) {
+            if (!energy_for_shot(5)) {
+                usingFlameThrower = false;
+            } else {
+                flameTimeSinceCost = .0f;
+                usingFlameThrower = true;
+            }
+        }
         return;
     }
 

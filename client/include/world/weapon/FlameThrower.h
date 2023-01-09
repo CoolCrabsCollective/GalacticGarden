@@ -15,6 +15,7 @@ struct FlameParticle {
     float lifetime = .0f;
     float angle;
     float size;
+    float finalSize;
     float rot;
     float angVel;
     float speed;
@@ -28,11 +29,7 @@ class FlameThrower : sf::Drawable {
     float rotation = 0.0f;
 
     std::vector<particleFrame_t> particles;
-    int maxNumberOfFlames = 1000;
     int currentNumberOfFlames = 0;
-
-    float timeBetweenParticles = 1000.f;
-    float timeSinceLastParticle = .0f;
 
     mutable sf::Sprite flameSprite;
 public:

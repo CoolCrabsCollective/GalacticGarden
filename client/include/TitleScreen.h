@@ -6,14 +6,15 @@
 #define WIZENGINEQUICKSTART_CLIENT_TITLESCREEN_H
 
 #include <WIZ/game/Screen.h>
-#include <SW/SelbaWard.hpp>
-#include <SW/Common.hpp>
+#include "SFML/Graphics/Text.hpp"
+#include "SFML/Graphics/Sprite.hpp"
 
-class TitleScreen : public wiz::Screen, public wiz::WindowListener {
+class TitleScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
 	std::string name = "TitleScreen";
 
 	sf::Sprite logo;
 	sf::Sprite background;
+    sf::Text pressStartText;
 public:
 	TitleScreen(wiz::Game& game);
 
@@ -28,6 +29,8 @@ public:
 	const std::string& getName() const override;
 
 	void windowClosed() override;
+
+    void keyPressed(const sf::Event::KeyEvent& keyEvent) override;
 };
 
 

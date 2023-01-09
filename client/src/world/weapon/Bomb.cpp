@@ -17,7 +17,7 @@ Bomb::Bomb(Space& space, sf::Vector2f location, sf::Vector2f direction)
 
     SpriteUtil::setSpriteOrigin(bombSprite, { 0.5f, 0.5f });
     SpriteUtil::setSpriteOrigin(explosionSprite, { 0.5f, 0.5f });
-    SpriteUtil::setSpriteSize(bombSprite, { 1.0f, 2.0f });
+    SpriteUtil::setSpriteSize(bombSprite, { 0.5f, 1.0f });
 
     rotation = direction.angle().asDegrees() + 90.0f;
 }
