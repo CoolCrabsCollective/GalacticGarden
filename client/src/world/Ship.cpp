@@ -99,6 +99,7 @@ void Ship::tick(float delta) {
         if(crop && crop->isReady() && (crop->getLocation() - location).lengthSq() < 1.0f && !crop->isHarvested()) {
             crop->harvest();
             energy += crop->getEnergyGain();
+            score += crop->getEnergyGain();
         }
     }
 

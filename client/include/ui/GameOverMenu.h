@@ -15,11 +15,13 @@ class SpaceScreen;
 class GameOverMenu : public sf::Drawable {
     mutable sf::Sprite dim;
     mutable sf::Sprite gameover;
-    mutable sf::Text text;
+    mutable sf::Text text, scoreText;
 public:
     explicit GameOverMenu(SpaceScreen& screen);
 
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
+    
+    void setStats(int wazeNumber, int score);
 };
 
 

@@ -262,8 +262,10 @@ void SpaceScreen::render(sf::RenderTarget& target) {
 
     // ui
     target.setView(sf::View(SpaceScreen::UI_VIEW_SIZE / 2.0f, SpaceScreen::UI_VIEW_SIZE));
-    if (space.gameover)
-        target.draw(gameOverMenu);
+    if (space.gameover) {
+        gameOverMenu.setStats(space.get_wave_manager().get_current_wave(), space.getShip().getScore());
+        target.draw(gameOverMenu);   
+    }
     else if (space.paused) {
         dim.setTexture(*getAssets().get(GameAssets::WHITE_PIXEL));
         dim.setPosition({ 0.0f, 0.0f });

@@ -29,4 +29,6 @@ public:
     void setCallback(std::function<void (int)> newWaveCallback);
     void spawnNextWave();
     void update(float good_delta);
+
+    int get_current_wave() const;
 };

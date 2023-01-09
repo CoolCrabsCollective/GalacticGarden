@@ -11,7 +11,7 @@
 HatchlingShip::HatchlingShip(Space &space, sf::Vector2f location) 
     : EnemyShip(space, location) {
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_HATCHLING));
-    sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
+    SpriteUtil::setSpriteOrigin(sprite, { 0.5f, 0.5f });
     SpriteUtil::setSpriteSize(sprite, { 1.0f, 1.0f });
     targetAsteroid = nullptr;
     speed = 0.01f;

@@ -316,3 +316,7 @@ void Space::spawnEnemyTree() {
     sf::Vector2f pos = {randDes * cosf(randDir) + ship.getLocation().x, randDes * sinf(randDir) + ship.getLocation().y};
     addEntity(new TreeCraft(*this, pos));
 }
+
+const WaveManager& Space::get_wave_manager() const {
+    return waveManager;
+}

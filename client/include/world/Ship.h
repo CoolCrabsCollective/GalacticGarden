@@ -53,6 +53,7 @@ protected:
     float redness = 0.0f;
 
     float energy = 10.0f;
+    float score = 0.0f;
     
     WeaponType weaponType = WeaponType::SIMPLE;
     CropType cropType = CropType::FLOWER;
@@ -114,6 +115,10 @@ public:
     const sf::Vector2f& getMoveVelocity() const;
 
     bool isUsingFlameThrower() const;
+    
+    inline float getScore() const {
+        return score;
+    }
 
 protected:
 
