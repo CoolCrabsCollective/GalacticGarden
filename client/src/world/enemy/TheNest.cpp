@@ -3,14 +3,14 @@
 //
 #include "world/enemy/TheNest.h"
 #include "world/enemy/CrowCraft.h"
+#include "util/SpriteUtil.h"
 
 TheNest::TheNest(Space &space, const sf::Vector2f &location) : EnemyShip(space, location) {
     health = 100.f;
     fire_delay = 10.f;
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_NEST));
+    SpriteUtil::setSpriteSize(sprite, { 2.0f, 2.0f });
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
-
-    sprite.setScale({ 2.0f / sprite.getTexture()->getSize().x, 2.0f / sprite.getTexture()->getSize().y });
     speed = 0.01f;
 }
 

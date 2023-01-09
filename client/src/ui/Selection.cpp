@@ -73,22 +73,36 @@ Selection::Selection(SpaceScreen& screen, SelectionType type, UpgradeManager* up
     switch(type) {
         case WEAPON:
             titleText.setString("WEAPON");
+            keyText.setString("Q       E");
+            keyText.setPosition(pos + sf::Vector2f { 2.0f, size.y / 2.0f - 100.f });
             break;
         case SEED:
             titleText.setString("SEED");
+            keyText.setString("F      RMB");
+            keyText.setPosition(pos + sf::Vector2f { 2.0f, size.y / 2.0f - 100.f });
             break;
         case BOOSTER:
             titleText.setString("BOOSTER");
+            keyText.setString("Shift");
+            keyText.setPosition(pos + sf::Vector2f { -25.0f, size.y / 2.0f - 100.f });
             break;
     }
     
     titleText.setCharacterSize(30);
-    titleText.setScale(textSize);
+    titleText.setScale({1.f, 1.f});
     titleText.setStyle(sf::Text::Bold);
     titleText.setFont(*screen.getAssets().get(GameAssets::VT323_TTF));
     titleText.setOrigin({titleText.getLocalBounds().width / 2.0f, titleText.getLocalBounds().height / 2.0f});
     titleText.setFillColor(sf::Color::White);
     titleText.setPosition(pos + sf::Vector2f { 0.0f, size.y / 2.0f - 17.0f });
+
+    keyText.setCharacterSize(30);
+    keyText.setScale(textSize);
+    keyText.setStyle(sf::Text::Bold);
+    keyText.setFont(*screen.getAssets().get(GameAssets::VT323_TTF));
+    keyText.setOrigin({keyText.getLocalBounds().width / 2.0f, keyText.getLocalBounds().height / 2.0f});
+    keyText.setFillColor(sf::Color::White);
+
 }
 
 void Selection::draw(sf::RenderTarget& target, const sf::RenderStates& states) const {
@@ -107,6 +121,7 @@ void Selection::draw(sf::RenderTarget& target, const sf::RenderStates& states) c
     target.draw(backdrop);
     target.draw(item);
     target.draw(titleText);
+    target.draw(keyText);
 
     target.draw(*selectionScroll);
 }

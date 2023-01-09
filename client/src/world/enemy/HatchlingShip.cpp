@@ -12,6 +12,7 @@ HatchlingShip::HatchlingShip(Space &space, sf::Vector2f location)
     : EnemyShip(space, location) {
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_HATCHLING));
     SpriteUtil::setSpriteOrigin(sprite, { 0.5f, 0.5f });
+    SpriteUtil::setSpriteSize(sprite, { 1.0f, 1.0f });
     targetAsteroid = nullptr;
     speed = 0.01f;
     damageAmount = 1;
@@ -129,10 +130,6 @@ void HatchlingShip::draw(sf::RenderTarget &target, const sf::RenderStates &state
 
     if(tractorBeam)
         tractorBeam->draw(target, states);
-}
-
-float HatchlingShip::getZOrder() const {
-    return 2.0f;
 }
 
 void HatchlingShip::attackFriendly(sf::Vector2f distanceToFriendly) {

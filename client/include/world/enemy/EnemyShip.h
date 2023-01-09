@@ -39,5 +39,7 @@ public:
     bool shouldBeRemoved() const override;
     
     void damage(float amount);
+
+    float getZOrder() const override;
 };
 
