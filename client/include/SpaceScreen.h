@@ -63,6 +63,7 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     UpgradeMenu upgradeMenu;
 
     mutable sf::Sprite dim;
+    sf::Sprite infographicSprite;
 
     float intervalBetweenKeyPresses = 150.0f;
     float timeBetweenKeyPresses = .0f;

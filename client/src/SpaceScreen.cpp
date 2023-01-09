@@ -153,7 +153,6 @@ void SpaceScreen::tick(float delta) {
 }
 
 void SpaceScreen::render(sf::RenderTarget& target) {
-
     sf::Vector2f vec = { 1.0f, 1.0f };
     vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
     vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
@@ -183,6 +182,12 @@ void SpaceScreen::render(sf::RenderTarget& target) {
         dim.setScale(SpaceScreen::UI_VIEW_SIZE);
         dim.setColor(sf::Color(0, 0, 0, 128));
         target.draw(dim);
+
+        infographicSprite.setTexture(*getAssets().get(GameAssets::TEXTURE_INFOGRAPHIC));
+        infographicSprite.setPosition({ 0.0f, 10.0f });
+        infographicSprite.setScale(sf::Vector2f(1.95f, 2.0f));
+        target.draw(infographicSprite);
+
         if(shopIsOpen)
         {
             target.draw(upgradeMenu);
