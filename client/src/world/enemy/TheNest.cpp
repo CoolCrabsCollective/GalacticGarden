@@ -6,8 +6,8 @@
 #include "util/SpriteUtil.h"
 
 TheNest::TheNest(Space &space, const sf::Vector2f &location) : EnemyShip(space, location) {
-    health = 100.f;
-    fire_delay = 10.f;
+    health = 20.0f;
+    fire_delay = 10.0f;
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_NEST));
     SpriteUtil::setSpriteSize(sprite, { 2.0f, 2.0f });
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
@@ -26,7 +26,7 @@ void TheNest::tick(float delta) {
         space.addEntity(
                 new HatchlingShip(space, location + sf::Vector2f{-0.5f, -0.5f}));
 
-        time_since_last_fire = 0.f;
+        time_since_last_fire = 0.0f;
     }
 }
 

@@ -28,7 +28,7 @@ void TreeCraft::tick(float delta) {
         space.addEntity(
                 new TheNest(space, location + sf::Vector2f{-0.5f, -0.5f}));
 
-        time_since_last_fire = 0.f;
+        time_since_last_fire = 0.0f;
     }
 }
 

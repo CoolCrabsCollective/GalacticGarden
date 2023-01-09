@@ -116,7 +116,7 @@ void Space::tick(float delta) {
         if(dynamic_cast<EnemyShip*>(entity))
             enemyCount++;
 
-    waveManager.update(delta / 1000.f);
+    waveManager.update(delta / 1000.0f);
 
     for(Entity* entity : entities) {
 

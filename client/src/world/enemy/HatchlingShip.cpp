@@ -7,6 +7,7 @@
 #include "GameAssets.h"
 #include "world/crop/Crop.h"
 #include "util/SpriteUtil.h"
+#include "util/MathUtil.h"
 
 HatchlingShip::HatchlingShip(Space &space, sf::Vector2f location) 
     : EnemyShip(space, location) {
@@ -31,7 +32,7 @@ void HatchlingShip::tick(float delta) {
 
     sf::Vector2f distanceToNearestFriendly = nearestFriendly - location;
 
-    if (distanceToNearestFriendly.lengthSq() < min_friendly_target_range) {
+    if (distanceToNearestFriendly.lengthSq() < MathUtil::pow2(min_friendly_target_range)) {
         if (tractorBeam) {
             delete tractorBeam;
             tractorBeam = nullptr;
