@@ -79,6 +79,8 @@ public:
     void spawnEnemyNest();
     void spawnEnemyTree();
 
+    const WaveManager& get_wave_manager() const;
+
 private:
 	void initSpacialMap();
     void removeEntities();

@@ -45,3 +45,7 @@ void WaveManager::setCallback(std::function<void(int)> newWaveCallback) {
     this->newWaveCallback = newWaveCallback;
 }
 
+int WaveManager::get_current_wave() const {
+    return currentWave;
+}
+
