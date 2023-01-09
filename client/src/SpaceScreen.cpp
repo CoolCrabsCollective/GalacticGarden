@@ -15,7 +15,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
         space(game.getAssets(), [&](int waveNumber){
             switch(waveNumber)
             {
-                case 2:
+                case 1:
                     space.paused = true;
                     dialogBox.startDialog({
                                                   "Another wave of crow hatchlings is inbound commander! Get Ready!",
@@ -35,7 +35,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                                           }
                     );
                     break;
-                case 3:
+                case 2:
                     space.paused = true;
                     dialogBox.startDialog({
                                                   "~CAW~ It appears the hatchlings were insufficient... Send in a crowcraft...!",
@@ -52,7 +52,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                                           }
                     );
                     break;
-                case 4:
+                case 3:
                     space.paused = true;
                     dialogBox.startDialog({
                                                   "It appears the Lord Crow is sending additional reinforcement, be careful Celestial Chad.",
@@ -69,7 +69,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                                           }
                     );
                     break;
-                case 5:
+                case 4:
                     space.paused = true;
                     dialogBox.startDialog({
                                                   "The enemy is sending in a Nest! I repeat, the enemy is sending in a Nest!",
@@ -86,7 +86,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                                           }
                     );
                     break;
-                case 6:
+                case 5:
                     space.paused = true;
                     dialogBox.startDialog({
                                                   "Is this all you birds got?",
@@ -103,7 +103,7 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
                                           }
                     );
                     break;
-                case 7:
+                case 6:
                     space.paused = true;
                     dialogBox.startDialog({
                                                   "Holy Pegasus... The Lord Crow himself is coming...",
