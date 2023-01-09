@@ -28,4 +28,7 @@ public:
     void tick(float delta) override;
 
     void attackFriendly(sf::Vector2f distanceToFriendly);
+
+protected:
+    void pushAwayFrom(sf::Vector2f location, float delta) override;
 };

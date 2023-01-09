@@ -155,6 +155,20 @@ void Space::tick(float delta) {
 	}
 
     removeEntities();
+    
+    // add entities from last tick
+
+    for(Entity* entity : toAdd) {
+        entities.push_back(entity);
+
+        uint64_t key = spacialKey(entity->getLocation());
+
+        if(!spacialMap.contains(key))
+            spacialMap[key] = { entity };
+        else
+            spacialMap[key].insert(spacialMap[key].begin(), entity);
+    }
+    toAdd.clear();
 }
 
 std::vector<Entity*> Space::getAllEntitiesInRect(sf::Vector2f center,
@@ -234,14 +248,7 @@ void Space::removeEntities() {
 }
 
 void Space::addEntity(Entity *entity) {
-    entities.push_back(entity);
-
-    uint64_t key = spacialKey(entity->getLocation());
-
-    if(!spacialMap.contains(key))
-        spacialMap[key] = { entity };
-    else
-        spacialMap[key].insert(spacialMap[key].begin(), entity);
+    toAdd.push_back(entity);
 }
 
 Ship& Space::getShip() {

@@ -48,8 +48,6 @@ void Crop::tick(float delta) {
     
     timeSincePlanted += delta / 1000.0f;
     location = asteroid.getLocation() + relLocation.rotatedBy(sf::degrees(asteroid.getRotation()));
-    progress.setPosition(location + sf::Vector2f { 0.0f, 0.1f });
-    progress.setHealth(std::min(timeSincePlanted / getTimeToMaturity(), 1.0f));
 
     if(isReady() && !wasReady)
         sprite.setTexture(*grown, true);
@@ -64,6 +62,8 @@ void Crop::draw(sf::RenderTarget& target, const sf::RenderStates& states) const 
         return;
     
     sprite.setPosition(location);
+    progress.setPosition(location + sf::Vector2f { 0.0f, 0.1f });
+    progress.setHealth(std::min(timeSincePlanted / getTimeToMaturity(), 1.0f));
     
     target.draw(sprite);
     if(!isReady())

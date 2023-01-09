@@ -36,3 +36,7 @@ void TreeCraft::fire() {
 
 }
 
+void TreeCraft::pushAwayFrom(sf::Vector2f location, float delta) {
+
+}
+
