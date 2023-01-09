@@ -9,8 +9,8 @@
 class Space;
 class WaveManager {
 protected:
-    int currentWave = 7;
-    const float waveCooldown = 20.f;
+    int currentWave = 0;
+    const float waveCooldown = 60.f;
     float currentWaveCooldownProgress = 0.f;
     std::function<void(int)> newWaveCallback;
     std::vector<std::vector<int>> waves {{

@@ -21,7 +21,7 @@ TitleScreen::TitleScreen(wiz::Game& game)
 
 void TitleScreen::tick(float delta) {
 
-	logo.setPosition({ 640.0f, 720.0f / 2.0f });
+	logo.setPosition({ 640.0f, 720.0f / 2.0f - 100.0f });
 	logo.setScale(sf::Vector2f(2.0f, 2.0f));
     
     sf::FloatRect textRect2 = pressStartText.getLocalBounds();

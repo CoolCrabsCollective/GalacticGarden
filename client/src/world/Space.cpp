@@ -13,7 +13,6 @@
 #include "world/enemy/CrowCraft.h"
 #include "world/enemy/TheNest.h"
 #include "world/enemy/TreeCraft.h"
-#include "world/weapon/FlameThrower.h"
 
 using namespace MathUtil;
 
@@ -40,6 +39,9 @@ void Space::spawnAsteroids() {
         int countPlant = round(pow2(radius * 2.0f));
         
         if(pow2(x) + pow2(y) > pow2(Space::MAP_RADIUS))
+            continue;
+        
+        if(pow2(x - gayStation.getLocation().x) + pow2(y - gayStation.getLocation().y) < pow2(10.0f))
             continue;
         
         bool overlap = false;
@@ -114,8 +116,8 @@ void Space::tick(float delta) {
         if(dynamic_cast<EnemyShip*>(entity))
             enemyCount++;
 
-    if(enemyCount == 0)
-        waveManager.update(delta / 1000.f);
+    waveManager.update(delta / 1000.f);
+
     for(Entity* entity : entities) {
 
         // protip : don't fuck with this unless you know what you are doing

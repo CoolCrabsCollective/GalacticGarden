@@ -67,6 +67,8 @@ protected:
 
     FlameThrower* flameThrower;
     bool usingFlameThrower = false;
+    float flameCostInterval = 1000.f;
+    float flameTimeSinceCost = .0f;
 
 public:
 
