@@ -86,12 +86,12 @@ void Asteroid::draw(sf::RenderTarget& target, const sf::RenderStates& states) co
 }
 
 void Asteroid::generatePlantingZones(int count) {
-	float minRadius = size / 4.0f;
-	float maxRadius = size / 2.0f * 6.0f / 8.0f;
+	float minRadius = size / 8.0f;
+	float maxRadius = size / 3.0f;
 
     for(int i = 0; i < count; i++) {
-		float dir = i / static_cast<float>(count) * 360.0f;
-		float randDes = static_cast<float>(rand() / (RAND_MAX + 1.0)) * (maxRadius - minRadius) + minRadius;
+		float dir = i / static_cast<float>(count) * M_PI * 2.0f;
+		float randDes = static_cast<float>(rand() / (RAND_MAX + 1.0f)) * (maxRadius - minRadius) + minRadius;
 
 		plantingZones.insert(std::pair<sf::Vector2f, Crop*> {{ randDes * cosf(dir), randDes * sinf(dir)}, nullptr});
     }

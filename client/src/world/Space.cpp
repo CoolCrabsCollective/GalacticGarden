@@ -35,7 +35,7 @@ void Space::spawnAsteroids() {
         float x = static_cast<float>(rand() / (RAND_MAX + 1.0) * 2.0 - 1.0) * Space::MAP_RADIUS;
         float y = static_cast<float>(rand() / (RAND_MAX + 1.0) * 2.0 - 1.0) * Space::MAP_RADIUS;
         float radius = static_cast<float>(rand() / (RAND_MAX + 1.0)) * 2.0 + 0.5f;
-        int countPlant = round(pow2(radius));
+        int countPlant = round(pow2(radius * 2.0f));
         
         if(pow2(x) + pow2(y) > pow2(Space::MAP_RADIUS))
             continue;
