@@ -8,6 +8,7 @@
 #include "util/SpriteUtil.h"
 #include "world/enemy/EnemyShip.h"
 #include "util/MathUtil.h"
+#include "world/FloatingText.h"
 
 FlameThrower::FlameThrower(Space& space)
         : space(space) {
@@ -44,7 +45,11 @@ void FlameThrower::update(float delta) {
         for(Entity* entity : space.getAllEntitiesInRect(std::get<0>(particle), { 10.0f, 10.0f })) {
             if(EnemyShip* ship = dynamic_cast<EnemyShip*>(entity)) {
                 if((ship->getLocation() - space.getShip().getLocation()).lengthSq() < MathUtil::pow2(5.0f)) {
-                    ship->damage(.3f*(delta / 1000.f));
+                    
+                    float damage = 0.3f*(delta / 1000.f);
+                    ship->damage(damage);
+                    space.addEntity(new FloatingText(space, ship->getLocation(), "-" + std::to_string((int)round(damage)), sf::Color::Yellow, 0.5f));
+                    
                 }
             }
         }
