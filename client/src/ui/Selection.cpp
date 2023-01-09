@@ -78,8 +78,8 @@ Selection::Selection(SpaceScreen& screen, SelectionType type, UpgradeManager* up
             break;
         case SEED:
             titleText.setString("SEED");
-            keyText.setString("F");
-            keyText.setPosition(pos + sf::Vector2f { -40.0f, size.y / 2.0f - 100.f });
+            keyText.setString("F      RMB");
+            keyText.setPosition(pos + sf::Vector2f { 2.0f, size.y / 2.0f - 100.f });
             break;
         case BOOSTER:
             titleText.setString("BOOSTER");
