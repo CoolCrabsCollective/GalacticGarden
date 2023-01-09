@@ -98,6 +98,8 @@ public:
     bool isShopIsOpen() const;
 
     void setShopIsOpen(bool shopIsOpen);
+
+    void mouseMoved(const sf::Event::MouseMoveEvent &mouseMoveEvent) override;
 };
 
 #endif //LD52_CLIENT_SPACESCREEN_H

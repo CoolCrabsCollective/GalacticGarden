@@ -22,11 +22,12 @@ UpgradeMenu::UpgradeMenu(Space& space, UpgradeManager &upgradeManager) : space(s
     selected.setTexture(*ass.get(GameAssets::TEXTURE_SELECTED));
 }
 
-#include <iostream>
 void UpgradeMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
+    // dont update without updating handleMouse
     float offsetX = 0.0f;
     float xPos = 200.0f;
     float yPos = 400.0f;
+    // end of danger
 
     displayedItems.clear();
 
@@ -93,6 +94,19 @@ void UpgradeMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states)
         target.draw(price);
         offsetX += 300;
     }
+}
+
+void UpgradeMenu::handleMouse(sf::Vector2i pos) {
+
+    // kwik impl
+    float xPos = 200.0f;
+    float xOffset = 300.f;
+    float xMax = xPos + xOffset * displayedItems.size();
+    // garbage that will trigger winter
+    float ratio = (pos.x - xPos)/(xMax - xPos);
+    indexSelected = floor(ratio * displayedItems.size());
+    if(indexSelected >= displayedItems.size())
+        indexSelected = displayedItems.size() - 1;
 }
 
 bool UpgradeMenu::upgradeBlockComplete(const std::vector<Upgrade> &upgradeBlock) const {
