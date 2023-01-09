@@ -39,7 +39,7 @@ void FlameThrower::update(float delta) {
         }
 
         flameParticle.size = flameParticle.finalSize*(flameParticle.lifetime / flameParticle.lifeSpan) +
-                                flameParticle.finalSize / 4.f;
+                                flameParticle.finalSize / 4.0f;
         flameParticle.size = flameParticle.size > flameParticle.finalSize ? flameParticle.finalSize :
                                 flameParticle.size;
 

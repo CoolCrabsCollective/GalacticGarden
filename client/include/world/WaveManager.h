@@ -10,18 +10,18 @@ class Space;
 class WaveManager {
 protected:
     int currentWave = 0;
-    const float waveCooldown = 10.f;
+    const float waveCooldown = 60.f;
     float currentWaveCooldownProgress = 0.f;
     std::function<void(int)> newWaveCallback;
     std::vector<std::vector<int>> waves {{
         // HATCHLINGS, CROWCRAFTS, NESTS, TREES
-         {20, 0, 0, 0},
-         {4, 0, 0, 0},
-         {8, 0, 0, 0},
-         {3, 1, 0, 0},
-         {6, 3, 0, 0},
-         {8, 3, 1, 0},
-         {16, 5, 3, 0},
+         {2, 0, 0, 0},
+         {12, 0, 0, 0},
+         {40, 0, 0, 0},
+         {50, 1, 0, 0},
+         {50, 2, 0, 0},
+         {50, 20, 1, 0},
+         {100, 50, 5, 0},
          {0, 0, 0, 1},
     }};
     Space& space;
