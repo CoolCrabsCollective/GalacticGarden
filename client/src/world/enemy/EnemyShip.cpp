@@ -87,5 +87,5 @@ void EnemyShip::damage(float amount) {
 }
 
 float EnemyShip::getZOrder() const {
-    return 2.0f;
+    return 2.0f + ((location.y + Space::MAP_RADIUS) / (Space::MAP_RADIUS * 2.0f)) * 0.5f;
 }

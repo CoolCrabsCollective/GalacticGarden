@@ -21,6 +21,12 @@ void FlameThrower::update(float delta) {
     if (space.getShip().isUsingFlameThrower())
         generateParticles();
 
+    time += delta / 1000.0f;
+    bool display = time - lastDisplay >= 3.0f;
+    if(display) {
+        lastDisplay = time;
+    }
+    
     int index = 0;
     for(particleFrame_t& particle : particles) {
         FlameParticle& flameParticle = std::get<1>(particle);
@@ -48,8 +54,8 @@ void FlameThrower::update(float delta) {
                     
                     float damage = 0.3f*(delta / 1000.f);
                     ship->damage(damage);
-                    space.addEntity(new FloatingText(space, ship->getLocation(), "-" + std::to_string((int)round(damage)), sf::Color::Yellow, 0.5f));
-                    
+                    if(display)
+                        space.addEntity(new FloatingText(space, ship->getLocation(), "-1", sf::Color::Yellow, 0.5f));
                 }
             }
         }
