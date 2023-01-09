@@ -38,7 +38,6 @@ void WaveManager::update(float good_delta) {
         currentWaveCooldownProgress = 0;
         newWaveCallback(currentWave);
         spawnNextWave();
-        currentWave++;
     }
 }
 
