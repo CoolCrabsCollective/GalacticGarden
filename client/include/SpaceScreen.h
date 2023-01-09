@@ -41,7 +41,6 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
 
     wiz::MappingDatabase mappingDatabase;
     wiz::Mapping mapping;
-    bool controllerDisconnected = true;
     bool mappingFound = false;
     
     sf::Vector2f smoothPosition, cameraPosition, shipSmoothVelocity;
@@ -51,7 +50,7 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     sf::Text energyText;
     
     GameOverMenu gameOverMenu;
-    float gameoverCooldown = 1.5f;
+    float gameoverCooldown = 0.5f;
 
     const float SPACE_STATION_STORE_DIS_SQ = 50.0f;
 

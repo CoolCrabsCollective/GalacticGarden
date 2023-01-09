@@ -32,15 +32,8 @@ void MiniMap::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
     SpriteUtil::setSpriteSize(arrowSprite, { 16.0f, 16.0f });
     SpriteUtil::setSpriteOrigin(sprite, { 0.5f, 0.5f });
     
-    auto& vec = screen.getSpace().getEntities();
-    
-    for(auto it = vec.rbegin(); it != vec.rend(); it++) {
-        Entity* entity = *it;
-        if(dynamic_cast<Ship*>(entity)) 
-            sprite.setColor(shipColor);
-        else if(dynamic_cast<GayStation*>(entity))
-            sprite.setColor(spaceStationColor);
-        else if(Asteroid* asteroid = dynamic_cast<Asteroid*>(entity)) {
+    for(Entity* entity : screen.getSpace().getEntities()) {
+        if(Asteroid* asteroid = dynamic_cast<Asteroid*>(entity)) {
             if (!asteroid->has_planting_spots()) {
                 sprite.setColor(noPlantingSpotsColor);
             } else if (asteroid->has_grown_plants()) {
@@ -50,7 +43,51 @@ void MiniMap::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
             } else {
                 sprite.setColor(unplantedAsteroidColor);
             }
+            
+            SpriteUtil::setSpriteSize(sprite, (entity->getVisualSize() / mapSize).cwiseMul(size));
+
+            sf::Vector2f pos = offset + (entity->getLocation() - center + sf::Vector2f { mapSize / 2.0f, mapSize / 2.0f }).cwiseMul(size) / mapSize;
+
+            if(pos.x < offset.x
+               || pos.y < offset.y
+               || pos.x > offset.x + size.x
+               || pos.y > offset.y + size.y) {
+
+                if(dynamic_cast<GayStation*>(entity) || dynamic_cast<EnemyShip*>(entity))
+                {
+                    arrowSprite.setRotation((entity->getLocation() - center).angle() + sf::degrees(90.0f));
+
+                    pos.x = fmax(pos.x, offset.x);
+                    pos.x = fmin(pos.x, offset.x + size.x);
+                    pos.y = fmax(pos.y, offset.y);
+                    pos.y = fmin(pos.y, offset.y + size.y);
+                    arrowSprite.setPosition(pos);
+
+                    if(dynamic_cast<GayStation*>(entity))
+                    {
+                        arrowSprite.setColor(spaceStationColor);
+                        SpriteUtil::setSpriteSize(arrowSprite, { 32.0f, 32.0f });
+                    }
+                    else if(dynamic_cast<EnemyShip*>(entity))
+                    {
+                        arrowSprite.setColor(enemyShipColor);
+                        SpriteUtil::setSpriteSize(arrowSprite, { 16.0f, 16.0f });
+                    }
+
+                    target.draw(arrowSprite);
+                }
+                continue;
+            }
+
+            sprite.setPosition(pos);
+            target.draw(sprite);
         }
+    }
+    
+    
+    for(Entity* entity : screen.getSpace().getEntities()) {
+        if(dynamic_cast<GayStation*>(entity))
+            sprite.setColor(spaceStationColor);
         else if(dynamic_cast<EnemyShip*>(entity))
             sprite.setColor(enemyShipColor);
         else
@@ -94,4 +131,11 @@ void MiniMap::draw(sf::RenderTarget& target, const sf::RenderStates& states) con
         sprite.setPosition(pos);
         target.draw(sprite);
     }
+
+
+    sprite.setColor(shipColor);
+
+    SpriteUtil::setSpriteSize(sprite, (screen.getSpace().getShip().getVisualSize() / mapSize).cwiseMul(size));
+    sprite.setPosition(offset + (screen.getSpace().getShip().getLocation() - center + sf::Vector2f { mapSize / 2.0f, mapSize / 2.0f }).cwiseMul(size) / mapSize);
+    target.draw(sprite);
 }

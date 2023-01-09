@@ -68,7 +68,7 @@ void Bomb::tick(float delta) {
                 if((ship->getLocation() - location).lengthSq() < MathUtil::pow2(5.0f)) {
                     ship->damage(10.0f);
 
-                    space.addEntity(new FloatingText(space, location, "-10", sf::Color::Yellow, 0.5f));
+                    space.addEntity(new FloatingText(space, ship->getLocation(), "-10", sf::Color::Yellow, 0.5f));
                 }
             }
         }
