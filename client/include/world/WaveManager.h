@@ -15,7 +15,7 @@ protected:
     std::function<void(int)> newWaveCallback;
     std::vector<std::vector<int>> waves {{
         // HATCHLINGS, CROWCRAFTS, NESTS, TREES
-         {3, 0, 0, 0},
+         {3, 0, 1, 1},
          {8, 0, 0, 0},
          {14, 1, 0, 0},
          {17, 4, 0, 0},

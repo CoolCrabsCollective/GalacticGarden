@@ -18,9 +18,8 @@ EnemyShip::EnemyShip(Space &space, sf::Vector2f location)
 void EnemyShip::draw(sf::RenderTarget &target, const sf::RenderStates &states) const {
     if(shouldBeRemoved())
         return;
-    
+
     SpriteUtil::setSpriteOrigin(sprite, { 0.5f, 0.5f });
-    SpriteUtil::setSpriteSize(sprite, { 1.0f, 1.0f });
     sprite.setPosition(location);
     sprite.setRotation(sf::degrees(rotation));
 

@@ -5,11 +5,13 @@
 #include "world/enemy/HatchlingShip.h"
 #include "world/enemy/CrowCraft.h"
 #include "world/weapon/SmallEnemyLaser.h"
+#include "util/SpriteUtil.h"
 
 CrowCraft::CrowCraft(Space &space, const sf::Vector2f &location) : HatchlingShip(space, location) {
 
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_CROWCRAFT));
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
+    SpriteUtil::setSpriteSize(sprite, { 1.0f, 1.0f });
     targetAsteroid = nullptr;
     speed = 0.05f;
     damageAmount = 1;
