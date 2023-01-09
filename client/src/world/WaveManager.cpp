@@ -24,8 +24,8 @@ void WaveManager::spawnNextWave() {
         treesToSpawn = wave[3];
     } else {
         hatchlingsToSpawn = currentWave * 10;
-        crowCraftsToSpawn = currentWave * 10;
-        nestsToSpawn = currentWave * 5;
+        crowCraftsToSpawn = currentWave * 5;
+        nestsToSpawn = currentWave * 1;
     }
 
     for(int i = 0; i < hatchlingsToSpawn; i++)

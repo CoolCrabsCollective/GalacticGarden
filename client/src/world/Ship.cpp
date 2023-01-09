@@ -245,7 +245,7 @@ void Ship::fire() {
                 laserSound.play();
                 break;
             case BOMB:
-                if(!space.getUpgradeManager().has_unlocked(NUKE_SIMPLE) || !energy_for_shot(15)) return;
+                if(!space.getUpgradeManager().has_unlocked(NUKE_SIMPLE) || !energy_for_shot(50)) return;
                 space.addEntity(new Bomb(space, location, sf::Vector2f(0.0f, -1.0f).rotatedBy(sf::degrees(rotation))));
                 break;
 
