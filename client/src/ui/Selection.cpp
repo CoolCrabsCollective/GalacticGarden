@@ -65,7 +65,7 @@ Selection::Selection(SpaceScreen& screen, SelectionType type, UpgradeManager* up
     sf::Vector2f itemSize = { 1.5f, 1.5f };
 
     item.setPosition(pos - sf::Vector2f { 0.0f, 7.0f });
-    item.setScale(itemSize * 1.4f);
+    item.setScale(itemSize * 1.4f * 32.0f / 12.0f);
     SpriteUtil::setSpriteOrigin(item, { 0.5f, 0.5f });
 
      sf::Vector2f textSize = { 0.8f, 0.8f };

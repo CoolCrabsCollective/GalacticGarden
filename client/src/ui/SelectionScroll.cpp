@@ -56,7 +56,7 @@ SelectionScroll::SelectionScroll(SpaceScreen& screen, SelectionType type, int nu
         sf::Vector2f itemSize = {1.2f, 1.2f};
 
         items.at(i).setPosition(pos + itemOffset);
-        items.at(i).setScale(itemSize);
+        items.at(i).setScale(itemSize * 32.0f / 12.0f);
     }
 }
 
@@ -66,7 +66,7 @@ void SelectionScroll::draw(sf::RenderTarget& target, const sf::RenderStates& sta
                                      yOffset};
         selectHighLight.setPosition(highLightPos);
 
-        for (int i = 0; i < backdrops.size(); i++) {
+        for (size_t i = 0; i < backdrops.size(); i++) {
             if (!upgradeManager->has_unlocked(static_cast<Upgrade>(i)) &&
                 type != SelectionType::SEED) {
                 backdrops.at(i).setColor({255, 255, 255, 128});

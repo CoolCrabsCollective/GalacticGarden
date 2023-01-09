@@ -15,6 +15,7 @@ HatchlingShip::HatchlingShip(Space &space, sf::Vector2f location)
     speed = 0.01f;
     damageAmount = 1;
     fire_delay = 0.8f;
+    health = 2.0f;
 }
 
 void HatchlingShip::tick(float delta) {
