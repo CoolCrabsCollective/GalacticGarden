@@ -12,6 +12,8 @@
 #include "world/AsteroidBelt.h"
 #include "world/enemy/CrowCraft.h"
 #include "world/enemy/TheNest.h"
+#include "world/enemy/TreeCraft.h"
+#include "world/weapon/FlameThrower.h"
 
 using namespace MathUtil;
 
@@ -312,6 +314,5 @@ void Space::spawnEnemyTree() {
     float randDes = static_cast<float>(rand() / (RAND_MAX + 1.0)) * (maxDst - minDst) + minDst;
 
     sf::Vector2f pos = {randDes * cosf(randDir) + ship.getLocation().x, randDes * sinf(randDir) + ship.getLocation().y};
-    throw std::runtime_error("some dumbass (not cedric) forgot to uncomment this lol");
-    //addEntity(new TreeCraft(*this, pos));
+    addEntity(new TreeCraft(*this, pos));
 }

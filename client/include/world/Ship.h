@@ -12,6 +12,7 @@
 #include "Asteroid.h"
 #include "world/anime/Anime.h"
 #include "world/weapon/Lazer.h"
+#include "world/weapon/FlameThrower.h"
 #include "SFML/Audio/Sound.hpp"
 
 typedef std::pair<sf::Vector2f, Asteroid*> plantzone_t;
@@ -62,10 +63,14 @@ protected:
     Anime boostAnime;
     mutable sf::Sprite megaBoostAnimeSprite;
     Anime megaBoostAnime;
+
+    FlameThrower* flameThrower;
+    bool usingFlameThrower = false;
+
 public:
 
     sf::Sound laserSound, hurtSound, pickupSound, nukeSound;
-    
+
     void setIsIdle(bool isIdle);
 
     void setIsBoosting(bool isBoosting);
@@ -83,6 +88,8 @@ public:
     void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
     void fire();
+
+    void noFire();
 
     void moveInDirOfVec(const sf::Vector2f& moveVec, float good_delta);
 
@@ -105,6 +112,8 @@ public:
     std::map<plantzone_t, bool, PlantZoneCompare> &getSeedThrown();
 
     const sf::Vector2f& getMoveVelocity() const;
+
+    bool isUsingFlameThrower() const;
 
 protected:
 

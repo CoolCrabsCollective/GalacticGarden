@@ -59,6 +59,7 @@ namespace GameAssets {
     ASSET(wiz::TextureAsset, TEXTURE_NARRATOR_ICON, ("gfx/narrator_icon.png"))
     ASSET(wiz::TextureAsset, TEXTURE_BOMB, ("gfx/bomb.png"))
     ASSET(wiz::TextureAsset, TEXTURE_EXPLOSION_PARTICLE, ("gfx/explosion_particle.png"))
+    ASSET(wiz::TextureAsset, TEXTURE_FLAME_PARTICLE, ("gfx/flame_particle.png"))
 
     ASSET(wiz::TextureAsset, TEXTURE_CORN, ("gfx/corn.png"))
     ASSET(wiz::TextureAsset, TEXTURE_CORN_YOUNG, ("gfx/corn_young.png"))
