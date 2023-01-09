@@ -47,7 +47,7 @@ void UpgradeMenu::draw(sf::RenderTarget &target, const sf::RenderStates &states)
         if(index != -1)
         {
             const std::vector<Upgrade>& upgradeBlock = upgradeLine.at(index);
-            for(int i = 0; i < upgradeBlock.size(); i++)
+            for(size_t i = 0; i < upgradeBlock.size(); i++)
             {
                 if(!upgradeManager.has_unlocked(upgradeBlock[i]))
                     displayedItems.push_back(upgradeBlock[i]);

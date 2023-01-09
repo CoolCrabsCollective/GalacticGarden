@@ -33,13 +33,13 @@ class WeaponTextureGetter {
 public:
     WeaponTextureGetter(wiz::AssetLoader& assets) {
         weaponTextures =
-                {assets.get(GameAssets::TEXTURE_LASER_SIMPLE),
-                 assets.get(GameAssets::TEXTURE_LASER_DOUBLE),
-                 assets.get(GameAssets::TEXTURE_LASER_TRIANGLE),
-                 assets.get(GameAssets::TEXTURE_LASER_FOUR_WAY),
-                 assets.get(GameAssets::TEXTURE_LASER_CRAZY),
-                 assets.get(GameAssets::TEXTURE_NUKE_SIMPLE),
-                 assets.get(GameAssets::TEXTURE_NUKE_SIMPLE)};
+                {assets.get(GameAssets::TEXTURE_LASER_SIMPLE_SMALL),
+                 assets.get(GameAssets::TEXTURE_LASER_DOUBLE_SMALL),
+                 assets.get(GameAssets::TEXTURE_LASER_TRIANGLE_SMALL),
+                 assets.get(GameAssets::TEXTURE_LASER_FOUR_WAY_SMALL),
+                 assets.get(GameAssets::TEXTURE_LASER_CRAZY_SMALL),
+                 assets.get(GameAssets::TEXTURE_NUKE_SIMPLE_SMALL),
+                 assets.get(GameAssets::TEXTURE_FLAMETHROWER_SIMPLE_SMALL)};
     }
 
     ~WeaponTextureGetter() = default;
@@ -55,8 +55,8 @@ class SeedTextureGetter {
 public:
     SeedTextureGetter(wiz::AssetLoader& assets) {
         seedTextures =
-                {assets.get(GameAssets::TEXTURE_FLOWER_ICON),
-                 assets.get(GameAssets::TEXTURE_CORN_ICON)};
+                {assets.get(GameAssets::TEXTURE_FLOWER_ICON_SMALL),
+                 assets.get(GameAssets::TEXTURE_CORN_ICON_SMALL)};
     }
 
     ~SeedTextureGetter() = default;
@@ -72,9 +72,9 @@ class BoostTextureGetter {
 public:
     BoostTextureGetter(wiz::AssetLoader& assets) {
         boostTextures =
-                {assets.get(GameAssets::TEXTURE_BOOST_NONE),
-                 assets.get(GameAssets::TEXTURE_BOOST_BASIC),
-                 assets.get(GameAssets::TEXTURE_BOOST_ULTRA)};
+                {assets.get(GameAssets::TEXTURE_BOOST_NONE_SMALL),
+                 assets.get(GameAssets::TEXTURE_BOOST_BASIC_SMALL),
+                 assets.get(GameAssets::TEXTURE_BOOST_ULTRA_SMALL)};
     }
 
     ~BoostTextureGetter() = default;
