@@ -44,7 +44,7 @@ void WaveManager::spawnNextWave() {
 
 void WaveManager::update(float good_delta) {
     currentWaveCooldownProgress += good_delta;
-    if(currentWaveCooldownProgress >= waveCooldown)
+    if(currentWaveCooldownProgress >= waveCooldown || space.lordCrowHasFallen)
     {
         currentWaveCooldownProgress = 0;
         newWaveCallback(currentWave);
