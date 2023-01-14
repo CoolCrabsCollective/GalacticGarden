@@ -22,19 +22,14 @@ namespace MathUtil
 
     inline std::string decToHex(int n)
     {
-        // ans string to store hexadecimal number
         std::string ans = "";
 
         while (n != 0) {
-            // remainder variable to store remainder
             int rem = 0;
 
-            // ch variable to store each character
             char ch;
-            // storing remainder in rem variable.
             rem = n % 16;
 
-            // check if temp < 10
             if (rem < 10) {
                 ch = rem + 48;
             }
@@ -42,12 +37,10 @@ namespace MathUtil
                 ch = rem + 55;
             }
 
-            // updating the ans string with the character variable
             ans += std::tolower(ch);
             n = n / 16;
         }
 
-        // reversing the ans string to get the final result
         int i = 0, j = ans.size() - 1;
         while(i <= j)
         {
