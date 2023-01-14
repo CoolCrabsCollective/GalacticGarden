@@ -11,10 +11,10 @@ public:
 				std::shared_ptr<wiz::AssetLoader> assetLoader);
 
     // Stupid shit (blame SFML joy)
-    std::string joyStickName;
+    std::string joyStickProductAndVendorIds;
 
-    const std::string &getJoyStickName() const;
+    const std::string &getJoyStickProductAndVendorIds() const;
 
-    void setJoyStickName(const sf::String joyStickName);
+    void setJoyStickProductAndVendorIds(const sf::String joyStickProductAndVendorIds);
 };
 
