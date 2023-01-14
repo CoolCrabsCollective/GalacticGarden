@@ -29,8 +29,15 @@ void TitleScreen::tick(float delta) {
     sf::FloatRect textRect2 = pressStartText.getLocalBounds();
     pressStartText.setPosition({ 640.0f - textRect2.width / 2.0f, 500.0f });
 
-	if(sf::Joystick::isButtonPressed(0, 3)
-       || sf::Mouse::isButtonPressed(sf::Mouse::Left) || sf::Touch::isDown(1))
+	bool pressingButton = false;
+	for(int i = 0; sf::Joystick::isConnected(0) && i < sf::Joystick::getButtonCount(0); i++) {
+		if(sf::Joystick::isButtonPressed(0, i)) {
+			pressingButton = true;
+			break;
+		}
+	}
+
+	if(pressingButton || sf::Mouse::isButtonPressed(sf::Mouse::Left) || sf::Touch::isDown(1))
 	{
 		getGame().setScreen(std::make_shared<SpaceScreen>(getGame()));
 		return;
@@ -61,58 +68,6 @@ void TitleScreen::show() {
 
 	getGame().addWindowListener(this);
     getGame().addInputListener(this);
-
-    GalacticGarden* galacticGarden = dynamic_cast<GalacticGarden*>(&getGame());
-    galacticGarden->setJoyStickProductAndVendorIds("None");
-	int i;
-	for(i = 0; true; i++) {
-		if(!sf::Joystick::isConnected(i))
-			break;
-
-		sf::Joystick::Identification id = sf::Joystick::getIdentification(i);
-        std::string vendorId = MathUtil::decToHex(id.vendorId);
-        std::string productId = MathUtil::decToHex(id.productId);
-
-        std::string reorderVendorId = vendorId.substr(2, 2) + vendorId.substr(0, 2);
-        std::string reorderProductId = productId.substr(2, 2) + productId.substr(0, 2);
-
-        dynamic_cast<GalacticGarden*>(
-                &getGame())->setJoyStickProductAndVendorIds(reorderVendorId + reorderProductId);
-		unsigned int buttonCount = sf::Joystick::getButtonCount(i);
-
-		std::stringstream ss;
-
-		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::X))
-			ss << "X";
-
-		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::Y))
-			ss << "Y";
-
-		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::U))
-			ss << "U";
-
-		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::V))
-			ss << "V";
-
-		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::Z))
-			ss << "Z";
-
-		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::R))
-			ss << "R";
-
-		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::PovX))
-			ss << "pX";
-
-		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::PovY))
-			ss << "pY";
-
-		getLogger().info("Found controller, Name: " + id.name +
-					 ", VendorID: " + std::to_string(id.vendorId) +
-					 ", ProductID: " + std::to_string(id.productId) +
-					 ", ButtonCount: " + std::to_string(buttonCount) +
-					 ", Axis: " + ss.str());
-	}
-	getLogger().info("Found " + std::to_string(i) + " controllers");
 }
 
 void TitleScreen::hide() {

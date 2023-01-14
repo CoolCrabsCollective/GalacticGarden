@@ -18,7 +18,6 @@
 #include "world/Space.h"
 
 #include "WIZ/input/Mapping.h"
-#include "new_wiz/NewMappingDatabase.h"
 #include "ui/GameOverMenu.h"
 #include "MiniMap.h"
 
@@ -26,6 +25,7 @@
 #include "ui/PictureDialogBox.h"
 #include "ui/Selection.h"
 #include "ui/UpgradeMenu.h"
+#include "WIZ/input/MappingDatabase.h"
 
 class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::InputListener {
     std::string name = "SpaceScreen";
@@ -39,7 +39,7 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     Space space;
     MiniMap miniMap;
 
-    NewMappingDatabase mappingDatabase;
+    wiz::MappingDatabase mappingDatabase;
     wiz::Mapping mapping;
     bool mappingFound = false;
     std::map<int, sf::Keyboard::Key> mapJoyButtonToKey;

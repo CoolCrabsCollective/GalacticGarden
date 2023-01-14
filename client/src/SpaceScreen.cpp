@@ -449,12 +449,12 @@ void SpaceScreen::render(sf::RenderTarget& target) {
 
 void SpaceScreen::show() {
     bool connected = sf::Joystick::isConnected(0);
-    // TODO: figure out why SFML fetching the joystick name doesn't work
     mappingFound = false;
     if (connected) {
-        std::string joyStickProductAndVendorIds = dynamic_cast<GalacticGarden*>(&getGame())->getJoyStickProductAndVendorIds();
-        if (mappingDatabase.hasMapping(joyStickProductAndVendorIds.substr(0, 4), joyStickProductAndVendorIds.substr(4, 4))) {
-            mapping = mappingDatabase.getMapping(joyStickProductAndVendorIds);
+	    sf::Joystick::Identification id = sf::Joystick::getIdentification(0);
+        if (mappingDatabase.hasMapping(id)) {
+	        getLogger().info("Found controller with mapping, Name: " + id.name);
+            mapping = mappingDatabase.getMapping(id);
             mappingFound = true;
             initMapJoyButtonToKey();
         }
@@ -694,8 +694,11 @@ void SpaceScreen::processInput(float delta) {
     space.getShip().moveInDirOfVec(moveVec, delta / 1000.0f);
 
     sf::Vector2i mousePos = sf::Mouse::getPosition(getWindow());
-    int shipFacingX = mappingFound && connected ? std::round(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U)) : mousePos.x;
-    int shipFacingY = mappingFound && connected ? std::round(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::V)) : mousePos.y;
+
+	bool hasUVAxes = sf::Joystick::hasAxis(0, sf::Joystick::Axis::U) && sf::Joystick::hasAxis(0, sf::Joystick::Axis::V);
+
+    int shipFacingX = mappingFound && connected ? std::round(sf::Joystick::getAxisPosition(0, hasUVAxes ? sf::Joystick::Axis::U : sf::Joystick::Axis::Z)) : mousePos.x;
+    int shipFacingY = mappingFound && connected ? std::round(sf::Joystick::getAxisPosition(0, hasUVAxes ? sf::Joystick::Axis::V : sf::Joystick::Axis::R)) : mousePos.y;
 
     sf::Vector2i shipFacingVec = {shipFacingX, shipFacingY};
 
