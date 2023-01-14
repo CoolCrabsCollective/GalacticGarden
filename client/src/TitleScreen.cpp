@@ -9,6 +9,7 @@
 #include "SFML/Window/Touch.hpp"
 #include "SpaceScreen.h"
 #include "GalacticGarden.h"
+#include "util/MathUtil.h"
 
 TitleScreen::TitleScreen(wiz::Game& game)
 	: Screen(game) {
@@ -62,14 +63,21 @@ void TitleScreen::show() {
     getGame().addInputListener(this);
 
     GalacticGarden* galacticGarden = dynamic_cast<GalacticGarden*>(&getGame());
-    galacticGarden->setJoyStickName("None");
+    galacticGarden->setJoyStickProductAndVendorIds("None");
 	int i;
 	for(i = 0; true; i++) {
 		if(!sf::Joystick::isConnected(i))
 			break;
 
 		sf::Joystick::Identification id = sf::Joystick::getIdentification(i);
-        dynamic_cast<GalacticGarden*>(&getGame())->setJoyStickName(id.name);
+        std::string vendorId = MathUtil::decToHex(id.vendorId);
+        std::string productId = MathUtil::decToHex(id.productId);
+
+        std::string reorderVendorId = vendorId.substr(2, 2) + vendorId.substr(0, 2);
+        std::string reorderProductId = productId.substr(2, 2) + productId.substr(0, 2);
+
+        dynamic_cast<GalacticGarden*>(
+                &getGame())->setJoyStickProductAndVendorIds(reorderVendorId + reorderProductId);
 		unsigned int buttonCount = sf::Joystick::getButtonCount(i);
 
 		std::stringstream ss;

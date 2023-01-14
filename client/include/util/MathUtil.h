@@ -19,6 +19,38 @@ namespace MathUtil
     inline constexpr const float pow2(float x) {
         return x * x;
     }
+
+    inline std::string decToHex(int n)
+    {
+        std::string ans = "";
+
+        while (n != 0) {
+            int rem = 0;
+
+            char ch;
+            rem = n % 16;
+
+            if (rem < 10) {
+                ch = rem + 48;
+            }
+            else {
+                ch = rem + 55;
+            }
+
+            ans += std::tolower(ch);
+            n = n / 16;
+        }
+
+        int i = 0, j = ans.size() - 1;
+        while(i <= j)
+        {
+            std::swap(ans[i], ans[j]);
+            i++;
+            j--;
+        }
+        return ans.length() == 3 ? "0" + ans : ans;
+    }
+
 }
 
 #endif //LD52_CLIENT_MATHUTIL_H
