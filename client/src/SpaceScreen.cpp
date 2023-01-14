@@ -331,6 +331,13 @@ SpaceScreen::SpaceScreen(wiz::Game& game)
            );
 }
 
+void SpaceScreen::initMapJoyButtonToKey() {
+    mapJoyButtonToKey[mapping.getButton(wiz::MapButton::Start)] = sf::Keyboard::Escape;
+    mapJoyButtonToKey[mapping.getButton(wiz::MapButton::X)] = sf::Keyboard::F;
+
+    mapJoyAxisToKey[sf::Joystick::Axis::PovX] = {sf::Keyboard::Q, sf::Keyboard::E};
+}
+
 bool SpaceScreen::isShopIsOpen() const {
     return shopIsOpen;
 }
@@ -445,10 +452,11 @@ void SpaceScreen::show() {
     // TODO: figure out why SFML fetching the joystick name doesn't work
     mappingFound = false;
     if (connected) {
-        std::string joyStickName = dynamic_cast<GalacticGarden*>(&getGame())->getJoyStickName();
-        if (mappingDatabase.hasMapping(joyStickName)) {
-            mapping = mappingDatabase.getMapping(joyStickName);
+        std::string joyStickProductAndVendorIds = dynamic_cast<GalacticGarden*>(&getGame())->getJoyStickProductAndVendorIds();
+        if (mappingDatabase.hasMapping(joyStickProductAndVendorIds.substr(0, 4), joyStickProductAndVendorIds.substr(4, 4))) {
+            mapping = mappingDatabase.getMapping(joyStickProductAndVendorIds);
             mappingFound = true;
+            initMapJoyButtonToKey();
         }
     }
 
@@ -493,6 +501,22 @@ void SpaceScreen::mouseButtonPressed(const sf::Event::MouseButtonEvent &mouseBut
 void SpaceScreen::mouseMoved(const sf::Event::MouseMoveEvent &mouseMoveEvent) {
     sf::Vector2f pos = getWindow().mapPixelToCoords(sf::Mouse::getPosition(getWindow()), sf::View({ UI_VIEW_SIZE.x/ 2.f, UI_VIEW_SIZE.y/2.0f }, UI_VIEW_SIZE));
     upgradeMenu.handleMouse({static_cast<int>(pos.x), static_cast<int>(pos.y)});
+}
+
+void SpaceScreen::joystickButtonPressed(const sf::Event::JoystickButtonEvent& joystickButtonEvent) {
+    if (joystickButtonEvent.joystickId==0) {
+        sf::Event::KeyEvent keyEvent;
+        keyEvent.code = mapJoyButtonToKey[joystickButtonEvent.button];
+        keyPressed(keyEvent);
+    }
+}
+
+void SpaceScreen::joystickMoved(const sf::Event::JoystickMoveEvent& joystickMoveEvent) {
+    if (joystickMoveEvent.joystickId==0) {
+        sf::Event::KeyEvent keyEvent;
+        keyEvent.code = joystickMoveEvent.position < 0 ? mapJoyAxisToKey[joystickMoveEvent.axis].first : mapJoyAxisToKey[joystickMoveEvent.axis].second;
+        keyPressed(keyEvent);
+    }
 }
 
 void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
@@ -615,17 +639,16 @@ void SpaceScreen::keyPressed(const sf::Event::KeyEvent &keyEvent) {
                 space.getShip().setWeaponType(static_cast<WeaponType>(weaponSelectionUi.getSelection()));
                 break;
             }
-            /*
             // TODO: CHEATs - remove
-            case sf::Keyboard::V:
-                space.getShip().buyShit(-1000.0f);
-                break;
-            case sf::Keyboard::Add:
-                space.get_wave_manager().spawnNextWave();
-                break;
-            case sf::Keyboard::Subtract:
-                space.get_wave_manager().spawnNextWave();
-                break;*/
+//            case sf::Keyboard::V:
+//                space.getShip().buyShit(-1000.0f);
+//                break;
+//            case sf::Keyboard::Add:
+//                space.get_wave_manager().spawnNextWave();
+//                break;
+//            case sf::Keyboard::Subtract:
+//                space.get_wave_manager().spawnNextWave();
+//                break;
             default:
                 break;
         }
@@ -639,8 +662,10 @@ void SpaceScreen::windowClosed() {
 void SpaceScreen::processInput(float delta) {
     bool connected = sf::Joystick::isConnected(0);
 
-    bool isFiring = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) || sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
-    bool isBoosting = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift);
+    bool isFiring = (mappingFound && connected ? sf::Joystick::isButtonPressed(0, mapping.getButton(wiz::MapButton::Right_Shoulder)) : false) ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) || sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
+    bool isBoosting = (mappingFound && connected ? sf::Joystick::isButtonPressed(0, mapping.getButton(wiz::MapButton::B)) : false) ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift);
 
     if(isFiring)
         space.getShip().fire();
@@ -649,11 +674,8 @@ void SpaceScreen::processInput(float delta) {
 
     space.getShip().setIsBoosting(isBoosting);
 
-    bool isPlanting = mappingFound && connected ? sf::Joystick::isButtonPressed(0, mapping.getButton(wiz::MapButton::Left_Shoulder)) :
-            (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) ||
-            sf::Mouse::isButtonPressed(sf::Mouse::Button::Right));
-
-//    bool isPlanting = sf::Mouse::isButtonPressed(sf::Mouse::Button::Right);
+    bool isPlanting = (mappingFound && connected ? sf::Joystick::isButtonPressed(0, mapping.getButton(wiz::MapButton::Left_Shoulder)) : false) ||
+            sf::Mouse::isButtonPressed(sf::Mouse::Button::Right);
 
     if (isPlanting)
         space.getShip().plantOnAsteroid(space);
@@ -671,15 +693,22 @@ void SpaceScreen::processInput(float delta) {
 
     space.getShip().moveInDirOfVec(moveVec, delta / 1000.0f);
 
-    sf::Vector2f pos = getWindow().mapPixelToCoords(sf::Mouse::getPosition(getWindow()), sf::View({ 0.0f, 0.0f }, Space::VIEW_SIZE));
+    sf::Vector2i mousePos = sf::Mouse::getPosition(getWindow());
+    int shipFacingX = mappingFound && connected ? std::round(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U)) : mousePos.x;
+    int shipFacingY = mappingFound && connected ? std::round(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::V)) : mousePos.y;
+
+    sf::Vector2i shipFacingVec = {shipFacingX, shipFacingY};
+
+    sf::Vector2f pos = mappingFound && connected ? (sf::Vector2f) shipFacingVec :
+            getWindow().mapPixelToCoords(shipFacingVec, sf::View({ 0.0f, 0.0f }, Space::VIEW_SIZE));
 
     float rotation = 0.0f;
-    if(pos.length() >= 0.0001)
+    if(mappingFound && connected ? shipFacingX != 0 || shipFacingY != 0 : pos.length() >= 0.0001)
     {
         pos = pos.normalized();
         rotation = pos.angle().asDegrees();
+        space.getShip().setRotation(rotation + 90.0f);
     }
-    space.getShip().setRotation(rotation + 90.0f);
 }
 
 const std::string& SpaceScreen::getName() const {

@@ -18,7 +18,7 @@
 #include "world/Space.h"
 
 #include "WIZ/input/Mapping.h"
-#include "WIZ/input/MappingDatabase.h"
+#include "new_wiz/NewMappingDatabase.h"
 #include "ui/GameOverMenu.h"
 #include "MiniMap.h"
 
@@ -39,9 +39,11 @@ class SpaceScreen : public wiz::Screen, public wiz::WindowListener, public wiz::
     Space space;
     MiniMap miniMap;
 
-    wiz::MappingDatabase mappingDatabase;
+    NewMappingDatabase mappingDatabase;
     wiz::Mapping mapping;
     bool mappingFound = false;
+    std::map<int, sf::Keyboard::Key> mapJoyButtonToKey;
+    std::map<sf::Joystick::Axis, std::pair<sf::Keyboard::Key, sf::Keyboard::Key>> mapJoyAxisToKey;
     
     sf::Vector2f smoothPosition, cameraPosition, shipSmoothVelocity;
     float zoom = 1.0f;
@@ -74,6 +76,8 @@ public:
     
     SpaceScreen(wiz::Game& game);
 
+    void initMapJoyButtonToKey();
+
     void tick(float delta) override;
 
     void render(sf::RenderTarget& target) override;
@@ -101,6 +105,10 @@ public:
     void setShopIsOpen(bool shopIsOpen);
 
     void mouseMoved(const sf::Event::MouseMoveEvent &mouseMoveEvent) override;
+
+    void joystickButtonPressed(const sf::Event::JoystickButtonEvent& joystickButtonEvent) override;
+
+    void joystickMoved(const sf::Event::JoystickMoveEvent& joystickMoveEvent) override;
 };
 
 #endif //LD52_CLIENT_SPACESCREEN_H
