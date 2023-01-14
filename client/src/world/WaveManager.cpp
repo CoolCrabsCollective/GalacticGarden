@@ -22,10 +22,10 @@ void WaveManager::spawnNextWave() {
         crowCraftsToSpawn = wave[1];
         nestsToSpawn = wave[2];
         treesToSpawn = wave[3];
-    } else {
-        hatchlingsToSpawn = currentWave * 10;
-        crowCraftsToSpawn = currentWave * 5;
-        nestsToSpawn = currentWave * 1;
+    } else if (space.startInfiniteWaves) {
+        hatchlingsToSpawn = currentWave * 3;
+        crowCraftsToSpawn = currentWave * 3;
+        nestsToSpawn = (currentWave/2) * 1;
     }
 
     for(int i = 0; i < hatchlingsToSpawn; i++)

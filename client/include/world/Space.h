@@ -34,8 +34,8 @@ protected:
             { Upgrade::LASER_TRIANGLE,      50.0f },
             { Upgrade::LASER_SHOTGUN,       100.0f },
             { Upgrade::LASER_CRAZY,         300.0f },
-            { Upgrade::NUKE_SIMPLE,         500.0f },
-            { Upgrade::FLAMETHROWER_SIMPLE, 300.0f },
+            { Upgrade::NUKE_SIMPLE,         1000.0f },
+            { Upgrade::FLAMETHROWER_SIMPLE, 500.0f },
             { Upgrade::BOOST_BASIC,         75.0f },
             { Upgrade::BOOST_ULTRA,         300.0f },
     };

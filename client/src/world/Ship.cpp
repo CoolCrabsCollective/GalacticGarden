@@ -238,7 +238,6 @@ void Ship::fire() {
                 laserSound.play();
                 break;
             case CRAZY:
-
                 if(!space.getUpgradeManager().has_unlocked(LASER_CRAZY) || !energy_for_shot(25)) return;
                 for(int i = 0; i < 36; i++)
                     space.addEntity(new SmallLaser(space, location, sf::Vector2f(0.0f, -1.0f).rotatedBy(sf::degrees(rotation + static_cast<float>(i) * 10.0f))));

@@ -6,8 +6,8 @@
 #include "util/SpriteUtil.h"
 
 TheNest::TheNest(Space &space, const sf::Vector2f &location) : EnemyShip(space, location) {
-    health = 20.0f;
-    fire_delay = 7.5f;
+    health = 30.0f;
+    fire_delay = 10.0f;
     sprite.setTexture(*space.getAssets().get(GameAssets::TEXTURE_NEST));
     SpriteUtil::setSpriteSize(sprite, { 2.0f, 2.0f });
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });

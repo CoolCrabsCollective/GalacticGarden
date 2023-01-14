@@ -13,10 +13,10 @@ CrowCraft::CrowCraft(Space &space, const sf::Vector2f &location) : HatchlingShip
     sprite.setOrigin({ sprite.getTexture()->getSize().x / 2.0f, sprite.getTexture()->getSize().y / 2.0f });
     SpriteUtil::setSpriteSize(sprite, { 1.0f, 1.0f });
     targetAsteroid = nullptr;
-    speed = 0.02f;
+    speed = 0.016f;
     damageAmount = 3.0f;
     fire_delay = 0.35f;
-    health = 5.0f;
+    health = 10.0f;
 }
 
 void CrowCraft::fire() {

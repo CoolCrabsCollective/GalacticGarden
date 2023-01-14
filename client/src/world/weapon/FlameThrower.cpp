@@ -53,7 +53,7 @@ void FlameThrower::update(float delta) {
             if(EnemyShip* ship = dynamic_cast<EnemyShip*>(entity)) {
                 if((ship->getLocation() - pos).lengthSq() < MathUtil::pow2(1.0f)) {
                     
-                    float damage = 0.3f*(delta / 1000.f);
+                    float damage = 0.7f*(delta / 1000.f);
                     ship->damage(damage);
                     if(display)
                         space.addEntity(new FloatingText(space, ship->getLocation(), "-1", sf::Color::Yellow, 0.5f));

@@ -15,10 +15,10 @@ HatchlingShip::HatchlingShip(Space &space, sf::Vector2f location)
     SpriteUtil::setSpriteOrigin(sprite, { 0.5f, 0.5f });
     SpriteUtil::setSpriteSize(sprite, { 1.0f, 1.0f });
     targetAsteroid = nullptr;
-    speed = 0.01f;
+    speed = 0.008f;
     damageAmount = 1;
     fire_delay = 0.8f;
-    health = 2.0f;
+    health = 5.0f;
 }
 
 void HatchlingShip::tick(float delta) {
