@@ -1,6 +1,6 @@
 # Galactic Garden
 
-This project was made for the Ludum Dare 52. Checkout our submission page https://ldjam.com/events/ludum-dare/52/galactic-garden
+**This project was made for the Ludum Dare 52. Checkout our submission page https://ldjam.com/events/ludum-dare/52/galactic-garden**
 
 Plant and defend your crops and base from cosmic crows! Harvest them to gain Energy. Buy upgrades for your booster and weapons. Will you defeat Lord Crow and his diabolical ‘Treecraft’?
 
